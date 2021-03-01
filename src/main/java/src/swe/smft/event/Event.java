@@ -2,8 +2,8 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-interface Event {
-    /* TODO check */
+/* TODO check if interface or abstract */
+public interface Event {
     public boolean isWorking();
 }
 
@@ -16,6 +16,12 @@ class BasicEvent implements Event {
         this.lambda = lambda;
         this.mu = mu;
         this.status = status;
+    }
+
+    public BasicEvent(float lambda, float mu) {
+        this.lambda = lambda;
+        this.mu = mu;
+        this.status = true;
     }
 
     public float getLambda() {
@@ -34,27 +40,35 @@ class BasicEvent implements Event {
         this.mu = mu;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
 
     public void setStatus(boolean status) {
         this.status = status;
     }
 
+    /* getStatus */
     @Override
     public boolean isWorking() {
         return status;
     }
+
+    public float getP() {
+        if (isWorking())
+            return getLambda();
+        else
+            return getMu();
+    }
+
+    public void toggle() {
+        setStatus(!isWorking());
+    }
 }
 
-class IntermediateEvent implements Event {
+/* TODO check if its abstract */
+abstract class IntermediateEvent implements Event {
     private ArrayList<Event> children;
-    private boolean status;
 
-    public IntermediateEvent(ArrayList<Event> children, boolean status) {
+    public IntermediateEvent(ArrayList<Event> children) {
         this.children = children;
-        this.status = status;
     }
 
     public ArrayList<Event> getChildren() {
@@ -65,23 +79,20 @@ class IntermediateEvent implements Event {
         this.children = children;
     }
 
-    @Override
-    public boolean isWorking() {
-        return status;
-    }
+    public abstract boolean isWorking();
 }
 
 class AndGate extends IntermediateEvent {
 
-    public AndGate(ArrayList<Event> children, boolean status) {
-        super(children, status);
+    public AndGate(ArrayList<Event> children) {
+        super(children);
     }
 
     @Override
     public boolean isWorking() {
         boolean result = true;
-        for (int i = 0; i < getChildren().size(); i++) {
-            if (!getChildren().get(i).isWorking()) {
+        for (Event e : getChildren()) {
+            if (!e.isWorking()) {
                 result = false;
                 break;
             }
@@ -92,15 +103,15 @@ class AndGate extends IntermediateEvent {
 
 class OrGate extends IntermediateEvent {
 
-    public OrGate(ArrayList<Event> children, boolean status) {
-        super(children, status);
+    public OrGate(ArrayList<Event> children) {
+        super(children);
     }
 
     @Override
     public boolean isWorking() {
         boolean result = false;
-        for (int i = 0; i < getChildren().size(); i++) {
-            if (getChildren().get(i).isWorking()) {
+        for (Event e : getChildren()) {
+            if (e.isWorking()) {
                 result = true;
                 break;
             }
@@ -112,8 +123,8 @@ class OrGate extends IntermediateEvent {
 class KNGate extends IntermediateEvent {
     private int K;
 
-    public KNGate(ArrayList<Event> children, boolean status, int k) {
-        super(children, status);
+    public KNGate(ArrayList<Event> children, int k) {
+        super(children);
         K = k;
     }
 
@@ -150,7 +161,7 @@ abstract class MySubject {
     /* detach() is not necessary at the moment */
     /* private void detach(MyObserver o){}; */
 
-    public void notifyAllObservers(){
+    public void notifyAllObservers() {
         for (MyObserver o : observers)
             o.update();
     }
@@ -158,7 +169,7 @@ abstract class MySubject {
 }
 
 /* concrete observer class */
-class EventManager extends MyObserver{
+class EventManager extends MyObserver {
     /* TODO check */
     /* start Observer stuff */
     private Modeler concreteSubject;
@@ -170,39 +181,59 @@ class EventManager extends MyObserver{
 
     @Override
     public void update() {
-        observerState = concreteSubject.getSubjectState();
+        /* TODO check, i make it a local variable pt1 */
+        BasicEvent observerState = concreteSubject.getSubjectState();
+        basicEvents.add(observerState);
     }
 
-    private int observerState;
+    /* TODO check, i make it a local variable pt2 */
+    /* private BasicEvent observerState; */
     /* end Observer stuff */
 
     /* start EventManager stuff */
+    private ArrayList<BasicEvent> basicEvents;
 
-}
-
-/* a concrete subject class */
-class Modeler extends MySubject{
-    /* start Subject stuff */
-    /* TODO state, get, set */
-    private int subjectState;
-
-    public int getSubjectState() {
-        return subjectState;
+    public EventManager(ArrayList<BasicEvent> basicEvents) {
+        this.basicEvents = basicEvents;
     }
 
-    public void setSubjectState(int subjectState) {
-        this.subjectState = subjectState;
-    }
-    /* end Subject stuff */
+    public void nextToggle() {
+        ArrayList<Float> pList = calculateP();
+        int choose = sample(pList);
+        basicEvents.get(choose).toggle();
 
-    /* start Modeler stuff */
-    public Event createBasicEvent(float lambda, float mu, boolean status){
-        return new BasicEvent(lambda, mu, status);
     }
 
-    public Event createIntermediateEvent(ArrayList<Event> children, boolean status){
-        return new IntermediateEvent(children, status);
+    public ArrayList<Float> calculateP() {
+        ArrayList<Float> pList = new ArrayList<Float>();
+        for (BasicEvent b : basicEvents) {
+            pList.add(b.getP());
+        }
+        return pList;
     }
-    /* start Modeler stuff */
+
+    public int sample(ArrayList<Float> pList) {
+        /* will return -1 in case of error */
+        int choose = -1;
+
+        float rand = (float) Math.random();
+        float sum = 0;
+        for (float p : pList) {
+            sum += p;
+        }
+        float sample = rand * sum;
+        for (int i = 0; i <= basicEvents.size(); i++) {
+            float adder = 0;
+            if (sample <= (pList.get(i) + adder))
+                choose = i;
+            else
+                adder += pList.get(i);
+        }
+
+        return choose;
+    }
+
+    /* TODO will take a list of triplets (lambda, mu, status) to initialize basic events */
+    public void initialize() {}
 }
 
