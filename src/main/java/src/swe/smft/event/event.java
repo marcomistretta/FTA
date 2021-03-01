@@ -134,3 +134,75 @@ class KNGate extends IntermediateEvent {
 
 }
 
+/* my observer */
+abstract class MyObserver {
+    public abstract void update();
+}
+
+/* my subject */
+abstract class MySubject {
+    private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
+
+    public void attach(MyObserver o) {
+        observers.add(o);
+    }
+
+    /* detach() is not necessary at the moment */
+    /* private void detach(MyObserver o){}; */
+
+    public void notifyAllObservers(){
+        for (MyObserver o : observers)
+            o.update();
+    }
+
+}
+
+/* concrete observer class */
+class EventManager extends MyObserver{
+    /* TODO check */
+    /* start Observer stuff */
+    private Modeler concreteSubject;
+
+    public EventManager(Modeler m) {
+        this.concreteSubject = m;
+        this.concreteSubject.attach(this);
+    }
+
+    @Override
+    public void update() {
+        observerState = concreteSubject.getSubjectState();
+    }
+
+    private int observerState;
+    /* end Observer stuff */
+
+    /* start EventManager stuff */
+
+}
+
+/* a concrete subject class */
+class Modeler extends MySubject{
+    /* start Subject stuff */
+    /* TODO state, get, set */
+    private int subjectState;
+
+    public int getSubjectState() {
+        return subjectState;
+    }
+
+    public void setSubjectState(int subjectState) {
+        this.subjectState = subjectState;
+    }
+    /* end Subject stuff */
+
+    /* start Modeler stuff */
+    public Event createBasicEvent(float lambda, float mu, boolean status){
+        return new BasicEvent(lambda, mu, status);
+    }
+
+    public Event createIntermediateEvent(ArrayList<Event> children, boolean status){
+        return new IntermediateEvent(children, status);
+    }
+    /* start Modeler stuff */
+}
+
