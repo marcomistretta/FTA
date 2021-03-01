@@ -5,7 +5,7 @@ package src.swe.smft.event;
 import java.util.ArrayList;
 
 /* a concrete subject class */
-public class Modeler extends MySubject {
+public class EventModeler extends MySubject {
     /* start Subject stuff */
     /* TODO state, get, set */
     private BasicEvent subjectState;

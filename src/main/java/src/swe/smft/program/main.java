@@ -11,7 +11,7 @@ public class main {
         /* twp basic events: A, B */
         /* A && B = C */
         /* start Gate & Events Testing */
-        Modeler modeler = new Modeler();
+        EventModeler modeler = new EventModeler();
 
         float lambdaA = 0.5f;
         float muA = 0.5f;
