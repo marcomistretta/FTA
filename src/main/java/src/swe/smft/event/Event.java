@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 /* TODO check if interface or abstract */
 public interface Event {
-    public boolean isWorking();
+    boolean isWorking();
 }
 
+// TODO basic event serve che sia pubblica, il simulatore deve accedere liberamente alle foglie
 class BasicEvent implements Event {
     private float lambda;
     private float mu;
