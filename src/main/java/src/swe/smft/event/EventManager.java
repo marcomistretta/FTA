@@ -32,14 +32,17 @@ public class EventManager extends MyObserver {
     }
 
     public void nextToggle() {
-        ArrayList<Float> pList = calculateP();
+        ArrayList<Float> pList = new ArrayList<Float>();
+        pList = calculateP(pList);
         int choose = sample(pList);
         basicEvents.get(choose).toggle();
 
+        /* just for debugging */
+        //for(BasicEvent b : basicEvents)
+        //    System.out.println(b.isWorking());
     }
 
-    public ArrayList<Float> calculateP() {
-        ArrayList<Float> pList = new ArrayList<Float>();
+    public ArrayList<Float> calculateP(ArrayList<Float> pList) {
         for (BasicEvent b : basicEvents) {
             pList.add(b.getP());
         }
@@ -48,24 +51,26 @@ public class EventManager extends MyObserver {
 
     public int sample(ArrayList<Float> pList) {
         /* will return -1 in case of error */
-        /** TODO FIX
         int choose = -1;
 
         float rand = (float) Math.random();
         float sum = 0;
         for (float p : pList) {
+            //System.err.println("Pcalc: " + p);
             sum += p;
         }
+        //System.err.println("sum: " + sum);
         float sample = rand * sum;
+        //System.err.println("sample: " + sample);
+        float adder = 0;
         for (int i = 0; i < basicEvents.size(); i++) {
-            float adder = 0;
-            if (sample <= (pList.get(i) + adder))
+            if (sample <= (pList.get(i) + adder)) {
                 choose = i;
-            else
+                break;
+            } else
                 adder += pList.get(i);
         }
-         */
-        int choose = 0;
+        //System.err.println("stato scelto: " + choose);
         return choose;
     }
 

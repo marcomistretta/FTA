@@ -19,15 +19,17 @@ public class Simulator {
 
     /* TODO simulation() */
     public void simulation(){
-        System.err.print(timer.getTime() + " ");
-        System.err.println(topEvent.isWorking());
+        /* just for debugging */
+        System.out.print("Tempo: " + timer.getTime() + " ");
+        System.out.println(topEvent.isWorking());
         while (true){
+
             eventManager.nextToggle();
             timer.nextTime();
             if(timer.getTime() < 0)
                 break;
-            System.err.print(timer.getTime() + " ");
-            System.err.println(topEvent.isWorking());
+            System.out.print("Tempo: " + timer.getTime() + " ");
+            System.out.println(topEvent.isWorking());
         }
     }
 

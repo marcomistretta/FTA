@@ -17,20 +17,20 @@ public class main {
         /* start Gate & Events Testing */
         EventModeler modeler = new EventModeler();
 
-        float lambdaA = 0.5f;
-        float muA = 0.5f;
+        float lambdaA = 0.7f;
+        float muA = 0.3f;
         boolean statusA = false;
         BasicEvent A = modeler.createBasicEvent(lambdaA, muA, statusA);
 
-        float lambdaB = 0.5f;
-        float muB = 0.5f;
+        float lambdaB = 0.4f;
+        float muB = 0.6f;
         boolean statusB = false;
         BasicEvent B = modeler.createBasicEvent(lambdaB, muB, statusB);
 
         ArrayList<Event> children = new ArrayList<Event>();
         children.add(A);
         children.add(B);
-        char opz = '1';
+        char opz = 'A';
         Event C = modeler.createIntermediateEvent(children, opz);
         // System.out.println(C.isWorking());
         /* end Gate & Events Testing */
