@@ -48,6 +48,7 @@ public class EventManager extends MyObserver {
 
     public int sample(ArrayList<Float> pList) {
         /* will return -1 in case of error */
+        /** TODO FIX
         int choose = -1;
 
         float rand = (float) Math.random();
@@ -56,18 +57,32 @@ public class EventManager extends MyObserver {
             sum += p;
         }
         float sample = rand * sum;
-        for (int i = 0; i <= basicEvents.size(); i++) {
+        for (int i = 0; i < basicEvents.size(); i++) {
             float adder = 0;
             if (sample <= (pList.get(i) + adder))
                 choose = i;
             else
                 adder += pList.get(i);
         }
-
+         */
+        int choose = 0;
         return choose;
     }
 
     /* TODO will take a list of triplets (lambda, mu, status) to initialize basic events */
-    public void initialize() {
+    /* TODO choose data structure */
+    /* ritona false se non ha inizializzato con successo */
+    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
+        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {
+            int n = lambdas.size();
+            for (int i = 0; i < n; i++) {
+                basicEvents.get(i).setLambda(lambdas.get(i));
+                basicEvents.get(i).setMu(mus.get(i));
+                basicEvents.get(i).setStatus(status.get(i));
+            }
+            return true;
+        } else
+            /* problema di inconsistenza dimensionale */
+            return false;
     }
 }

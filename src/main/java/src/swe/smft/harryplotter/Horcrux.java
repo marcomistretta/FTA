@@ -1,13 +1,11 @@
 package src.swe.smft.harryplotter;
 
-import org.knowm.xchart.*;
 
 public class Horcrux implements Voldemort {
-
     private static Horcrux myHorcrux = null;
 
     public static Horcrux getInstance() {
-        if(myHorcrux != null)
+        if (myHorcrux != null)
             return myHorcrux;
         myHorcrux = new Horcrux();
         return myHorcrux;

@@ -1,6 +1,6 @@
 package src.swe.smft.utilities;
 
-abstract public class ChineseChildCalculator {
+abstract public class Calculator {
     /**
      * quick math methods here ^_^
      */

@@ -20,7 +20,7 @@ public class EventModeler extends MySubject {
     /* end Subject stuff */
 
     /* start Modeler stuff */
-    public Event createBasicEvent(float lambda, float mu, boolean status) {
+    public BasicEvent createBasicEvent(float lambda, float mu, boolean status) {
         subjectState = new BasicEvent(lambda, mu, status);
         notifyAllObservers();
         return new BasicEvent(lambda, mu, status);
@@ -39,8 +39,8 @@ public class EventModeler extends MySubject {
             return new KNGate(children, k);
         }
     }
+    /* end Modeler stuff */
 }
 
-    /* start Modeler stuff */
 
-    /* end Modeler studd */
+
