@@ -6,6 +6,13 @@ import java.util.ArrayList;
 public class EventManager extends MyObserver {
     /* TODO check */
     /* start Observer stuff */
+
+
+    /**
+     * l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
+     * ed anche se servisse, il subject è un singleton
+     */
+
     private EventModeler concreteSubject;
 
     public EventManager(EventModeler m) {
@@ -89,5 +96,14 @@ public class EventManager extends MyObserver {
         } else
             /* problema di inconsistenza dimensionale */
             return false;
+    }
+
+    public ArrayList<Boolean> getStatus() {
+        /**
+         * ritorna una panoramica sullo stato delle foglie nell'instante in cui è chiamata
+         */
+        ArrayList<Boolean> status = new ArrayList<Boolean>();
+        for (BasicEvent be: basicEvents) status.add(be.isWorking());
+        return status;
     }
 }
