@@ -1,9 +1,9 @@
+/* new */
 package src.swe.smft.program;
 import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.EventManager;
 import src.swe.smft.event.EventModeler;
-import src.swe.smft.utilities.Timer;
 
 import java.util.ArrayList;
 

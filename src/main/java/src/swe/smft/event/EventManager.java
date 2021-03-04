@@ -5,6 +5,10 @@ import java.util.ArrayList;
 /* concrete observer class */
 public class EventManager extends MyObserver {
     /* TODO check */
+    /**
+     * l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
+     * ed anche se servisse, il subject è un singleton
+     */
     /* start Observer stuff */
     private EventModeler concreteSubject;
 
@@ -16,12 +20,10 @@ public class EventManager extends MyObserver {
     @Override
     public void update() {
         /* TODO check, i make it a local variable pt1 */
-        BasicEvent observerState = concreteSubject.getSubjectState();
-        basicEvents.add(observerState);
+        BasicEvent lastAddedBasicEvent = concreteSubject.getLastAddedBasicEvent();
+        basicEvents.add(lastAddedBasicEvent);
     }
 
-    /* TODO check, i make it a local variable pt2 */
-    /* private BasicEvent observerState; */
     /* end Observer stuff */
 
     /* start EventManager stuff */
@@ -90,4 +92,14 @@ public class EventManager extends MyObserver {
             /* problema di inconsistenza dimensionale */
             return false;
     }
+
+    public ArrayList<Boolean> getStatus() {
+        /**
+         * ritorna una panoramica sullo stato delle foglie nell'instante in cui è chiamata
+         */
+        ArrayList<Boolean> status = new ArrayList<Boolean>();
+        for (BasicEvent be: basicEvents) status.add(be.isWorking());
+        return status;
+    }
 }
+

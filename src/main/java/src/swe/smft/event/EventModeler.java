@@ -1,29 +1,26 @@
-/* TODO check */
-/* we assume that every event works initially in a default condition */
 package src.swe.smft.event;
-
 import java.util.ArrayList;
 
 /* a concrete subject class */
 public class EventModeler extends MySubject {
     /* start Subject stuff */
     /* TODO state, get, set */
-    private BasicEvent subjectState;
+    private BasicEvent lastAddedBasicEvent;
 
-    public BasicEvent getSubjectState() {
-        return subjectState;
+    public BasicEvent getLastAddedBasicEvent() {
+        return lastAddedBasicEvent;
     }
 
-    public void setSubjectState(BasicEvent subjectState) {
-        this.subjectState = subjectState;
+    public void setLastAddedBasicEvent(BasicEvent lastAddedBasicEvent) {
+        this.lastAddedBasicEvent = lastAddedBasicEvent;
     }
     /* end Subject stuff */
 
     /* start Modeler stuff */
     public BasicEvent createBasicEvent(float lambda, float mu, boolean status) {
-        subjectState = new BasicEvent(lambda, mu, status);
+        lastAddedBasicEvent = new BasicEvent(lambda, mu, status);
         notifyAllObservers();
-        return new BasicEvent(lambda, mu, status);
+        return lastAddedBasicEvent;
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, char opz) {

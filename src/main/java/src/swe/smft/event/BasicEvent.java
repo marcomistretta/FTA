@@ -1,6 +1,5 @@
 package src.swe.smft.event;
 
-// TODO basic event serve che sia pubblica, il simulatore deve accedere liberamente alle foglie
 public class BasicEvent implements Event {
     private float lambda;
     private float mu;
