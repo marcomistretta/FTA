@@ -5,17 +5,11 @@ import java.util.ArrayList;
 /* concrete observer class */
 public class EventManager extends MyObserver {
     /* TODO check */
-    /**
-     * l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
-     * ed anche se servisse, il subject è un singleton
-     */
-    /* start Observer stuff */
 
-
-    /**
-     * l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
-     * ed anche se servisse, il subject è un singleton
-     */
+    //
+    //  l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
+    //  ed anche se servisse, il subject è un singleton
+    //
 
     private EventModeler concreteSubject;
 

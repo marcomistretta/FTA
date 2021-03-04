@@ -1,4 +1,3 @@
-/* new */
 package src.swe.smft.event;
 
 import java.util.ArrayList;
@@ -51,7 +50,7 @@ class KNGate extends IntermediateEvent {
 
     public KNGate(ArrayList<Event> children, int k) {
         super(children);
-        K = k;
+        this.K = k;
     }
 
     @Override
