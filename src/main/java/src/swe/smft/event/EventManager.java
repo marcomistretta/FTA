@@ -10,6 +10,13 @@ public class EventManager extends MyObserver {
      * ed anche se servisse, il subject è un singleton
      */
     /* start Observer stuff */
+
+
+    /**
+     * l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
+     * ed anche se servisse, il subject è un singleton
+     */
+
     private EventModeler concreteSubject;
 
     public EventManager(EventModeler m) {
