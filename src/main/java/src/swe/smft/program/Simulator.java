@@ -22,12 +22,13 @@ public class Simulator {
         /* just for debugging */
         System.out.print("Tempo: " + timer.getTime() + " ");
         System.out.println(topEvent.isWorking());
-        while (timer.getTime() >= 0){
+        while (timer.nextTime()  >= 0){
             eventManager.nextToggle();
-            timer.nextTime();
             System.out.print("Tempo: " + timer.getTime() + " ");
             System.out.println(topEvent.isWorking());
         }
+        System.out.println("Last tempo: " + topEvent.isWorking());
+
     }
 
 
