@@ -2,7 +2,6 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-/* TODO check if interface or abstract */
 public interface Event {
     boolean isWorking();
 }
