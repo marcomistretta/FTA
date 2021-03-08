@@ -1,32 +1,25 @@
 package src.swe.smft.memory;
 
+import src.swe.smft.utilities.Triplet;
+
 import java.util.*;
 
 public class DataCentre {
 
-    //TODO fa tutto schifo, rifaccio uml
+private ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>> simulationResults;
 
-    private ArrayList<ArrayList<Boolean>> results;
-    private ArrayList<ArrayList<Float>> timeFrames;
+public DataCentre() {
+    simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
+    simulationResults.add(new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>());
+}
 
-    public DataCentre(){
-        results = new ArrayList<ArrayList<Boolean>>();
-        timeFrames = new ArrayList<ArrayList<Float>>();
-    }
+public void appendData(Triplet<Float, Boolean, ArrayList<Boolean>> entry) {
+    simulationResults.get(simulationResults.size() - 1).add(entry);
+}
 
-    public void appendData(ArrayList<Boolean> result, ArrayList<Float> times) {
-        results.add(result);
-        timeFrames.add(times);
-    }
-
-    private void sanitizeData() {
-        ArrayList<Float> commonTimes = new ArrayList<Float>();
-        for(ArrayList<Float> time : timeFrames) {
-            for(Float f : time)
-                if(!commonTimes.contains(f))
-                    commonTimes.add(f);
-        }
-    }
+public void newSimulation() {
+    simulationResults.add(new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>());
+}
 
 }
 
