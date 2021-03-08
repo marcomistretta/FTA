@@ -12,8 +12,8 @@ public class BasicEvent implements Event {
     }
 
     public BasicEvent(float lambda, float mu) {
-        this.lambda = lambda;
-        this.mu = mu;
+        this.lambda = this.lambda;
+        this.mu = this.mu;
         this.status = true;
     }
 
