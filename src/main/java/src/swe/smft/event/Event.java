@@ -69,26 +69,4 @@ class KNGate extends IntermediateEvent {
 
 }
 
-/* my observer */
-abstract class MyObserver {
-    public abstract void update();
-}
-
-/* my subject */
-abstract class MySubject {
-    private ArrayList<MyObserver> observers = new ArrayList<MyObserver>();
-
-    public void attach(MyObserver o) {
-        observers.add(o);
-    }
-
-    /* detach() is not necessary at the moment */
-    /* private void detach(MyObserver o){}; */
-
-    public void notifyAllObservers() {
-        for (MyObserver o : observers)
-            o.update();
-    }
-
-}
 

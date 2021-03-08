@@ -2,36 +2,15 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-/* concrete observer class */
-public class EventManager extends MyObserver {
-    /* TODO check */
+public class EventManager {
 
-    //
-    //  l'observer viene notificato dal subject, ma non lo vede ==> riferimento inutile
-    //  ed anche se servisse, il subject è un singleton
-    //
+    private ArrayList<BasicEvent> basicEvents = new ArrayList<BasicEvent>();
 
-    private EventModeler concreteSubject;
-
-    public EventManager(EventModeler m) {
-        this.concreteSubject = m;
-        this.concreteSubject.attach(this);
+    public EventManager() {
     }
 
-    @Override
-    public void update() {
-        /* TODO check, i make it a local variable pt1 */
-        BasicEvent lastAddedBasicEvent = concreteSubject.getLastAddedBasicEvent();
-        basicEvents.add(lastAddedBasicEvent);
-    }
-
-    /* end Observer stuff */
-
-    /* start EventManager stuff */
-    private ArrayList<BasicEvent> basicEvents;
-
-    public EventManager(ArrayList<BasicEvent> basicEvents) {
-        this.basicEvents = basicEvents;
+    public void update(BasicEvent b) {
+        basicEvents.add(b);
     }
 
     public void nextToggle() {
@@ -99,7 +78,8 @@ public class EventManager extends MyObserver {
          * ritorna una panoramica sullo stato delle foglie nell'instante in cui è chiamata
          */
         ArrayList<Boolean> status = new ArrayList<Boolean>();
-        for (BasicEvent be: basicEvents) status.add(be.isWorking());
+        for (BasicEvent b : basicEvents)
+            status.add(b.isWorking());
         return status;
     }
 }

@@ -1,26 +1,22 @@
 package src.swe.smft.event;
 import java.util.ArrayList;
 
-/* a concrete subject class */
-public class EventModeler extends MySubject {
-    /* start Subject stuff */
-    /* TODO state, get, set */
-    private BasicEvent lastAddedBasicEvent;
+public class EventModeler  {
 
-    public BasicEvent getLastAddedBasicEvent() {
-        return lastAddedBasicEvent;
+    private EventManager em;
+
+    public EventModeler(EventManager em) {
+        this.em = em;
     }
 
-    public void setLastAddedBasicEvent(BasicEvent lastAddedBasicEvent) {
-        this.lastAddedBasicEvent = lastAddedBasicEvent;
-    }
-    /* end Subject stuff */
-
-    /* start Modeler stuff */
     public BasicEvent createBasicEvent(float lambda, float mu, boolean status) {
-        lastAddedBasicEvent = new BasicEvent(lambda, mu, status);
-        notifyAllObservers();
-        return lastAddedBasicEvent;
+        BasicEvent b = new BasicEvent(lambda, mu, status);
+        notifyManager(b);
+        return b;
+    }
+
+    private void notifyManager(BasicEvent b) {
+        em.update(b);
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, char opz) {

@@ -15,7 +15,8 @@ public class main {
         /* twp basic events: A, B */
         /* A && B = C */
         /* start Gate & Events Testing */
-        EventModeler modeler = new EventModeler();
+        EventManager em = new EventManager();
+        EventModeler modeler = new EventModeler(em);
 
         float lambdaA = 0.7f;
         float muA = 0.3f;
@@ -30,7 +31,7 @@ public class main {
         ArrayList<Event> children = new ArrayList<Event>();
         children.add(A);
         children.add(B);
-        char opz = 'A';
+        char opz = 'O';
         Event C = modeler.createIntermediateEvent(children, opz);
         // System.out.println(C.isWorking());
         /* end Gate & Events Testing */
@@ -41,7 +42,6 @@ public class main {
         ArrayList<BasicEvent> childrenBasic = new ArrayList<BasicEvent>();
         childrenBasic.add(A);
         childrenBasic.add(B);
-        EventManager em = new EventManager(childrenBasic);
         Simulator simulator = new Simulator(1000, C, em);
         simulator.simulation();
 
