@@ -1,5 +1,7 @@
 package src.swe.smft.memory;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Triplet;
 
 import java.util.*;
@@ -20,6 +22,15 @@ public void appendData(Triplet<Float, Boolean, ArrayList<Boolean>> entry) {
 public void newSimulation() {
     simulationResults.add(new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>());
 }
+
+public void clean() {
+    if(!simulationResults.isEmpty())
+        simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
+}
+//
+//public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData() {
+//
+//}
 
 }
 

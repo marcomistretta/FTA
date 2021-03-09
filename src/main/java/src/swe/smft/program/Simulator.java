@@ -1,8 +1,12 @@
 package src.swe.smft.program;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.EventManager;
 import src.swe.smft.utilities.Timer;
+import src.swe.smft.utilities.Triplet;
+
+import java.util.ArrayList;
 
 public class Simulator {
 
@@ -10,7 +14,7 @@ public class Simulator {
     private EventManager eventManager;
     private Event topEvent;
 
-    /* TODO ho aggiunto top event in ingresso */
+    /* xxx ho aggiunto top event in ingresso */
     public Simulator(float maxTime, Event topEvent, EventManager em) {
         timer = new Timer(maxTime);
         this.topEvent = topEvent;
@@ -18,17 +22,18 @@ public class Simulator {
     }
 
     /* TODO simulation() */
-    public void simulation(){
+    public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(){
         /* just for debugging */
-        System.out.print("Tempo: " + timer.getTime() + " ");
-        System.out.println(topEvent.isWorking());
-        while (timer.nextTime()  >= 0){
+        ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
+        while (timer.getTime()  >= 0){
             eventManager.nextToggle();
-            System.out.print("Tempo: " + timer.getTime() + " ");
-            System.out.println(topEvent.isWorking());
+            simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
+                (timer.getTime(),
+                topEvent.isWorking(),
+                eventManager.getStatus()));
+            timer.nextTime();
         }
-        System.out.println("Last tempo: " + topEvent.isWorking());
-
+        return simResult;
     }
 
 
