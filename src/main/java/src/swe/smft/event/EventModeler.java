@@ -1,22 +1,21 @@
 package src.swe.smft.event;
+
 import java.util.ArrayList;
 
-public class EventModeler  {
-
-    private EventManager em;
-
-    public EventModeler(EventManager em) {
-        this.em = em;
-    }
+public class EventModeler {
 
     public BasicEvent createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent b = new BasicEvent(lambda, mu, status);
-        notifyManager(b);
+        eventManager.addBasicEvent(b);
         return b;
     }
 
-    private void notifyManager(BasicEvent b) {
-        em.update(b);
+    private EventManager eventManager;
+
+
+
+    public EventModeler(EventManager em) {
+        this.eventManager = em;
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, char opz) {
@@ -32,7 +31,11 @@ public class EventModeler  {
             return new KNGate(children, k);
         }
     }
-    /* end Modeler stuff */
+
+    // TODO agli intermediate event ci penserà il garbage collector di java
+    public void clearTree() {
+        eventManager.clearBasicEvent();
+    }
 }
 
 

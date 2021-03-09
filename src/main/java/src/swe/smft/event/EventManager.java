@@ -9,10 +9,6 @@ public class EventManager {
     public EventManager() {
     }
 
-    public void update(BasicEvent b) {
-        basicEvents.add(b);
-    }
-
     public void nextToggle() {
         ArrayList<Float> pList = new ArrayList<Float>();
         pList = calculateP(pList);
@@ -56,31 +52,38 @@ public class EventManager {
         return choose;
     }
 
-    /* TODO will take a list of triplets (lambda, mu, status) to initialize basic events */
-    /* TODO choose data structure */
-    /* ritona false se non ha inizializzato con successo */
-    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
-        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {
-            int n = lambdas.size();
-            for (int i = 0; i < n; i++) {
-                basicEvents.get(i).setLambda(lambdas.get(i));
-                basicEvents.get(i).setMu(mus.get(i));
-                basicEvents.get(i).setStatus(status.get(i));
-            }
-            return true;
-        } else
-            /* problema di inconsistenza dimensionale */
-            return false;
-    }
+
+//    /* TODO will take a list of triplets (lambda, mu, status) to initialize basic events */
+//    /* TODO choose data structure */
+//    /* ritona false se non ha inizializzato con successo */
+//    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
+//        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {
+//            int n = lambdas.size();
+//            for (int i = 0; i < n; i++) {
+//                basicEvents.get(i).setLambda(lambdas.get(i));
+//                basicEvents.get(i).setMu(mus.get(i));
+//                basicEvents.get(i).setStatus(status.get(i));
+//            }
+//            return true;
+//        } else
+//            /* problema di inconsistenza dimensionale */
+//            return false;
+//    }
 
     public ArrayList<Boolean> getStatus() {
-        /**
-         * ritorna una panoramica sullo stato delle foglie nell'instante in cui è chiamata
-         */
         ArrayList<Boolean> status = new ArrayList<Boolean>();
         for (BasicEvent b : basicEvents)
             status.add(b.isWorking());
         return status;
+    }
+
+    public void addBasicEvent(BasicEvent b) {
+        basicEvents.add(b);
+
+    }
+
+    public void clearBasicEvent() {
+        basicEvents = new ArrayList<BasicEvent>();
     }
 }
 
