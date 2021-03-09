@@ -1,13 +1,12 @@
 package src.swe.smft.memory;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Triplet;
 
 import java.util.*;
 
 public class DataCentre {
-
+        //simulazioni>>campionamenti(tempo, top, base)
 private ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>> simulationResults;
 
 public DataCentre() {
@@ -27,59 +26,28 @@ public void clean() {
     if(!simulationResults.isEmpty())
         simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
 }
-//
-//public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData() {
-//
-//}
 
+public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData(float quantum) {
+    /**
+     * (Simulazioni[simulazione])[quanto]
+     */
+    ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantized =
+            new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+    for (ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation : simulationResults) {
+        quantized.add(new ArrayList<Pair<Boolean, ArrayList<Boolean>>>());
+        float step = 0;
+        for (Triplet<Float, Boolean, ArrayList<Boolean>> data : simulation) {
+            if (step < data.getElement1())
+                continue;
+            quantized.get(quantized.size() - 1).add(
+                    new Pair<Boolean, ArrayList<Boolean>>(data.getElement2(), data.getElement3()));
+            step += quantum;
+        }
+        //maxTime value
+        quantized.get(quantized.size() - 1).add(new Pair<Boolean, ArrayList<Boolean>>(
+                simulation.get(simulation.size() - 1).getElement2(),
+                simulation.get(simulation.size() - 1).getElement3()));
+    }
+    return quantized;
 }
-
-//public class DataCentre {
-//
-//    private ArrayList<ArrayList<Boolean>> topStatus;
-//    private ArrayList<ArrayList<ArrayList<Boolean>>> leavesStatus;
-//    private ArrayList<ArrayList<Float>> timeFrames;
-//
-//    private ArrayList<HashMap<Float, Pair<Boolean, ArrayList<Boolean>>>> simulations;
-//    private ArrayList<Float> plotTimes;
-//
-//    public DataCentre(){
-//        topStatus = new ArrayList<ArrayList<Boolean>>();
-//        leavesStatus = new ArrayList<ArrayList<ArrayList<Boolean>>>();
-//        timeFrames = new ArrayList<ArrayList<Float>>();
-//
-//        plotTimes = new ArrayList<Float>();
-//        simulations = new ArrayList<HashMap<Float, Pair<Boolean, ArrayList<Boolean>>>>();
-//    }
-//
-//    public void appendData(ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulationResult) {
-//        ArrayList<Float> time = new ArrayList<Float>();
-//        ArrayList<ArrayList<Boolean>> leaves = new ArrayList<ArrayList<Boolean>>();
-//        ArrayList<Boolean> root = new ArrayList<Boolean>();
-//
-//        for(Triplet<Float, Boolean, ArrayList<Boolean>> entry: simulationResult) {
-//            time.add(entry.getValue0());
-//            root.add(entry.getValue1());
-//            leaves.add(entry.getValue2());
-//        }
-//        topStatus.add(root);
-//        leavesStatus.add(leaves);
-//        timeFrames.add(time);
-//
-//    }
-//
-//    public void appendData(HashMap<Float, Pair<Boolean, ArrayList<Boolean>>> simulation) {
-//        simulations.add(simulation);
-//        for (Float t: simulation.keySet()) {
-//            if(!plotTimes.contains(t)) plotTimes.add(t);
-//        }
-//    }
-//
-//    public static Pair<Boolean, ArrayList<Boolean>>
-//    getRightPair(HashMap<Float, Pair<Boolean, ArrayList<Boolean>>> hash, Float key) {
-//        if(hash.containsKey(key)) return hash.get(key);
-//        Float nearest = 0f;
-//        for (Float t: hash.keySet()) if(t > nearest && t < key) nearest = t;
-//        return hash.get(nearest);
-//    }
-//}
+}
