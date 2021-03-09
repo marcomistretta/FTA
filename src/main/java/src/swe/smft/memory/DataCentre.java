@@ -14,12 +14,8 @@ public DataCentre() {
     simulationResults.add(new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>());
 }
 
-public void appendData(Triplet<Float, Boolean, ArrayList<Boolean>> entry) {
-    simulationResults.get(simulationResults.size() - 1).add(entry);
-}
-
-public void newSimulation() {
-    simulationResults.add(new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>());
+public void appendData(ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> entry) {
+    simulationResults.add(entry);
 }
 
 public void clean() {
