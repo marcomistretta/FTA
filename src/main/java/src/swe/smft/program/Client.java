@@ -17,4 +17,7 @@ public class Client {
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> qd = dataLogger.quantizedData(quantum);
     }
 
+    public void computeErgodicity() {
+
+    }
 }

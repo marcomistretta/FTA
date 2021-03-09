@@ -26,7 +26,7 @@ public class Statistic {
         for (int i = 0; i < quantizedResults.get(0).size(); i++) {
             float mult = 1;
             for (int j = 0; j < N; j++)
-                mult *= (Math.pow(((float) Integer.parseInt(String.valueOf(quantizedResults.get(j).get(i).getElement2())) - sampleMeanList.get(j)), 2));
+                mult *= (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList.get(j)), 2));
             list.add(mult / (N - 1));
         }
         return list;
@@ -37,7 +37,7 @@ public class Statistic {
         for (int i = 0; i < quantizedResults.get(0).size(); i++) {
             float sum = 0;
             for (int j = 0; j < N; j++)
-                sum = sum + Integer.parseInt(String.valueOf(quantizedResults.get(j).get(i).getElement2()));
+                sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
             list.add(sum / N);
         }
         return list;
@@ -50,6 +50,5 @@ public class Statistic {
         System.out.println("VARIANZA ");
         for (float j : sampleVarianceList)
             System.out.print(j + "  ");
-
     }
 }

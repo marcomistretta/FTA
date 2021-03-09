@@ -1,5 +1,8 @@
 /* new */
 package src.swe.smft.program;
+import org.knowm.xchart.QuickChart;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
 import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.EventManager;
@@ -55,6 +58,15 @@ public class main {
         dc.appendData(simulator.simulation());
         Statistic s = new Statistic(dc.quantizedData(100));
         s.confidenceInterval();
+        double[] xData = new double[] { 0.0, 1.0, 2.0 };
+        double[] yData = new double[] { 2.0, 1.0, 0.0 };
+
+        // Create Chart
+        XYChart chart = QuickChart.getChart("Sample Chart", "X", "Y", "y(x)", xData, yData);
+        chart.addSeries("Y2", new double[]{0.0, 1.0, 2.0}, new double[]{0.0, 1.0, 2.0});
+
+        // Show it
+        new SwingWrapper(chart).displayChart();
 
     }
 

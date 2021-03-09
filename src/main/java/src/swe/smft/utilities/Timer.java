@@ -19,6 +19,10 @@ public class Timer {
         return current_time;
     }
 
+    public void reset() {
+        current_time = 0;
+    }
+
     public float nextTime() {
         current_time += -Calculator.log2(Math.random());
         if (current_time >= simulation_time)

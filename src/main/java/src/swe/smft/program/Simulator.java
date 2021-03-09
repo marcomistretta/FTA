@@ -22,6 +22,7 @@ public class Simulator {
 
     /* TODO simulation() */
     public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(){
+        timer.reset();
         /* just for debugging */
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
         while (timer.getTime()  >= 0){
