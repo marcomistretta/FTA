@@ -22,9 +22,14 @@ public class Simulator {
 
     /* TODO simulation() */
     public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(){
-        timer.reset();
-        /* just for debugging */
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
+        timer.reset();
+        simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
+                (timer.getTime(),
+                        topEvent.isWorking(),
+                        eventManager.getStatus()));
+        System.err.println(simResult.get(0).getElement2());
+        timer.nextTime();
         while (timer.getTime()  >= 0){
             eventManager.nextToggle();
             simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
