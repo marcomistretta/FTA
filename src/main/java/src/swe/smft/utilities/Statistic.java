@@ -44,5 +44,12 @@ public class Statistic {
     }
 
     public void confidenceInterval() {
+        System.out.println("MEDIA ");
+        for (float i : sampleMeanList)
+            System.out.print(i + "  ");
+        System.out.println("VARIANZA ");
+        for (float j : sampleVarianceList)
+            System.out.print(j + "  ");
+
     }
 }

@@ -4,6 +4,8 @@ import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.EventManager;
 import src.swe.smft.event.EventModeler;
+import src.swe.smft.memory.DataCentre;
+import src.swe.smft.utilities.Statistic;
 
 import java.util.ArrayList;
 
@@ -43,7 +45,16 @@ public class main {
         childrenBasic.add(A);
         childrenBasic.add(B);
         Simulator simulator = new Simulator(1000, C, em);
-        simulator.simulation();
+        DataCentre dc = new DataCentre();
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        dc.appendData(simulator.simulation());
+        Statistic s = new Statistic(dc.quantizedData(100));
+        s.confidenceInterval();
 
     }
 

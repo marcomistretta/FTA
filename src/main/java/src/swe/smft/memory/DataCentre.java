@@ -40,9 +40,9 @@ public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData(flo
             step += quantum;
         }
         //maxTime value
-        quantized.get(quantized.size() - 1).add(new Pair<Boolean, ArrayList<Boolean>>(
-                simulation.get(simulation.size() - 1).getElement2(),
-                simulation.get(simulation.size() - 1).getElement3()));
+//        quantized.get(quantized.size() - 1).add(new Pair<Boolean, ArrayList<Boolean>>(
+//                simulation.get(simulation.size() - 1).getElement2(),
+//                simulation.get(simulation.size() - 1).getElement3()));
     }
     return quantized;
 }
