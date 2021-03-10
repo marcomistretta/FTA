@@ -72,29 +72,13 @@ public class main {
         dc.appendData(simulator.simulation());
         dc.appendData(simulator.simulation());
         dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-        dc.appendData(simulator.simulation());
-
-
 
         float alpha = 0.05f;
         float quantum = 5;
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults = dc.quantizedData(quantum);
-        Statistic s = new Statistic(quantizedResults, alpha);
+
         double[][] CI;
-        CI = s.confidenceInterval();
+        CI = Statistic.confidenceInterval(quantizedResults, alpha);
         int l = CI[0].length;
         double time = 0;
         double[] xData = new double[l];

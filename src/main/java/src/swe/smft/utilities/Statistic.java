@@ -1,32 +1,11 @@
 package src.swe.smft.utilities;
-
 import org.apache.commons.math3.distribution.TDistribution;
-
 import java.util.ArrayList;
 
 public class Statistic {
 
-    private ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults;
-    private int N;
-    private int l;
-    private float alpha;
-    private TDistribution TDist;
 
-    private ArrayList<Float> sampleMeanList = new ArrayList<Float>();
-    private ArrayList<Float> sampleVarianceList = new ArrayList<Float>();
-
-    public Statistic(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, float alpha) {
-        this.quantizedResults = quantizedResults;
-        this.N = quantizedResults.size();
-        this.l = quantizedResults.get(0).size();
-        sampleMeanList = sampleMean();
-        sampleVarianceList = sampleVariance();
-        // TODO check
-        this.alpha = alpha;
-        TDist = new TDistribution(N - 1);
-    }
-
-    public ArrayList<Float> sampleVariance() {
+    public static ArrayList<Float> sampleVariance(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, ArrayList<Float> sampleMeanList, int l, int N) {
         ArrayList<Float> list = new ArrayList<Float>();
         for (int i = 0; i < l; i++) {
             float sum = 0;
@@ -37,7 +16,7 @@ public class Statistic {
         return list;
     }
 
-    public ArrayList<Float> sampleMean() {
+    public static ArrayList<Float> sampleMean(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, int l, int N) {
         ArrayList<Float> list = new ArrayList<Float>();
         for (int i = 0; i < l; i++) {
             float sum = 0;
@@ -48,47 +27,38 @@ public class Statistic {
         return list;
     }
 
-    public double[][] confidenceInterval() {
-        double[] upperCI = new double[l];
-        double[] lowerCI = new double[l];
+    public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, float alpha) {
+        int N = quantizedResults.size();
+        int l = quantizedResults.get(0).size();
+        TDistribution TDist = new TDistribution(N - 1);
+        double[][] ret = new double[2][l];
+        // ret[0] = lowerCI;
+        // ret[1] = upperCI;
 
-        /*
-        System.out.println("MEDIA ");
-        for (float i : sampleMeanList)
-            System.out.print(i + "  ");
-        System.out.println();
-        System.out.println("VARIANZA ");
-        for (float j : sampleVarianceList)
-            System.out.print(j + "  ");
-        System.out.println();
-         */
-
-        double value = TDist.inverseCumulativeProbability(1 - (alpha / 2));
+        double Tvalue = TDist.inverseCumulativeProbability(1 - (alpha / 2));
         //System.out.println("TSTUDENT: " + value);
+
+        ArrayList<Float> sampleMeanList = sampleMean(quantizedResults, l, N);
+        ArrayList<Float> sampleVarianceList = sampleVariance(quantizedResults, sampleMeanList, l, N);
+
+        double radN = Math.sqrt(N);
 
         for(int i = 0; i<l; i++){
             double S = Math.sqrt(sampleVarianceList.get(i));
-            double radN = Math.sqrt(N);
             // System.err.println("N: " + N);
             // System.err.println("S: " + S);
             // System.err.println("value: " + value);
-            double coeff = (S/radN)*value;
+            double coeff = (S/radN)*Tvalue;
             // System.err.println(coeff);
-            double up = sampleMean().get(i) + coeff;
-            double low = sampleMean().get(i) - coeff;
-            lowerCI[i] = low;
+            double up = sampleMeanList.get(i) + coeff;
+            double low = sampleMeanList.get(i) - coeff;
+            ret[0][i] = low;
             // System.err.println("low: " + low);
-            upperCI[i] = up;
+            ret[1][i] = up;
             // System.err.println("up: " + up);
         }
 
-        double[][] ret = new double[2][];
-        ret[0] = lowerCI;
-        ret[1] = upperCI;
-
         return ret;
-
-
     }
 
 }
