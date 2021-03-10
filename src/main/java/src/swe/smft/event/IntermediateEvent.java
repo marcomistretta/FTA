@@ -3,7 +3,6 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-/* TODO check if its abstract */
 public abstract class IntermediateEvent implements Event {
     private ArrayList<Event> children;
 
@@ -20,6 +19,13 @@ public abstract class IntermediateEvent implements Event {
     }
 
     public abstract boolean isWorking();
+
+    @Override
+    public void reset(){
+        for(Event child : children){
+            child.reset();
+        }
+    }
 }
 
 

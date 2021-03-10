@@ -2,11 +2,21 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-public class EventManager {
+public class TreeManager {
 
     private ArrayList<BasicEvent> basicEvents = new ArrayList<BasicEvent>();
 
-    public EventManager() {
+    private Event topEvent;
+
+    public Event getTopEvent() {
+        return topEvent;
+    }
+
+    public void setTopEvent(Event topEvent) {
+        this.topEvent = topEvent;
+    }
+
+    public TreeManager() {
     }
 
     public void nextToggle() {
@@ -82,8 +92,10 @@ public class EventManager {
 
     }
 
-    public void clearBasicEvent() {
-        basicEvents = new ArrayList<BasicEvent>();
+    public void clearTree() {
+        basicEvents = null;
+        topEvent = null;
+
     }
 }
 

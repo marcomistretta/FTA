@@ -2,20 +2,22 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
+// TODO deve essere un singleton
+// TODO guardare se è Builder/Factory
+// TODO daje ema fallo te
 public class EventModeler {
 
-    public BasicEvent createBasicEvent(float lambda, float mu, boolean status) {
+    public Event createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent b = new BasicEvent(lambda, mu, status);
-        eventManager.addBasicEvent(b);
+        // TODO lo modificherà ema
+        treeManager.addBasicEvent(b);
         return b;
     }
 
-    private EventManager eventManager;
+    private TreeManager treeManager;
 
-
-
-    public EventModeler(EventManager em) {
-        this.eventManager = em;
+    public EventModeler(TreeManager em) {
+        this.treeManager = em;
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, char opz) {
@@ -32,10 +34,6 @@ public class EventModeler {
         }
     }
 
-    // TODO agli intermediate event ci penserà il garbage collector di java
-    public void clearTree() {
-        eventManager.clearBasicEvent();
-    }
 }
 
 

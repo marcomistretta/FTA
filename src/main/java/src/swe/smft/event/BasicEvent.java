@@ -44,6 +44,11 @@ public class BasicEvent implements Event {
         return status;
     }
 
+    @Override
+    public void reset() {
+        setStatus(true);
+    }
+
     public float getP() {
         if (isWorking())
             return getLambda();
