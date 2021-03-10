@@ -7,17 +7,17 @@ import java.util.ArrayList;
 // TODO daje ema fallo te
 public class EventModeler {
 
+    static private EventModeler eventFactory = null;
+
     public Event createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent b = new BasicEvent(lambda, mu, status);
-        // TODO lo modificherà ema
-        treeManager.addBasicEvent(b);
         return b;
     }
 
-    private TreeManager treeManager;
-
-    public EventModeler(TreeManager em) {
-        this.treeManager = em;
+    public static EventModeler getInstance() {
+        if(eventFactory != null) return eventFactory;
+        eventFactory = new EventModeler();
+        return eventFactory;
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, char opz) {
