@@ -62,9 +62,8 @@ public class TreeManager {
         return choose;
     }
 
+        // TODO initialize? cambioano anche i parametri?
 
-//    /* TODO will take a list of triplets (lambda, mu, status) to initialize basic events */
-//    /* TODO choose data structure */
 //    /* ritona false se non ha inizializzato con successo */
 //    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
 //        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {

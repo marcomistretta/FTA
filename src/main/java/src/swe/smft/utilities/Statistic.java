@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Statistic {
 
-
     public static ArrayList<Float> sampleVariance(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, ArrayList<Float> sampleMeanList, int l, int N) {
         ArrayList<Float> list = new ArrayList<Float>();
         for (int i = 0; i < l; i++) {

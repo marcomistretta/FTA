@@ -2,9 +2,7 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-// TODO deve essere un singleton
-// TODO guardare se è Builder/Factory
-// TODO daje ema fallo te
+
 public class EventModeler {
 
     static private EventModeler eventFactory = null;
@@ -27,8 +25,7 @@ public class EventModeler {
             return new OrGate(children);
             /* (opz == 'K') */
         else {
-            /* TODO check */
-            /* int k = (int) (Math.random() * (children.size() - 1) + 1); */
+            //TODO converti opz da char a str: com'è ora non può avere K > 9
             int k = Character.getNumericValue(opz);
             return new KNGate(children, k);
         }

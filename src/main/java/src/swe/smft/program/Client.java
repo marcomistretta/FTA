@@ -13,8 +13,8 @@ public class Client {
         dataLogger = new DataCentre();
     }
 
-    public void getConfidenceIndex(float quantum) {
-        ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> qd = dataLogger.quantizedData(quantum);
+    public void getConfidenceIndex(float quantum, float maxTime) {
+        ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> qd = dataLogger.quantizedData(quantum, maxTime);
     }
 
     public void computeErgodicity() {
