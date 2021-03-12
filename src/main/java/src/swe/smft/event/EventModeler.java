@@ -8,8 +8,7 @@ public class EventModeler {
     static private EventModeler eventFactory = null;
 
     public Event createBasicEvent(float lambda, float mu, boolean status) {
-        BasicEvent b = new BasicEvent(lambda, mu, status);
-        return b;
+        return new BasicEvent(lambda, mu, status);
     }
 
     public static EventModeler getInstance() {

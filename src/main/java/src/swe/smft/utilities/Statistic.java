@@ -9,7 +9,8 @@ public class Statistic {
         for (int i = 0; i < l; i++) {
             float sum = 0;
             for (int j = 0; j < N; j++)
-                sum = (float) (sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList.get(j)), 2)));
+                //todo leggi: ho invertito indici i e j nel get di sampleMean, controlla se va bene
+                sum = (float) (sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList.get(i)), 2)));
             list.add(sum / (N - 1));
         }
         return list;
