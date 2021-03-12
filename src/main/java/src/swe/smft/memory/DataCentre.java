@@ -60,5 +60,9 @@ public class DataCentre {
         }
         return quantized;
     }
+
+    public void clear(){
+        simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
+    }
 }
 
