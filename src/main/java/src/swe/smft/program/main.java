@@ -30,18 +30,19 @@ public class main {
         tm.addBasicEvent((BasicEvent) B);
 
         ArrayList<Event> children = new ArrayList<Event>();
+        // TODO change ArrayList to List
         children.add(A);
         children.add(B);
         String opz = "O";
         Event C = modeler.createIntermediateEvent(children, opz);
 
-        float maxTime = 1000;
+        float maxTime = 10000;
         Simulator sim = new Simulator(maxTime, C, tm);
         DataCentre dc = new DataCentre();
 
         Analyzer anal = new Analyzer(sim, dc);
-        int N = 50;
-        int quantum = 5;
+        int N = 100;
+        int quantum = 50;
 
         boolean defineCI = true;
         boolean verifyErgodic = true;

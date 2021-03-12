@@ -70,12 +70,12 @@ public class Client {
             if (i % 2 == 0) {
                 // TODO after fix remove c and put interNames
                 System.out.println(c + " AND");
-                Event e = em.createIntermediateEvent(children, 'A');
+                Event e = em.createIntermediateEvent(children, "A");
                 // TODO after fix remove c and put interNames
                 interEvents.add(new Pair<Event, String>(e, Character.toString(c)));
             } else {
                 System.out.println(interNames[i] + " OR");
-                Event e = em.createIntermediateEvent(children, 'A');
+                Event e = em.createIntermediateEvent(children, "A");
                 // TODO after fix remove c and put interNames
                 interEvents.add(new Pair<Event, String>(e, Character.toString(c)));
             }
@@ -88,6 +88,7 @@ public class Client {
 
 
 }
+*/
 
- */
+
 
