@@ -49,6 +49,11 @@ public class BasicEvent implements Event {
         setStatus(true);
     }
 
+    @Override
+    public void randomReset() {
+        setStatus(Math.random() >= 0.5d);
+    }
+
     public float getP() {
         if (isWorking())
             return getLambda();

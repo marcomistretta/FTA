@@ -51,6 +51,14 @@ public class Statistic {
             // System.err.println(coeff);
             double up = sampleMeanList.get(i) + coeff;
             double low = sampleMeanList.get(i) - coeff;
+            if(up>1)
+                up = 1;
+            if(up<0)
+                up=0;
+            if(low>1)
+                low = 1;
+            if(low<0)
+                low=0;
             ret[0][i] = low;
             // System.err.println("low: " + low);
             ret[1][i] = up;

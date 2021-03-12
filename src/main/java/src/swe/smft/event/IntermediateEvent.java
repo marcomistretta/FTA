@@ -21,8 +21,15 @@ public abstract class IntermediateEvent implements Event {
     public abstract boolean isWorking();
 
     @Override
-    public void reset(){
-        for(Event child : children){
+    public void reset() {
+        for (Event child : children) {
+            child.reset();
+        }
+    }
+
+    @Override
+    public void randomReset() {
+        for (Event child : children) {
             child.reset();
         }
     }

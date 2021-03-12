@@ -62,8 +62,6 @@ public class TreeManager {
         return choose;
     }
 
-        // TODO initialize? cambioano anche i parametri?
-
 //    /* ritona false se non ha inizializzato con successo */
 //    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
 //        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {

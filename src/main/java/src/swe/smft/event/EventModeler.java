@@ -18,15 +18,16 @@ public class EventModeler {
         return eventFactory;
     }
 
-    public Event createIntermediateEvent(ArrayList<Event> children, char opz) {
-        if (opz == 'A')
+    public Event createIntermediateEvent(ArrayList<Event> children, String opz) {
+        if (opz.equals("A"))
             return new AndGate(children);
-        if (opz == 'O')
+        if (opz.equals("O"))
             return new OrGate(children);
             /* (opz == 'K') */
         else {
-            //TODO converti opz da char a str: com'è ora non può avere K > 9
-            int k = Character.getNumericValue(opz);
+            int k = Integer.parseInt(opz);
+            if(k > children.size())
+                k = children.size();
             return new KNGate(children, k);
         }
     }
