@@ -2,7 +2,6 @@ package src.swe.smft.event;
 
 import java.util.ArrayList;
 
-
 public class EventModeler {
 
     static private EventModeler eventFactory = null;
@@ -18,16 +17,18 @@ public class EventModeler {
     }
 
     public Event createIntermediateEvent(ArrayList<Event> children, String opz) {
-        if (opz.equals("A"))
-            return new AndGate(children);
-        if (opz.equals("O"))
-            return new OrGate(children);
+        if (opz.equals("AND"))
+            return new AndGate(children, opz);
+        if (opz.equals("OR"))
+            return new OrGate(children, opz);
             /* (opz == 'K') */
         else {
             int k = Integer.parseInt(opz);
-            if(k > children.size())
+            if (k > children.size()) {
                 k = children.size();
-            return new KNGate(children, k);
+                opz = String.valueOf(k);
+            }
+            return new KNGate(children, k, opz);
         }
     }
 

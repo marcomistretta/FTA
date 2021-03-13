@@ -2,10 +2,6 @@
 package src.swe.smft.utilities;
 
 public class Timer {
-    /**
-     * se il tempo trascorso (current time) è maggiore del tempo di simulazioone massimo (simulation timer)
-     * lo segnala, rendendo un tempo negativo
-     */
 
     float simulation_time;
     float current_time;

@@ -1,17 +1,20 @@
 package src.swe.smft.program;
 
-import org.knowm.xchart.*;
+import org.knowm.xchart.SwingWrapper;
+import org.knowm.xchart.XYChart;
+import org.knowm.xchart.XYChartBuilder;
+import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
+import org.knowm.xchart.style.markers.SeriesMarkers;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Statistic;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
 public class Analyzer {
-    private Simulator s;
-    private DataCentre dc;
+    private final Simulator s;
+    private final DataCentre dc;
 
     public Analyzer(Simulator s, DataCentre dc) {
         this.s = s;
@@ -29,6 +32,7 @@ public class Analyzer {
                 dc.quantizedData(quantum, s.getMaxTime());
 
         double[][] CI = Statistic.confidenceInterval(quantizedResults, alpha);
+        double[] sampleMean = Statistic.sampleMean(quantizedResults);
 
         int l = CI[0].length;
         double time = 0;
@@ -46,12 +50,19 @@ public class Analyzer {
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
+        // TODO deve essere opzionale
+        boolean meanPlot = false;
         // Series
-        chart.addSeries("lower bound", times, CI[0]);
-        chart.addSeries("upper bound", times, CI[1]);
+        XYSeries series = chart.addSeries("lower bound", times, CI[0]);
+        series.setMarker(SeriesMarkers.NONE);
+        if (meanPlot) {
+            series = chart.addSeries("sample mean", times, sampleMean);
+            series.setMarker(SeriesMarkers.NONE);
+        }
+        series = chart.addSeries("upper bound", times, CI[1]);
+        series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chart).displayChart();
-
 
 
     }
@@ -84,12 +95,15 @@ public class Analyzer {
 
         // Customize Chart
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Step);
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
         // Series
         //chart.addSeries("-eps", times, minusEpsF);
-        chart.addSeries("difference", times, differences);
-        chart.addSeries("+eps", times, epsF);
+        XYSeries series = chart.addSeries("difference", times, differences);
+        series.setMarker(SeriesMarkers.NONE);
+        series = chart.addSeries("+eps", times, epsF);
+        series.setMarker(SeriesMarkers.NONE);
+
 
         new SwingWrapper(chart).displayChart();
 

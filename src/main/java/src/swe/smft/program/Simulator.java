@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class Simulator {
 
-    private Timer timer;
-    private TreeManager treeManager;
-    private Event topEvent;
+    private final Timer timer;
+    private final TreeManager treeManager;
+    private final Event topEvent;
 
     // TODO l'ha aggiunto marco, va bene?
-    private float maxTime;
+    private final float maxTime;
+
     // TODO idem
     public float getMaxTime() {
         return maxTime;
