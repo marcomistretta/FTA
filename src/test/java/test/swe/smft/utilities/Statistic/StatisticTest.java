@@ -1,29 +1,29 @@
 package test.swe.smft.utilities.Statistic;
 
-import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
+
+import org.junit.jupiter.api.*;
+import src.swe.smft.utilities.Pair;
+
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class StatisticTest {
 
-    //private ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults;
+    private static ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults;
 
-    /*
     @BeforeEach
-    public void setUp() {
-        quantizedResults = null;
+    public void setUp() throws Exception {
+        System.out.println("tutto pronto");
     }
 
     @AfterEach
-    // usually throws Exception onnline
-    public void setUp() {
+    public void afterSetUp() throws Exception {
         // solo per provare
-        System.out.println("ho fatto");
+        System.out.println("tutto fatto");
     }
-    */
+
 
     @Test
     @DisplayName("Check Sample Mean Calc")
