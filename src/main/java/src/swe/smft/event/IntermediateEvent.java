@@ -1,22 +1,21 @@
 package src.swe.smft.event;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class IntermediateEvent implements Event {
-    private ArrayList<Event> children;
+    private List<Event> children;
     String opz;
 
-    public IntermediateEvent(ArrayList<Event> children, String opz) {
+    public IntermediateEvent(List<Event> children, String opz) {
         this.children = children;
         this.opz = opz;
     }
 
-    @Override
-    public ArrayList<Event> getChildren() {
+    public List<Event> getChildren() {
         return children;
     }
 
-    public void setChildren(ArrayList<Event> children) {
+    public void setChildren(List<Event> children) {
         this.children = children;
     }
 
@@ -50,7 +49,7 @@ public abstract class IntermediateEvent implements Event {
 
 class AndGate extends IntermediateEvent {
 
-    public AndGate(ArrayList<Event> children, String opz) {
+    public AndGate(List<Event> children, String opz) {
         super(children, opz);
     }
 
@@ -69,7 +68,7 @@ class AndGate extends IntermediateEvent {
 
 class OrGate extends IntermediateEvent {
 
-    public OrGate(ArrayList<Event> children, String opz) {
+    public OrGate(List<Event> children, String opz) {
         super(children, opz);
     }
 
@@ -89,7 +88,7 @@ class OrGate extends IntermediateEvent {
 class KNGate extends IntermediateEvent {
     private final int K;
 
-    public KNGate(ArrayList<Event> children, int k, String opz) {
+    public KNGate(List<Event> children, int k, String opz) {
         super(children, opz);
         this.K = k;
     }

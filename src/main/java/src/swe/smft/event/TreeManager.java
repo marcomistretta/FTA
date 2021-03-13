@@ -95,22 +95,5 @@ public class TreeManager {
 
     }
 
-    // TODO l'ho fatto qui, va bene?
-    public void buildGraph() {
-        System.out.println(topEvent.getLabel());
-        rBuild(topEvent);
-
-    }
-
-    private void rBuild(Event event) {
-        if (event.getChildren() != null) {
-            for (Event e : event.getChildren()) {
-                System.out.println(e.getLabel());
-                rBuild(e);
-            }
-        }
-
-    }
-
 }
 

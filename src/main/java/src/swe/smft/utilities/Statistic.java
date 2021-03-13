@@ -23,17 +23,17 @@ public class Statistic {
         return list;
     }
 
-    public static double[] sampleMean(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
-        int N = quantizedResults.size();
-        int l = quantizedResults.get(0).size();
-        double[] list = new double[l];
-        for (int i = 0; i < l; i++) {
-            double sum = 0;
-            for (int j = 0; j < N; j++)
-                sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
-            list[i] = sum / N;
-        }
-        return list;
+        public static double[] sampleMean(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
+            int N = quantizedResults.size();
+            int l = quantizedResults.get(0).size();
+            double[] list = new double[l];
+            for (int i = 0; i < l; i++) {
+                double sum = 0;
+                for (int j = 0; j < N; j++)
+                    sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
+                list[i] = sum / N;
+            }
+            return list;
     }
 
     public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double alpha) {

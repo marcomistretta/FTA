@@ -1,7 +1,5 @@
 package src.swe.smft.event;
 
-import java.util.ArrayList;
-
 public class BasicEvent implements Event {
     private float lambda;
     private float mu;
@@ -59,11 +57,6 @@ public class BasicEvent implements Event {
     @Override
     public String getLabel() {
         return "S: " + isWorking() + "(lamda: " + getLambda() + ", mu:" + getMu() + ")";
-    }
-
-    @Override
-    public ArrayList<Event> getChildren() {
-        return null;
     }
 
     public float getP() {

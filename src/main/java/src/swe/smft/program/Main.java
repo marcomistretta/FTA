@@ -3,11 +3,12 @@ package src.swe.smft.program;
 import src.swe.smft.event.*;
 import src.swe.smft.memory.DataCentre;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+
         TreeManager tm = new TreeManager();
         EventModeler modeler = EventModeler.getInstance();
 
@@ -23,15 +24,10 @@ public class Main {
         Event B = modeler.createBasicEvent(lambdaB, muB, statusB);
         tm.addBasicEvent((BasicEvent) B);
 
-        ArrayList<Event> children = new ArrayList<Event>();
-        // TODO change ArrayList to List
-        children.add(A);
-        children.add(B);
+        List<Event> children = List.of(A, B);
         String opz = "OR";
         Event C = modeler.createIntermediateEvent(children, opz);
         tm.setTopEvent((IntermediateEvent) C);
-        // TODO XXX
-        tm.buildGraph();
 
         float maxTime = 10000;
         Simulator sim = new Simulator(maxTime, C, tm);
