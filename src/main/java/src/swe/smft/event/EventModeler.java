@@ -7,17 +7,18 @@ public class EventModeler {
 
     static private EventModeler eventFactory = null;
 
-    public Event createBasicEvent(float lambda, float mu, boolean status) {
-        return new BasicEvent(lambda, mu, status);
-    }
+    public Event createBasicEvent(float lambda, float mu, boolean status)                                               {
+        return new BasicEvent(lambda, mu, status)                                                                       ;
+                                                                                                                        }
 
-    public static EventModeler getInstance() {
-        if(eventFactory != null) return eventFactory;
-        eventFactory = new EventModeler();
-        return eventFactory;
-    }
+    public static EventModeler getInstance()                                                                            {
+    if(eventFactory != null) return eventFactory                                                                        ;
+    eventFactory = new EventModeler()                                                                                   ;
+    return eventFactory                                                                                                 ;
+                                                                                                                        }
 
     public Event createIntermediateEvent(ArrayList<Event> children, String opz) {
+        
         if (opz.equals("A"))
             return new AndGate(children);
         if (opz.equals("O"))
