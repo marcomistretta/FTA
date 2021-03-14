@@ -43,7 +43,6 @@ public class GraphBuilder {
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.Pseudograph;
-import org.jgrapht.graph.SimpleGraph;
 import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.IntermediateEvent;
@@ -68,7 +67,7 @@ public class GraphBuilder {
     }
 
     public void printGraph() {
-        //todo
+        // TODO
     }
 
 

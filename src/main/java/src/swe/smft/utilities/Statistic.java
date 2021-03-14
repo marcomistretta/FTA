@@ -14,7 +14,6 @@ public class Statistic {
         for (int i = 0; i < l; i++) {
             double sum = 0;
             for (int j = 0; j < N; j++)
-                // TODO leggi: ho invertito indici i e j nel get di sampleMean, controlla se va bene
                 // quantizedResults.get(j).get(i).getElement1() ::
                 // della j-esima simulazione (su N), il i-esimo istante (su l)
                 sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList[i]), 2));
@@ -78,6 +77,8 @@ public class Statistic {
         return ret;
     }
 
+    // TODO quantized results arriva tutta uguale nel caso in cui si esegua prima CI che Ergodic
+    // nel caso si esegua orima ergodic si ha il problema opposto
     public static double[] allDifference(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
         int l = quantizedResults.get(0).size();
         int N = quantizedResults.size();
@@ -89,12 +90,14 @@ public class Statistic {
             for (int i = 0; i < N - 1; i++) {
                 // j :: i+1-esimo di N valori
                 for (int j = i + 1; j < N; j++) {
-                    sumDiff += Math.abs((quantizedResults.get(i).get(k).getElement1() ? 1 : 0)
+                    sumDiff = sumDiff + Math.abs((quantizedResults.get(i).get(k).getElement1() ? 1 : 0)
                             - (quantizedResults.get(j).get(k).getElement1() ? 1 : 0));
                 }
             }
-            result[k] = sumDiff/Calculator.binomialCoeff(N, 2);
+            result[k] = sumDiff / Calculator.binomialCoeff(N, 2);
         }
+        for (int z = 0; z < l; z++)
+            System.err.println(result[z]);
         return result;
     }
 }

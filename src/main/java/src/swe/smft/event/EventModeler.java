@@ -58,14 +58,7 @@ public class EventModeler {
         }
         /* (opz == 'K') */
         else {
-            int k;
-            if (Math.random() <= 0.33) k = 0;
-                //opz = "0";
-            else if (Math.random() <= 0.66) k = 1;
-                //opz = "1";
-            else k = 2;//opz = "2";
-            if (k > children.size())
-                k = children.size();
+            int k = (int) Math.random() * children.size();
             i = new KNGate(children, k, String.valueOf(k));
         }
         GraphBuilder.addNodeAndEdges(i);

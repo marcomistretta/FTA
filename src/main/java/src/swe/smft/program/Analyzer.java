@@ -1,11 +1,5 @@
 package src.swe.smft.program;
 
-import org.knowm.xchart.SwingWrapper;
-import org.knowm.xchart.XYChart;
-import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
-import org.knowm.xchart.style.Styler;
-import org.knowm.xchart.style.markers.SeriesMarkers;
 import src.swe.smft.harryplotter.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.Pair;
@@ -16,6 +10,9 @@ import java.util.ArrayList;
 public class Analyzer {
     private final Simulator s;
     private final DataCentre dc;
+    // TODO vedi prima todo nel main, questo è il modo in cui risolvere io
+    // mettendolo inizialmente null e inizializzandolo con i PRIMI quantizedResults
+    // ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> data = null;
 
     public Analyzer(Simulator s, DataCentre dc) {
         this.s = s;
