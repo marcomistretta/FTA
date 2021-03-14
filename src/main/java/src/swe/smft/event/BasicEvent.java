@@ -12,8 +12,8 @@ public class BasicEvent implements Event {
     }
 
     public BasicEvent(float lambda, float mu) {
-        this.lambda = this.lambda;
-        this.mu = this.mu;
+        this.lambda = lambda;
+        this.mu = mu;
         this.status = true;
     }
 
@@ -52,6 +52,12 @@ public class BasicEvent implements Event {
     @Override
     public void randomReset() {
         setStatus(Math.random() >= 0.5d);
+    }
+
+    @Override
+    public String getLabel() {
+        // TODO ema change in utf8
+        return isWorking() + "(λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
     public float getP() {

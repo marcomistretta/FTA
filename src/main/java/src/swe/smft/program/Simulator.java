@@ -9,12 +9,13 @@ import java.util.ArrayList;
 
 public class Simulator {
 
-    private Timer timer;
-    private TreeManager treeManager;
-    private Event topEvent;
+    private final Timer timer;
+    private final TreeManager treeManager;
+    private final Event topEvent;
 
     // TODO l'ha aggiunto marco, va bene?
-    private float maxTime;
+    private final float maxTime;
+
     // TODO idem
     public float getMaxTime() {
         return maxTime;
@@ -28,7 +29,6 @@ public class Simulator {
         this.treeManager = em;
     }
 
-    // TODO ho aggiunto un booleano in input, mi sembra sensato
     public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(boolean randomReset) {
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
         timer.reset();
@@ -40,19 +40,14 @@ public class Simulator {
                 (timer.getTime(),
                         topEvent.isWorking(),
                         treeManager.getStatus()));
-        System.err.println(simResult.get(0).getElement2());
         timer.nextTime();
         while (timer.getTime() >= 0) {
-            System.err.println("SONO NEL WHILE DI SIMULATION");
             treeManager.nextToggle();
-            System.err.println("SONO NEL WHILE DI 1");
             simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                     (timer.getTime(),
                             topEvent.isWorking(),
                             treeManager.getStatus()));
-            System.err.println("SONO NEL WHILE DI 2");
             timer.nextTime();
-            System.err.println("HO FINITO IL WHILE");
 
         }
         return simResult;

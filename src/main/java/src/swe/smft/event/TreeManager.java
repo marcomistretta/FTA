@@ -4,15 +4,15 @@ import java.util.ArrayList;
 
 public class TreeManager {
 
-    private ArrayList<BasicEvent> basicEvents = new ArrayList<BasicEvent>();
+    private ArrayList<BasicEvent> basicEvents = new ArrayList<>();
 
-    private Event topEvent;
+    private IntermediateEvent topEvent;
 
     public Event getTopEvent() {
         return topEvent;
     }
 
-    public void setTopEvent(Event topEvent) {
+    public void setTopEvent(IntermediateEvent topEvent) {
         this.topEvent = topEvent;
     }
 
@@ -20,7 +20,7 @@ public class TreeManager {
     }
 
     public void nextToggle() {
-        ArrayList<Float> pList = new ArrayList<Float>();
+        ArrayList<Float> pList = new ArrayList<>();
         pList = calculateP(pList);
         int choose = sample(pList);
         basicEvents.get(choose).toggle();
@@ -78,7 +78,7 @@ public class TreeManager {
 //    }
 
     public ArrayList<Boolean> getStatus() {
-        ArrayList<Boolean> status = new ArrayList<Boolean>();
+        ArrayList<Boolean> status = new ArrayList<>();
         for (BasicEvent b : basicEvents)
             status.add(b.isWorking());
         return status;
@@ -93,6 +93,10 @@ public class TreeManager {
         basicEvents = null;
         topEvent = null;
 
+    }
+
+    public ArrayList<BasicEvent> getBasicEvents() {
+        return basicEvents;
     }
 }
 
