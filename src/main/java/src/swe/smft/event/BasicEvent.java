@@ -56,7 +56,8 @@ public class BasicEvent implements Event {
 
     @Override
     public String getLabel() {
-        return "S: " + isWorking() + "(lamda: " + getLambda() + ", mu:" + getMu() + ")";
+        // TODO ema change in utf8
+        return isWorking() + "(λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
     public float getP() {

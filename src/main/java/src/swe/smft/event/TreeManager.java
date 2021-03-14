@@ -95,5 +95,8 @@ public class TreeManager {
 
     }
 
+    public ArrayList<BasicEvent> getBasicEvents() {
+        return basicEvents;
+    }
 }
 
