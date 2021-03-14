@@ -2,6 +2,7 @@ package src.swe.smft.program;
 
 import src.swe.smft.event.*;
 import src.swe.smft.memory.DataCentre;
+import src.swe.smft.utilities.Calculator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        boolean premadeModel = false;
+        boolean premadeModel = true;
 
         if (premadeModel) {
             float lambdaA = 0.7f;
@@ -39,20 +40,12 @@ public class Main {
 
             sim = new Simulator(maxTime, C, tm);
         } else {
-            // TODO non funziona sempre...perchè?...
-            /**
-             * la funzione che fa il plot del grafo fa crashare il programma quando non sa chi deve essere collegato a chi:
-             *  ovvero quando ci sono due nodi che hanno la stessa label
-             *  SECONDO ME: serve la Stringa Id da mettere dentro Basic e Intermediate
-             *  OPPURE un int statico dentro entrambi (tanto a parità di numero la label sarà diversa)
-             */
             int nBasic = 4;
             // int nIntermediate = nBasic/2;
-            for (int i = 0; i < nBasic; i++)
-                tm.addBasicEvent((BasicEvent) modeler.createRandomBasicEvent());
+            for (int i = 0; i < nBasic; i++) tm.addBasicEvent(modeler.createRandomBasicEvent());
             List<Event> topChildren = new ArrayList<>();
-            List<Event> children = new ArrayList<>();
             for (int j = 0; j < nBasic / 2; j++) {
+                List<Event> children = new ArrayList<>();
                 for (int k = j * 2; k < j * 2 + 2; k++) {
                     children.add(tm.getBasicEvents().get(k));
                     System.err.println(k);

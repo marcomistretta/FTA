@@ -13,17 +13,13 @@ public class Simulator {
     private final TreeManager treeManager;
     private final Event topEvent;
 
-    // TODO l'ha aggiunto marco, va bene?
-    private final float maxTime;
 
-    // TODO idem
     public float getMaxTime() {
-        return maxTime;
+        return timer.getMaxTime();
     }
 
     /* xxx ho aggiunto top event in ingresso */
     public Simulator(float maxTime, Event topEvent, TreeManager em) {
-        this.maxTime = maxTime;
         timer = new Timer(maxTime);
         this.topEvent = topEvent;
         this.treeManager = em;
@@ -40,14 +36,14 @@ public class Simulator {
                 (timer.getTime(),
                         topEvent.isWorking(),
                         treeManager.getStatus()));
-        timer.nextTime();
+        timer.nextTime(treeManager.getOmega());
         while (timer.getTime() >= 0) {
             treeManager.nextToggle();
             simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                     (timer.getTime(),
                             topEvent.isWorking(),
                             treeManager.getStatus()));
-            timer.nextTime();
+            timer.nextTime(treeManager.getOmega());
 
         }
         return simResult;

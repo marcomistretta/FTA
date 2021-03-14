@@ -7,6 +7,7 @@ public class TreeManager {
     private ArrayList<BasicEvent> basicEvents = new ArrayList<>();
 
     private IntermediateEvent topEvent;
+    private float omega;
 
     public Event getTopEvent() {
         return topEvent;
@@ -17,13 +18,14 @@ public class TreeManager {
     }
 
     public TreeManager() {
+
     }
 
     public void nextToggle() {
         ArrayList<Float> pList = new ArrayList<>();
         pList = calculateP(pList);
         int choose = sample(pList);
-        basicEvents.get(choose).toggle();
+        omega += basicEvents.get(choose).toggle();
 
         /* just for debugging */
         //for(BasicEvent b : basicEvents)
@@ -86,6 +88,7 @@ public class TreeManager {
 
     public void addBasicEvent(BasicEvent b) {
         basicEvents.add(b);
+        omega += b.getP();
 
     }
 
@@ -97,6 +100,10 @@ public class TreeManager {
 
     public ArrayList<BasicEvent> getBasicEvents() {
         return basicEvents;
+    }
+
+    public float getOmega() {
+        return omega;
     }
 }
 

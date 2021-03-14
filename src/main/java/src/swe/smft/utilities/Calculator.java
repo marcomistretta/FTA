@@ -1,17 +1,13 @@
 /* new */
 package src.swe.smft.utilities;
 
+import org.apache.commons.math3.exception.NumberIsTooSmallException;
+
 abstract public class Calculator {
 
-    //loga b = log10 b / log10 a
-    static double log2(double a) {
-        if(a == 0) a = 0.5f;
-        return (Math.log(a) / Math.log(2));
-    }
-
-    // TODO check
-    static int binomialCoeff(int n, int k)
-    {
+    public static int binomialCoeff(int n, int k) throws NumberIsTooSmallException {
+        if (n < 0) throw new NumberIsTooSmallException(n, 0, false);
+        if (k < 0) throw new NumberIsTooSmallException(k, 0, false);
         // base Cases
         if (k > n)
             return 0;
@@ -22,4 +18,5 @@ abstract public class Calculator {
         return binomialCoeff(n - 1, k - 1)
                 + binomialCoeff(n - 1, k);
     }
+
 }

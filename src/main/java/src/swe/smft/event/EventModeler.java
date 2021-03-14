@@ -16,19 +16,14 @@ public class EventModeler {
 
     public Event createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent e = new BasicEvent(lambda, mu, status);
-        // TODO MODEL GRAPH
         GraphBuilder.addNode(e);
         return e;
     }
-
-    // TODO dimmi che ne pensi
-    public Event createRandomBasicEvent() {
+    public BasicEvent createRandomBasicEvent() {
         float lambda = (float) Math.random();
         float mu = (float) Math.random();
-        boolean status;
-        status = Math.random() >= 0.5;
+        boolean status = Math.random() >= 0.5;
         BasicEvent e = new BasicEvent(lambda, mu, status);
-        // TODO MODEL GRAPH
         GraphBuilder.addNode(e);
         return e;
     }
@@ -49,38 +44,30 @@ public class EventModeler {
             }
             i = new KNGate(children, k, opz);
         }
-        // TODO MODEL GRAPH
         GraphBuilder.addNodeAndEdges(i);
         return i;
     }
 
-    // TODO dimmi che ne pensi
 
     public Event createRandomIntermediateEvent(List<Event> children) {
         IntermediateEvent i;
-        String opz;
         if (Math.random() <= 0.33) {
-            opz = "AND";
-            i = new AndGate(children, opz);
+            i = new AndGate(children, "AND");
         } else if (Math.random() <= 0.66) {
-            opz = "OR";
-            i = new OrGate(children, opz);
+            i = new OrGate(children, "OR");
         }
         /* (opz == 'K') */
         else {
-            if (Math.random() <= 0.33)
-                opz = "0";
-            else if (Math.random() <= 0.66)
-                opz = "1";
-            else opz = "2";
-            int k = Integer.parseInt(opz);
-            if (k > children.size()) {
+            int k;
+            if (Math.random() <= 0.33) k = 0;
+                //opz = "0";
+            else if (Math.random() <= 0.66) k = 1;
+                //opz = "1";
+            else k = 2;//opz = "2";
+            if (k > children.size())
                 k = children.size();
-                opz = String.valueOf(k);
-            }
-            i = new KNGate(children, k, opz);
+            i = new KNGate(children, k, String.valueOf(k));
         }
-        // TODO MODEL GRAPH
         GraphBuilder.addNodeAndEdges(i);
         return i;
 

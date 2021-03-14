@@ -56,7 +56,6 @@ public class BasicEvent implements Event {
 
     @Override
     public String getLabel() {
-        // TODO ema change in utf8
         return isWorking() + "(λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
@@ -67,7 +66,9 @@ public class BasicEvent implements Event {
             return getMu();
     }
 
-    public void toggle() {
+    public float toggle() {
         setStatus(!isWorking());
+        //status true => prima era off: - mu + lambda
+        return status ? lambda - mu : mu - lambda;
     }
 }

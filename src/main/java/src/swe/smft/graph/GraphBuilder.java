@@ -42,13 +42,14 @@ public class GraphBuilder {
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.SimpleGraph;
 import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.Event;
 import src.swe.smft.event.IntermediateEvent;
 
 public class GraphBuilder {
-    private static final Graph<String, DefaultEdge> g = new SimpleGraph<>(DefaultEdge.class);
+    private static final Graph<String, DefaultEdge> g = new Pseudograph<>(DefaultEdge.class);
 
 
     public static void addNode(BasicEvent e) {
@@ -64,6 +65,10 @@ public class GraphBuilder {
             System.out.println(g.toString());
             System.out.println();
         }
+    }
+
+    public void printGraph() {
+        //todo
     }
 
 

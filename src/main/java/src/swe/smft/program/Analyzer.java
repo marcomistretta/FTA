@@ -6,6 +6,7 @@ import org.knowm.xchart.XYChartBuilder;
 import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
+import src.swe.smft.harryplotter.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Statistic;
@@ -22,6 +23,10 @@ public class Analyzer {
     }
 
     public void defineCI(int N, float alpha, int quantum) {
+        defineCI(N, alpha, quantum, false);
+    }
+
+    public void defineCI(int N, float alpha, int quantum, boolean meanPlot) {
         dc.clear();
 
         for (int i = 0; i < N; i++) {
@@ -42,27 +47,8 @@ public class Analyzer {
             time = time + quantum;
         }
 
-        // TODO incapsulate in harry plotter
-        // Create Chart
-        final XYChart chart = new XYChartBuilder().width(600).height(400).title("Confidence Interval").xAxisTitle("times").yAxisTitle("CI").build();
+        HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
 
-        // Customize Chart
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-
-        // TODO deve essere opzionale
-        boolean meanPlot = false;
-        // Series
-        XYSeries series = chart.addSeries("lower bound", times, CI[0]);
-        series.setMarker(SeriesMarkers.NONE);
-        if (meanPlot) {
-            series = chart.addSeries("sample mean", times, sampleMean);
-            series.setMarker(SeriesMarkers.NONE);
-        }
-        series = chart.addSeries("upper bound", times, CI[1]);
-        series.setMarker(SeriesMarkers.NONE);
-
-        new SwingWrapper(chart).displayChart();
 
 
     }
@@ -89,23 +75,7 @@ public class Analyzer {
             //minusEpsF[i] = -eps;
         }
 
-        // TODO incapsulate in harry plotter
-        // Create Chart
-        final XYChart chart = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
-
-        // Customize Chart
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-
-        // Series
-        //chart.addSeries("-eps", times, minusEpsF);
-        XYSeries series = chart.addSeries("difference", times, differences);
-        series.setMarker(SeriesMarkers.NONE);
-        series = chart.addSeries("+eps", times, epsF);
-        series.setMarker(SeriesMarkers.NONE);
-
-
-        new SwingWrapper(chart).displayChart();
+        HarryPlotter.getInstance().plotErgodic(times, epsF, differences);
 
     }
 }

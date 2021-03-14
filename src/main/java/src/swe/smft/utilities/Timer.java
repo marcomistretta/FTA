@@ -3,11 +3,11 @@ package src.swe.smft.utilities;
 
 public class Timer {
 
-    float simulation_time;
+    float maxTime;
     float current_time;
 
     public Timer(float max_time) {
-        simulation_time = max_time > 0 ? max_time : 100;
+        maxTime = max_time > 0 ? max_time : 100;
         current_time = 0;
     }
 
@@ -15,13 +15,17 @@ public class Timer {
         return current_time;
     }
 
+    public float getMaxTime() {
+        return maxTime;
+    }
+
     public void reset() {
         current_time = 0;
     }
 
-    public float nextTime() {
-        current_time += -Calculator.log2(Math.random());
-        if (current_time >= simulation_time)
+    public float nextTime(float omega) {
+        current_time -= (Math.log(1 - Math.random())) / omega;
+        if (current_time >= maxTime)
             current_time = -1;
         return current_time;
     }
