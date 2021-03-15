@@ -105,5 +105,8 @@ public class TreeManager {
     public float getOmega() {
         return omega;
     }
+
+    public void updateOmega(float offset) {
+    }
 }
 

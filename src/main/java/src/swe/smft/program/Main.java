@@ -92,12 +92,12 @@ public class Main {
         // TODO Ema guarda perchè l'ordine di esecuzione tra defineCI e verifyErgodic è importante
         // probabile collegato a dataCdnter.clear()? o qualcosa lì vicino, il fatto di aver già simulato?
         // si potrebbe fare in modo di evitare di ripetere la simulazione nel caso si eseguano entrambi
+
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
             anal.defineCI(N, alpha, quantum, meanSimPLot);
         }
-
         if (verifyErgodic) {
             float eps = 0.1f;
             anal.verifyErgodic(N, quantum, eps);
