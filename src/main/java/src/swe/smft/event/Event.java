@@ -3,8 +3,8 @@ package src.swe.smft.event;
 public interface Event {
     boolean isWorking();
 
-    float reset();
-    float randomReset();
+    void reset();
+    void randomReset();
 
     String getLabel();
 

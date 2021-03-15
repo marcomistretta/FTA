@@ -29,9 +29,9 @@ public class Simulator {
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
         timer.reset();
         if (randomReset)
-            treeManager.updateOmega(topEvent.randomReset());
+            topEvent.randomReset();
         else
-            treeManager.updateOmega(topEvent.reset());
+            topEvent.reset();
         simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                 (timer.getTime(),
                         topEvent.isWorking(),

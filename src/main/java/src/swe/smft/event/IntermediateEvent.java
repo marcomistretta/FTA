@@ -32,21 +32,17 @@ public abstract class IntermediateEvent implements Event {
     }
 
     @Override
-    public float reset() {
-        float offset = 0;
+    public void reset() {
         for (Event child : children) {
-            offset += child.reset();
+            child.reset();
         }
-        return offset;
     }
 
     @Override
-    public float randomReset() {
-        float offset = 0;
+    public void randomReset() {
         for (Event child : children) {
-            offset += child.reset();
+            child.reset();
         }
-        return offset;
     }
 }
 

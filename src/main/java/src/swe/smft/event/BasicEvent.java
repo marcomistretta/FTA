@@ -1,7 +1,5 @@
 package src.swe.smft.event;
 
-import jdk.jshell.spi.SPIResolutionException;
-
 public class BasicEvent implements Event {
     private float lambda;
     private float mu;
@@ -36,10 +34,8 @@ public class BasicEvent implements Event {
     }
 
 
-    public float setStatus(boolean status) {
-        float prev = getP();
+    public void setStatus(boolean status) {
         this.status = status;
-        return getP() - prev;
     }
 
     /* getStatus */
@@ -49,13 +45,13 @@ public class BasicEvent implements Event {
     }
 
     @Override
-    public float reset() {
-        return setStatus(true);
+    public void reset() {
+        setStatus(true);
     }
 
     @Override
-    public float randomReset() {
-        return setStatus(Math.random() >= 0.5d);
+    public void randomReset() {
+        setStatus(Math.random() >= 0.5d);
     }
 
     @Override
