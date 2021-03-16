@@ -105,5 +105,11 @@ public class TreeManager {
     public float getOmega() {
         return omega;
     }
+
+    public void updateOmega() {
+        omega = 0;
+        for(BasicEvent e: basicEvents)
+            omega += e.getP();
+    }
 }
 

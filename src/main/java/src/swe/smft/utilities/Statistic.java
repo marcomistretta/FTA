@@ -77,8 +77,6 @@ public class Statistic {
         return ret;
     }
 
-    // TODO quantized results arriva tutta uguale nel caso in cui si esegua prima CI che Ergodic
-    // nel caso si esegua orima ergodic si ha il problema opposto
     public static double[] allDifference(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
         int l = quantizedResults.get(0).size();
         int N = quantizedResults.size();

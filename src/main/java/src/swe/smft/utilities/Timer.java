@@ -24,6 +24,7 @@ public class Timer {
     }
 
     public float nextTime(float omega) {
+        //log(0) è voluto: fine imprevedibile della simulazione
         current_time -= (Math.log(1 - Math.random())) / omega;
         if (current_time >= maxTime)
             current_time = -1;

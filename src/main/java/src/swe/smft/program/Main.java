@@ -83,15 +83,12 @@ public class Main {
 
 
         Analyzer anal = new Analyzer(sim, dc);
-        int N = 1000;
+        int N = 10;
         int quantum = 100;
 
         boolean defineCI = true;
         boolean verifyErgodic = true;
 
-        // TODO Ema guarda perchè l'ordine di esecuzione tra defineCI e verifyErgodic è importante
-        // probabile collegato a dataCdnter.clear()? o qualcosa lì vicino, il fatto di aver già simulato?
-        // si potrebbe fare in modo di evitare di ripetere la simulazione nel caso si eseguano entrambi
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
@@ -102,7 +99,5 @@ public class Main {
             float eps = 0.1f;
             anal.verifyErgodic(N, quantum, eps);
         }
-
-
     }
 }

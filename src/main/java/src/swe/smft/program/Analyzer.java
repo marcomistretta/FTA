@@ -10,9 +10,6 @@ import java.util.ArrayList;
 public class Analyzer {
     private final Simulator s;
     private final DataCentre dc;
-    // TODO vedi prima todo nel main, questo è il modo in cui risolvere io
-    // mettendolo inizialmente null e inizializzandolo con i PRIMI quantizedResults
-    // ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> data = null;
 
     public Analyzer(Simulator s, DataCentre dc) {
         this.s = s;

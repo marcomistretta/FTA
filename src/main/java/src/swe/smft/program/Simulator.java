@@ -32,6 +32,7 @@ public class Simulator {
             topEvent.randomReset();
         else
             topEvent.reset();
+        treeManager.updateOmega();
         simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                 (timer.getTime(),
                         topEvent.isWorking(),
@@ -39,12 +40,10 @@ public class Simulator {
         timer.nextTime(treeManager.getOmega());
         while (timer.getTime() >= 0) {
             treeManager.nextToggle();
-            simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
-                    (timer.getTime(),
+            simResult.add(new Triplet(timer.getTime(),
                             topEvent.isWorking(),
                             treeManager.getStatus()));
             timer.nextTime(treeManager.getOmega());
-
         }
         return simResult;
     }
