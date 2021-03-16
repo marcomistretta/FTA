@@ -4,11 +4,17 @@ public class BasicEvent implements Event {
     private float lambda;
     private float mu;
     private boolean status;
+    private String label;
 
-    public BasicEvent(float lambda, float mu, boolean status) {
+    public BasicEvent(float lambda, float mu, boolean status, int count) {
         this.lambda = lambda;
         this.mu = mu;
         this.status = status;
+        setLabel(count);
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public BasicEvent(float lambda, float mu) {
@@ -55,8 +61,8 @@ public class BasicEvent implements Event {
     }
 
     @Override
-    public String getLabel() {
-        return isWorking() + "(λ:" + getLambda() + ", μ:" + getMu() + ")";
+    public void setLabel(int count) {
+        label = count + ": (λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
     public float getP() {

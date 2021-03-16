@@ -18,7 +18,6 @@ public class Simulator {
         return timer.getMaxTime();
     }
 
-    /* xxx ho aggiunto top event in ingresso */
     public Simulator(float maxTime, Event topEvent, TreeManager em) {
         timer = new Timer(maxTime);
         this.topEvent = topEvent;

@@ -94,8 +94,6 @@ public class Statistic {
             }
             result[k] = sumDiff / Calculator.binomialCoeff(N, 2);
         }
-        for (int z = 0; z < l; z++)
-            System.err.println(result[z]);
         return result;
     }
 }

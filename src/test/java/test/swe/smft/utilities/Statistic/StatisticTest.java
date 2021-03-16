@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatisticTest {
 
-    private static final ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
-    private static final int N = 10; // numero di simulazioni
-    private static final int times = 100; // numero di istanti
+    private final ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+    private final int N = 10; // numero di simulazioni
+    private final int times = 100; // numero di istanti
 
     @BeforeEach
     public void setUp() throws Exception {

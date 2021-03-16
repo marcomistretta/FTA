@@ -1,15 +1,17 @@
 package src.swe.smft.program;
 
 import src.swe.smft.event.*;
+import src.swe.smft.graph.GraphBuilder;
 import src.swe.smft.memory.DataCentre;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Main {
 
     public static void main(String[] args) {
-
+        GraphBuilder gb = new GraphBuilder();
         TreeManager tm = new TreeManager();
         EventModeler modeler = EventModeler.getInstance();
         float maxTime = 10000;
@@ -59,7 +61,11 @@ public class Main {
 
             sim = new Simulator(maxTime, C, tm);
         } else {
-            // int nIntermediate = nBasic-2;
+            // TODO
+            // potresti per favore fare in modo che tutti i basic event che non vengono
+            // selezionati come figli degli intermediate, siano ALMENO figli del top event
+            // perchè sennò risultano nodi inutili senza padri
+
             for (int i = 0; i < nBasic; i++) {
                 BasicEvent e = modeler.createRandomBasicEvent();
                 tm.addBasicEvent(e);
@@ -68,14 +74,16 @@ public class Main {
             for (int j = 0; j < nBasic / 2; j++) {
                 List<Event> children = new ArrayList<>();
                 for (int k = 0; k < nBasic / 2; k++) {
-                    children.add(tm.getBasicEvents().get((int) (Math.random() * (nBasic - 1))));
+                    int choose = (int) (Math.random() * nBasic);
+                    children.add(tm.getBasicEvents().get(choose));
                 }
-                boolean random = true;
-                if (random) topChildren.add(modeler.createRandomIntermediateEvent(children));
-                else topChildren.add(modeler.createIntermediateEvent(children, "OR"));
-            }
 
-            Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
+                topChildren.add(modeler.createRandomIntermediateEvent(children));
+            }
+            // dato che con topEvent != da AND la simulazione non risulta interessante
+            //Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
+            Event topEvent = modeler.createIntermediateEvent(topChildren, "AND");
+
             tm.setTopEvent((IntermediateEvent) topEvent);
 
             sim = new Simulator(maxTime, topEvent, tm);
@@ -89,6 +97,7 @@ public class Main {
         boolean defineCI = true;
         boolean verifyErgodic = true;
 
+
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
@@ -99,5 +108,9 @@ public class Main {
             float eps = 0.1f;
             anal.verifyErgodic(N, quantum, eps);
         }
+
+
+        gb.printGraph();
+
     }
 }
