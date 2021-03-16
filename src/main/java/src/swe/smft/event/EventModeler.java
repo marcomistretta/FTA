@@ -25,7 +25,8 @@ public class EventModeler {
         GraphBuilder.addNode(e);
         return e;
     }
-    public BasicEvent createRandomBasicEvent() {
+
+    public Event createRandomBasicEvent() {
         float lambda = round((float) Math.random(), 2);
         float mu = round((float) Math.random(), 2);
         boolean status = Math.random() >= 0.5;
@@ -64,7 +65,7 @@ public class EventModeler {
         }
         /* (opz == 'K') */
         else {
-            int k = (int) Math.random() * children.size();
+            int k = (int) (Math.random() * children.size());
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
         GraphBuilder.addNodeAndEdges(i);

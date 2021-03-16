@@ -18,7 +18,7 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        boolean premadeModel = true;
+        boolean premadeModel = false;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -61,24 +61,32 @@ public class Main {
 
             sim = new Simulator(maxTime, C, tm);
         } else {
-            // TODO
-            // potresti per favore fare in modo che tutti i basic event che non vengono
-            // selezionati come figli degli intermediate, siano ALMENO figli del top event
-            // perchè sennò risultano nodi inutili senza padri
+            List<Event> topChildren = new ArrayList<>();
+            // TODO: i basicEvent che non sono stati scelti come figli degli intermediate 7
+            //  dovrebbero almeno esserlo per il top event, ma non funziona
+            boolean[] choosenBasic = new boolean[nBasic];
 
             for (int i = 0; i < nBasic; i++) {
-                BasicEvent e = modeler.createRandomBasicEvent();
+                BasicEvent e = (BasicEvent) modeler.createRandomBasicEvent();
                 tm.addBasicEvent(e);
+                choosenBasic[i] = false;
             }
-            List<Event> topChildren = new ArrayList<>();
+
             for (int j = 0; j < nBasic / 2; j++) {
                 List<Event> children = new ArrayList<>();
                 for (int k = 0; k < nBasic / 2; k++) {
                     int choose = (int) (Math.random() * nBasic);
                     children.add(tm.getBasicEvents().get(choose));
+                    choosenBasic[choose] = true;
                 }
+                // j-esimo IntermediateEvent
+                Event i = modeler.createRandomIntermediateEvent(children);
+                topChildren.add(i);
+            }
 
-                topChildren.add(modeler.createRandomIntermediateEvent(children));
+            for (int i = 0; i < nBasic; i++) {
+                if (choosenBasic[i] = false)
+                    topChildren.add(tm.getBasicEvents().get(i));
             }
             // dato che con topEvent != da AND la simulazione non risulta interessante
             //Event topEvent = modeler.createRandomIntermediateEvent(topChildren);

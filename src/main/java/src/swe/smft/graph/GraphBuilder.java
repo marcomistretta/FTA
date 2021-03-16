@@ -2,6 +2,7 @@ package src.swe.smft.graph;
 
 
 /*
+// NOTAZIONE PARENTISIZZATA
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.attribute.Font;
 import guru.nidi.graphviz.attribute.Rank;
@@ -99,9 +100,17 @@ public class GraphBuilder {
             g.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));
     }
 
+    /*
+    public static void addEdge(IntermediateEvent i, Event e) {
+        System.err.println(i.getLabel()+e.getLabel());
+        g.add(mutNode(i.getLabel()).addLink(mutNode(e.getLabel())));
+
+    }
+    */
+
     public void printGraph() {
         try {
-            Graphviz.fromGraph(g).height(5000).width(10000).render(Format.PNG).toFile(new File("example/modelloSMFT.png"));
+            Graphviz.fromGraph(g).height(1000).width(4000).render(Format.PNG).toFile(new File("example/modelloSMFT.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
