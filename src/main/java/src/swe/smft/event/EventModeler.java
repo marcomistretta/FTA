@@ -65,7 +65,7 @@ public class EventModeler {
         }
         /* (opz == 'K') */
         else {
-            int k = (int) (Math.random() * children.size());
+            int k = (int) (Math.random() * children.size() + 1);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
         GraphBuilder.addNodeAndEdges(i);

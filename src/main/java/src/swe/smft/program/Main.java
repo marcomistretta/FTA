@@ -62,7 +62,7 @@ public class Main {
             sim = new Simulator(maxTime, C, tm);
         } else {
             List<Event> topChildren = new ArrayList<>();
-            // TODO: i basicEvent che non sono stati scelti come figli degli intermediate 7
+            // TODO: i basicEvent che non sono stati scelti come figli degli intermediate
             //  dovrebbero almeno esserlo per il top event, ma non funziona
             boolean[] choosenBasic = new boolean[nBasic];
 
@@ -74,7 +74,7 @@ public class Main {
 
             for (int j = 0; j < nBasic / 2; j++) {
                 List<Event> children = new ArrayList<>();
-                for (int k = 0; k < nBasic / 2; k++) {
+                for (int k = 0; k < (int) (Math.random() * nBasic + 1); k++) {
                     int choose = (int) (Math.random() * nBasic);
                     children.add(tm.getBasicEvents().get(choose));
                     choosenBasic[choose] = true;
@@ -85,8 +85,9 @@ public class Main {
             }
 
             for (int i = 0; i < nBasic; i++) {
-                if (choosenBasic[i] = false)
-                    topChildren.add(tm.getBasicEvents().get(i));
+                if (choosenBasic[i] = false) {
+                    Event e = tm.getBasicEvents().get(i);
+                }
             }
             // dato che con topEvent != da AND la simulazione non risulta interessante
             //Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
