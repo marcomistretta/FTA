@@ -73,6 +73,18 @@ public class TreeManager {
 
     }
 
+    public void reset() {
+        for (BasicEvent child : basicEvents) {
+            omega += child.reset();
+        }
+    }
+
+    public void randomReset() {
+        for (BasicEvent child : basicEvents) {
+            omega += child.randomReset();
+        }
+    }
+
     // cancella tutto l'albero
     public void clearTree() {
         basicEvents = null;
@@ -88,9 +100,5 @@ public class TreeManager {
         return omega;
     }
 
-
-    public void updateOmega(float offset) {
-        omega += offset;
-    }
 }
 

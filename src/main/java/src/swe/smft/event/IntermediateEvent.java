@@ -38,23 +38,6 @@ public abstract class IntermediateEvent implements Event {
             label = count + ": " + opz;
     }
 
-    @Override
-    public float reset() {
-        float offset = 0;
-        for (Event child : children) {
-            offset += child.reset();
-        }
-        return offset;
-    }
-
-    @Override
-    public float randomReset() {
-        float offset = 0;
-        for (Event child : children) {
-            offset += child.randomReset();
-        }
-        return offset;
-    }
 }
 
 // "AND"

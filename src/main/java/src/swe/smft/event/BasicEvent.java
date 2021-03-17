@@ -66,19 +66,18 @@ public class BasicEvent implements Event {
         label = count + ": (λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
-    @Override
+
     // TODO non dovrebbe mettere al primo stato???
     public float reset() {
-        float previus = getP();
+        float offset = getP();
         setStatus(firstStatus);
-        return getP() - previus;
+        return getP() - offset;
     }
 
-    @Override
     public float randomReset() {
-        float previus = getP();
+        float offset = getP();
         setStatus(Math.random() >= 0.5d);
-        return getP() - previus;
+        return getP() - offset;
     }
 
     public float getP() {
