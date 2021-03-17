@@ -1,27 +1,30 @@
 package src.swe.smft.event;
 
-import src.swe.smft.graph.GraphBuilder;
+import src.swe.smft.harryplotter.HarryPlotter;
 
 import java.util.List;
 
 import static org.apache.commons.math3.util.Precision.round;
 
-public class EventModeler {
+public class EventFactory {
 
+    // tiene conto di quanti nodi ci sono nel modello
     private static int count = 0;
 
 
-    static private EventModeler eventFactory = null;
+    static private EventFactory eventFactory = null;
 
-    public static EventModeler getInstance() {
+    private EventFactory(){}
+
+    public static EventFactory getInstance() {
         if (eventFactory != null) return eventFactory;
-        eventFactory = new EventModeler();
+        eventFactory = new EventFactory();
         return eventFactory;
     }
 
     public Event createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent e = new BasicEvent(lambda, mu, status, ++count);
-        GraphBuilder.addNode(e);
+        HarryPlotter.addNode(e);
         return e;
     }
 
@@ -30,7 +33,7 @@ public class EventModeler {
         float mu = round((float) Math.random(), 2);
         boolean status = Math.random() >= 0.5;
         BasicEvent e = new BasicEvent(lambda, mu, status, ++count);
-        GraphBuilder.addNode(e);
+        HarryPlotter.addNode(e);
         return e;
     }
 
@@ -50,7 +53,7 @@ public class EventModeler {
             }
             i = new KNGate(children, k, opz, ++count);
         }
-        GraphBuilder.addNodeAndEdges(i);
+        HarryPlotter.addNodeAndEdges(i);
         return i;
     }
 
@@ -67,7 +70,7 @@ public class EventModeler {
             int k = (int) (Math.random() * children.size() + 1);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
-        GraphBuilder.addNodeAndEdges(i);
+        HarryPlotter.addNodeAndEdges(i);
         return i;
 
     }

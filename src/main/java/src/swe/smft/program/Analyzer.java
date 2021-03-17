@@ -16,6 +16,7 @@ public class Analyzer {
         this.dc = dc;
     }
 
+    // chiama defineCI senza richiedere il plot di Sample Mean
     public void defineCI(int N, float alpha, int quantum) {
         defineCI(N, alpha, quantum, false);
     }

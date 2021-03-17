@@ -92,7 +92,7 @@ public class Statistic {
                             - (quantizedResults.get(j).get(k).getElement1() ? 1 : 0));
                 }
             }
-            result[k] = sumDiff / Calculator.binomialCoeff(N, 2);
+            result[k] = sumDiff / Calculator.binomialCoefficient(N, 2);
         }
         return result;
     }

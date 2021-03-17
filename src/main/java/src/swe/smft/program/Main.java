@@ -1,24 +1,25 @@
 package src.swe.smft.program;
 
 import src.swe.smft.event.*;
-import src.swe.smft.graph.GraphBuilder;
+import src.swe.smft.harryplotter.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Main {
 
     public static void main(String[] args) {
-        GraphBuilder gb = new GraphBuilder();
+
+        HarryPlotter hp = HarryPlotter.getInstance();
         TreeManager tm = new TreeManager();
-        EventModeler modeler = EventModeler.getInstance();
-        float maxTime = 10000;
+        EventFactory modeler = EventFactory.getInstance();
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        boolean premadeModel = true;
+        float maxTime = 10000;
+
+        boolean premadeModel = false;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -88,9 +89,11 @@ public class Main {
                     topChildren.add(e);
                 }
             }
-            // dato che con topEvent != da AND la simulazione non risulta interessante
+
+            // dato che con topEvent != da K=N/2 la simulazione non risulta interessante
             //Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
-            Event topEvent = modeler.createIntermediateEvent(topChildren, "AND");
+            String topNumberOfChildren = String.valueOf(topChildren.size()/2);
+            Event topEvent = modeler.createIntermediateEvent(topChildren, topNumberOfChildren);
 
             tm.setTopEvent((IntermediateEvent) topEvent);
 
@@ -117,6 +120,6 @@ public class Main {
             anal.verifyErgodic(N, quantum, eps);
         }
 
-        gb.printGraph();
+        hp.printGraph();
     }
 }

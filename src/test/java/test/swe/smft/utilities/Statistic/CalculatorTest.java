@@ -12,26 +12,26 @@ public class CalculatorTest {
     @DisplayName("Test binomiale")
     void binomialTest() {
         //k > n
-        assertEquals(Calculator.binomialCoeff(2, 4), 0);
+        assertEquals(Calculator.binomialCoefficient(2, 4), 0);
         //casi base
-        assertEquals(Calculator.binomialCoeff(0, 0), 1);
-        assertEquals(Calculator.binomialCoeff(1, 0), 1);
-        assertEquals(Calculator.binomialCoeff(1, 1), 1);
+        assertEquals(Calculator.binomialCoefficient(0, 0), 1);
+        assertEquals(Calculator.binomialCoefficient(1, 0), 1);
+        assertEquals(Calculator.binomialCoefficient(1, 1), 1);
         //numeri negativi
         try {
-            assertEquals(Calculator.binomialCoeff(-1, 0), 33);
+            assertEquals(Calculator.binomialCoefficient(-1, 0), 33);
         } catch (NumberIsTooSmallException e) {
             assertEquals(0, 0);
         }
         try {
-            assertEquals(Calculator.binomialCoeff(0, -1), 33);
+            assertEquals(Calculator.binomialCoefficient(0, -1), 33);
         } catch (NumberIsTooSmallException e) {
             assertEquals(0, 0);
         }
         //recursive case
         assertEquals(
-                Calculator.binomialCoeff(2, 1),
-                Calculator.binomialCoeff(1, 1) + Calculator.binomialCoeff(1, 0)
+                Calculator.binomialCoefficient(2, 1),
+                Calculator.binomialCoefficient(1, 1) + Calculator.binomialCoefficient(1, 0)
         );
     }
 }

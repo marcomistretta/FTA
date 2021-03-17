@@ -6,7 +6,7 @@ public interface Event {
 
     String getLabel();
 
-    void setLabel(int c);
+    void setLabel(int count);
 }
 
 
