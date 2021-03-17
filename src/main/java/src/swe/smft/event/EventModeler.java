@@ -8,7 +8,6 @@ import static org.apache.commons.math3.util.Precision.round;
 
 public class EventModeler {
 
-    // TODO davanti ad ogni label c'è un identificatore
     private static int count = 0;
 
 

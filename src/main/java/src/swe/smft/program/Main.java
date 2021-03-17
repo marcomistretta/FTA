@@ -85,8 +85,9 @@ public class Main {
             }
 
             for (int i = 0; i < nBasic; i++) {
-                if (choosenBasic[i] = false) {
+                if (!choosenBasic[i]) {
                     Event e = tm.getBasicEvents().get(i);
+                    topChildren.add(e);
                 }
             }
             // dato che con topEvent != da AND la simulazione non risulta interessante

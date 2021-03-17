@@ -7,11 +7,9 @@ public interface Event {
 
     void randomReset();
 
-    // TODO alla fine non ho resistito:
-    // ho aggiunto l'ayytibuto String label
-    void setLabel(int count);
-
     String getLabel();
+
+    void setLabel(int c);
 }
 
 
