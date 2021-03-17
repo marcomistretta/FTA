@@ -18,7 +18,7 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        boolean premadeModel = false;
+        boolean premadeModel = true;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
