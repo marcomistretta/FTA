@@ -68,13 +68,17 @@ public class BasicEvent implements Event {
 
     @Override
     // TODO non dovrebbe mettere al primo stato???
-    public void reset() {
+    public float reset() {
+        float previus = getP();
         setStatus(firstStatus);
+        return getP() - previus;
     }
 
     @Override
-    public void randomReset() {
+    public float randomReset() {
+        float previus = getP();
         setStatus(Math.random() >= 0.5d);
+        return getP() - previus;
     }
 
     public float getP() {

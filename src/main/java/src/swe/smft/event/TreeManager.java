@@ -88,11 +88,9 @@ public class TreeManager {
         return omega;
     }
 
-    // TODO name typo?
-    public void updateOmega() {
-        omega = 0;
-        for(BasicEvent e: basicEvents)
-            omega += e.getP();
+
+    public void updateOmega(float offset) {
+        omega += offset;
     }
 }
 
