@@ -41,7 +41,7 @@ public class EventModeler {
             i = new AndGate(children, opz, ++count);
         else if (opz.equals("OR"))
             i = new OrGate(children, opz, ++count);
-            /* (opz == 'K') */
+        // opz == "K" con K numero intero
         else {
             int k = Integer.parseInt(opz);
             if (k > children.size()) {
@@ -62,7 +62,7 @@ public class EventModeler {
         } else if (Math.random() <= 0.66) {
             i = new OrGate(children, "OR", ++count);
         }
-        /* (opz == 'K') */
+        // opz == K
         else {
             int k = (int) (Math.random() * children.size() + 1);
             i = new KNGate(children, k, String.valueOf(k), ++count);

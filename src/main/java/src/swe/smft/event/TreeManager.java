@@ -7,29 +7,28 @@ public class TreeManager {
     private ArrayList<BasicEvent> basicEvents = new ArrayList<>();
 
     private IntermediateEvent topEvent;
-    private float omega;
 
-    public Event getTopEvent() {
-        return topEvent;
-    }
+    private float omega;
 
     public void setTopEvent(IntermediateEvent topEvent) {
         this.topEvent = topEvent;
     }
 
     public TreeManager() {
+    }
 
+    public Event getTopEvent() {
+        return topEvent;
     }
 
     public void nextToggle() {
         ArrayList<Float> pList = new ArrayList<>();
+        // calcola le singolo probabilità per ciascun BasicEvent
+        // di essere lui a mutare stato di funzionamento
         pList = calculateP(pList);
+        // sceglie il BasicEvent che dovrà cambiare stato di funzionamento
         int choose = sample(pList);
         omega += basicEvents.get(choose).toggle();
-
-        /* just for debugging */
-        //for(BasicEvent b : basicEvents)
-        //    System.out.println(b.isWorking());
     }
 
     public ArrayList<Float> calculateP(ArrayList<Float> pList) {
@@ -42,17 +41,15 @@ public class TreeManager {
     public int sample(ArrayList<Float> pList) {
         /* will return -1 in case of error */
         int choose = -1;
-
         float rand = (float) Math.random();
         float sum = 0;
-        for (float p : pList) {
-            //System.err.println("Pcalc: " + p);
+
+        for (float p : pList)
             sum += p;
-        }
-        //System.err.println("sum: " + sum);
+
         float sample = rand * sum;
-        //System.err.println("sample: " + sample);
         float adder = 0;
+
         for (int i = 0; i < basicEvents.size(); i++) {
             if (sample <= (pList.get(i) + adder)) {
                 choose = i;
@@ -60,24 +57,8 @@ public class TreeManager {
             } else
                 adder += pList.get(i);
         }
-        //System.err.println("stato scelto: " + choose);
         return choose;
     }
-
-//    /* ritona false se non ha inizializzato con successo */
-//    public boolean initialize(ArrayList<Float> lambdas, ArrayList<Float> mus, ArrayList<Boolean> status) {
-//        if (lambdas.size() == mus.size() && mus.size() == status.size() && status.size() == basicEvents.size()) {
-//            int n = lambdas.size();
-//            for (int i = 0; i < n; i++) {
-//                basicEvents.get(i).setLambda(lambdas.get(i));
-//                basicEvents.get(i).setMu(mus.get(i));
-//                basicEvents.get(i).setStatus(status.get(i));
-//            }
-//            return true;
-//        } else
-//            /* problema di inconsistenza dimensionale */
-//            return false;
-//    }
 
     public ArrayList<Boolean> getStatus() {
         ArrayList<Boolean> status = new ArrayList<>();
@@ -92,6 +73,7 @@ public class TreeManager {
 
     }
 
+    // cancella tutto l'albero
     public void clearTree() {
         basicEvents = null;
         topEvent = null;
@@ -106,6 +88,7 @@ public class TreeManager {
         return omega;
     }
 
+    // TODO name typo?
     public void updateOmega() {
         omega = 0;
         for(BasicEvent e: basicEvents)

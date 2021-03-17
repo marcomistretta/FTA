@@ -3,6 +3,7 @@ package src.swe.smft.event;
 import java.util.List;
 
 public abstract class IntermediateEvent implements Event {
+
     private List<Event> children;
     String opz;
     String label;
@@ -23,11 +24,13 @@ public abstract class IntermediateEvent implements Event {
 
     public abstract boolean isWorking();
 
+    @Override
     public String getLabel() {
         return label;
     }
 
     @Override
+    // "AND" "OR" "int"
     public void setLabel(int count) {
         if (!opz.equals("AND") && !opz.equals("OR"))
             label = count + ": " + opz + "/" + getChildren().size();
@@ -45,12 +48,12 @@ public abstract class IntermediateEvent implements Event {
     @Override
     public void randomReset() {
         for (Event child : children) {
-            child.reset();
+            child.randomReset();
         }
     }
 }
 
-
+// "AND"
 class AndGate extends IntermediateEvent {
 
     public AndGate(List<Event> children, String opz, int count) {
@@ -70,6 +73,7 @@ class AndGate extends IntermediateEvent {
     }
 }
 
+// "OR"
 class OrGate extends IntermediateEvent {
 
     public OrGate(List<Event> children, String opz, int count) {
@@ -89,6 +93,7 @@ class OrGate extends IntermediateEvent {
     }
 }
 
+// "K" con String K = "un numero intero"
 class KNGate extends IntermediateEvent {
     private final int K;
 
@@ -111,6 +116,6 @@ class KNGate extends IntermediateEvent {
         }
         return result;
     }
-
 }
 
+// TODO aggiungere porte dinamiche

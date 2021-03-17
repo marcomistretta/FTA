@@ -6,7 +6,7 @@ import src.swe.smft.utilities.Triplet;
 import java.util.ArrayList;
 
 public class DataCentre {
-    //simulazioni>>campionamenti(tempo, top, base)
+    // simulazioni >> campionamenti(tempo, topEvent, basicEvents)
     private ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>> simulationResults;
 
     public DataCentre() {
@@ -21,17 +21,17 @@ public class DataCentre {
 
         // (Simulazioni[simulazione])[quanto]
 
-        //it's ok, maxTime := k é quantum
+        // it's ok, maxTime := k é quantum
         int numberOfSamples = (int) (maxTime / quantum) + 1;
 
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantized =
                 new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
         for (ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation : simulationResults) {
-            //every sim
+            // every sim
             quantized.add(new ArrayList<Pair<Boolean, ArrayList<Boolean>>>());
             ArrayList<Float> debug = new ArrayList<Float>();
             for(float step = 0f; step <= maxTime; step += quantum) {
-            //quanto attuale
+                // quanto attuale
                 for (Triplet<Float, Boolean, ArrayList<Boolean>> data : simulation) {
                     //every sample
                     if (data.getElement1() > step) {
@@ -41,8 +41,8 @@ public class DataCentre {
                     }
                 }
             }
-            //correzione necessaria se non esistono più campioni dopo un certo quanto, riempie i quanti rimasti
-            //con l'ultimo istante temporale
+            // correzione necessaria se non esistono più campioni dopo un certo quanto, riempie i quanti rimasti
+            // con l'ultimo istante temporale
             int l = numberOfSamples - quantized.get(quantized.size() - 1).size();
             while (l > 0) {
                 quantized.get(quantized.size() - 1).add(new Pair(simulation.get(simulation.size() - 1).getElement2(),

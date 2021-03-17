@@ -40,11 +40,7 @@ public class Analyzer {
             times[i] = time;
             time = time + quantum;
         }
-
         HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
-
-
-
     }
 
     public void verifyErgodic(int N, int quantum, float eps) {
@@ -61,12 +57,10 @@ public class Analyzer {
         double time = 0;
         double[] times = new double[differences.length];
         double[] epsF = new double[differences.length];
-        //double[] minusEpsF = new double[differences.length];
         for (int i = 0; i < differences.length; i++) {
             times[i] = time;
             time = time + quantum;
             epsF[i] = eps;
-            //minusEpsF[i] = -eps;
         }
 
         HarryPlotter.getInstance().plotErgodic(times, epsF, differences);

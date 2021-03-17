@@ -9,12 +9,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class HarryPlotter {
 
-    /**
-     * stampa magicamente i dati! Amo la magia
-     */
-
-    private static int width = 1000;
-    private static int height = 700;
+    private static final int width = 1000;
+    private static final int height = 700;
     private static HarryPlotter mainCharacter = null;
 
     public static HarryPlotter getInstance() {
@@ -25,11 +21,11 @@ public class HarryPlotter {
     }
 
     public void plotSimulation() {
-
+        // TODO potremmo implementarlo?
     }
 
     public void plotReliability(double[] times, boolean meanPlot, double[][] CI, double[] sampleMean) {
-        final XYChart chart = new XYChartBuilder().width(1200).height(800).title("Confidence Interval").xAxisTitle("times").yAxisTitle("CI").build();
+        final XYChart chart = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
 
         // Customize Chart
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -56,10 +52,9 @@ public class HarryPlotter {
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
         // Series
-        //chart.addSeries("-eps", times, minusEpsF);
-        XYSeries series = chart.addSeries("difference", times, differences);
+        XYSeries series = chart.addSeries("differences", times, differences);
         series.setMarker(SeriesMarkers.NONE);
-        series = chart.addSeries("+eps", times, epsF);
+        series = chart.addSeries("epsilon", times, epsF);
         series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chart).displayChart();

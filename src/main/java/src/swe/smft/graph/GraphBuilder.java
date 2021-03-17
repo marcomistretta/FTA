@@ -1,6 +1,5 @@
 package src.swe.smft.graph;
 
-
 /*
 // NOTAZIONE PARENTISIZZATA
 import guru.nidi.graphviz.attribute.Color;
@@ -42,8 +41,6 @@ public class GraphBuilder {
 
     public void printGraph() {
     }
-
-
 }
 */
 
@@ -64,16 +61,9 @@ import static guru.nidi.graphviz.model.Factory.mutNode;
 
 public class GraphBuilder {
 
-    // private static Graph g;
     private static MutableGraph g;
 
     public GraphBuilder() {
-        /*
-        g = graph("example1").directed()
-                .graphAttr().with(Rank.dir(BOTTOM_TO_TOP))
-                .nodeAttr().with(Font.name("Comic Sans MS"))
-                .linkAttr().with("class", "link-class");
-        */
         g = mutGraph("SMFT").setDirected(true);
     }
 
@@ -84,7 +74,6 @@ public class GraphBuilder {
             color = GREEN;
         else
             color = RED;
-        // g.with(node(e.getLabel()).with(color));
         g.add(mutNode(e.getLabel()).add(color));
     }
 
@@ -96,17 +85,8 @@ public class GraphBuilder {
             color = BLUE;
         else color = ORANGE;
         for (int j = 0; j < i.getChildren().size(); j++)
-            // g.with(node(i.getLabel()).with(color)).link(node(i.getChildren().get(j).getLabel()));
             g.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));
     }
-
-    /*
-    public static void addEdge(IntermediateEvent i, Event e) {
-        System.err.println(i.getLabel()+e.getLabel());
-        g.add(mutNode(i.getLabel()).addLink(mutNode(e.getLabel())));
-
-    }
-    */
 
     public void printGraph() {
         try {
@@ -115,6 +95,4 @@ public class GraphBuilder {
             e.printStackTrace();
         }
     }
-
-
 }

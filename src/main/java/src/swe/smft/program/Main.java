@@ -62,8 +62,6 @@ public class Main {
             sim = new Simulator(maxTime, C, tm);
         } else {
             List<Event> topChildren = new ArrayList<>();
-            // TODO: i basicEvent che non sono stati scelti come figli degli intermediate
-            //  dovrebbero almeno esserlo per il top event, ma non funziona
             boolean[] choosenBasic = new boolean[nBasic];
 
             for (int i = 0; i < nBasic; i++) {
@@ -119,8 +117,6 @@ public class Main {
             anal.verifyErgodic(N, quantum, eps);
         }
 
-
         gb.printGraph();
-
     }
 }
