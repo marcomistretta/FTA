@@ -17,7 +17,7 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        float maxTime = 10000;
+        float maxTime = 50;
 
         boolean premadeModel = false;
         int nBasic = 10;
@@ -46,7 +46,6 @@ public class Main {
             boolean statusD = true;
             Event D = modeler.createBasicEvent(lambdaD, muD, statusD);
             tm.addBasicEvent((BasicEvent) D);
-
 
             List<Event> childrenC = List.of(A, B);
             List<Event> childrenD = List.of(C, D);
@@ -102,8 +101,8 @@ public class Main {
 
 
         Analyzer anal = new Analyzer(sim, dc);
-        int N = 10;
-        int quantum = 100;
+        int N = 10000;
+        int quantum = 1;
 
         boolean defineCI = true;
         boolean verifyErgodic = true;

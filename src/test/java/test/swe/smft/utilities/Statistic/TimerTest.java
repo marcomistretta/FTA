@@ -12,7 +12,7 @@ public class TimerTest {
     Timer timer;
 
     @Test
-    @DisplayName("NextTimw")
+    @DisplayName("NextTime")
     public void testNextTime() {
         timer = new Timer(0);
         assertNotEquals(0, timer.getMaxTime());
