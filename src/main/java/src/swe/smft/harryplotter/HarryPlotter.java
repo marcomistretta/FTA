@@ -66,9 +66,10 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
+    // TODO fissare l'unità di misura (il passo) con cui viene stampato l'asse X e l'asse Y
 
-    private static final int width = 1000;
-    private static final int height = 700;
+    // private static final int width = 1000;
+    // private static final int height = 700;
     private static HarryPlotter mainCharacter = null;
     private static MutableGraph g = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
@@ -107,13 +108,13 @@ public class HarryPlotter {
 
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
 
         // Series
         XYSeries series = chartErgodic.addSeries("differences", times, differences);
-        series.setMarker(SeriesMarkers.NONE);
+        //series.setMarker(SeriesMarkers.NONE);
         series = chartErgodic.addSeries("epsilon", times, epsF);
-        series.setMarker(SeriesMarkers.NONE);
+        //series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartErgodic).displayChart();
     }

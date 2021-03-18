@@ -17,11 +17,11 @@ public class Analyzer {
     }
 
     // chiama defineCI senza richiedere il plot di Sample Mean
-    public void defineCI(int N, float alpha, int quantum) {
+    public void defineCI(int N, float alpha, float quantum) {
         defineCI(N, alpha, quantum, false);
     }
 
-    public void defineCI(int N, float alpha, int quantum, boolean meanPlot) {
+    public void defineCI(int N, float alpha, float quantum, boolean meanPlot) {
         dc.clear();
 
         for (int i = 0; i < N; i++) {
@@ -44,7 +44,7 @@ public class Analyzer {
         HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
     }
 
-    public void verifyErgodic(int N, int quantum, float eps) {
+    public void verifyErgodic(int N, float quantum, float eps) {
         dc.clear();
 
         for (int i = 0; i < N; i++) {

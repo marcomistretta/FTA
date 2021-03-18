@@ -10,6 +10,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        // TODO impachettare tutto quanto
 
         HarryPlotter hp = HarryPlotter.getInstance();
         TreeManager tm = new TreeManager();
@@ -17,9 +18,9 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        float maxTime = 50;
+        float maxTime = 20;
 
-        boolean premadeModel = false;
+        boolean premadeModel = true;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -101,19 +102,29 @@ public class Main {
 
 
         Analyzer anal = new Analyzer(sim, dc);
-        int N = 10000;
-        int quantum = 1;
+        int N = 100000;
+        float quantum = 0.1f;
 
         boolean defineCI = true;
-        boolean verifyErgodic = true;
+        // TODO attenzione momentaneamente mutato
+        boolean verifyErgodic = false;
 
 
+        // TODO: una ottima esecuzione è
+        // premade model
+        // timemax = 20
+        // N = 100'000
+        // qunatum = 0.1
+
+        // TODO cronometrare l'esecuzione
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
             anal.defineCI(N, alpha, quantum, meanSimPLot);
         }
 
+
+        // TODO cronometrare l'esecuzione
         if (verifyErgodic) {
             float eps = 0.1f;
             anal.verifyErgodic(N, quantum, eps);

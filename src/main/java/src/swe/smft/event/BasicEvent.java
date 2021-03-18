@@ -66,8 +66,6 @@ public class BasicEvent implements Event {
         label = count + ": (λ:" + getLambda() + ", μ:" + getMu() + ")";
     }
 
-
-    // TODO non dovrebbe mettere al primo stato???
     public float reset() {
         float offset = getP();
         setStatus(firstStatus);
