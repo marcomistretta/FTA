@@ -46,6 +46,14 @@ public class Simulator {
         return simResult;
     }
 
+    public void estimatedTime(int iterations) {
+        double startTime = System.currentTimeMillis();
+        for (int i = 0; i < 1000; i++) simulation(true);
+        double endTime = System.currentTimeMillis();
+        // divido 1'000'000 perchè divido 1000 per fare la media e nuovamente divido 1000 per passare ai secondi
+        System.out.println("Tempo previsto: " + ((endTime - startTime) / 1000000) * iterations + " secondi");
+    }
+
 }
 
 

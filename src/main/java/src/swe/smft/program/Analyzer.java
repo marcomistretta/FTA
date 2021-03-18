@@ -23,23 +23,27 @@ public class Analyzer {
 
     public void defineCI(int N, float alpha, float quantum, boolean meanPlot) {
         dc.clear();
-
+        s.estimatedTime(N);
         for (int i = 0; i < N; i++) {
             dc.appendData(s.simulation(false));
         }
-
+        double start = System.currentTimeMillis();
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
+        System.out.println(System.currentTimeMillis()-start);
 
-        double[][] CI = Statistic.confidenceInterval(quantizedResults, alpha);
         double[] sampleMean = Statistic.sampleMean(quantizedResults);
+        double[][] CI = Statistic.confidenceInterval(quantizedResults, alpha, sampleMean);
 
         int l = CI[0].length;
-        double time = 0;
+        //fixme te lo eri complicato in modo inutile, ora fa
+
+        // double time = 0;
         double[] times = new double[l];
         for (int i = 0; i < l; i++) {
-            times[i] = time;
-            time = time + quantum;
+            times[i] = i * quantum;
+            // times[i] = time;
+            // time = time + quantum;
         }
         HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
     }

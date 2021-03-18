@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class DataCentre {
     // simulazioni >> campionamenti(tempo, topEvent, basicEvents)
     private ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>> simulationResults;
+    private ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults;
 
     public DataCentre() {
         simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
@@ -17,45 +18,46 @@ public class DataCentre {
         simulationResults.add(entry);
     }
 
+    //fixme calcolare quantizedData è oneroso: la prima vota che lo calcola lo conserva (cancellare i dati lo forza a ricalcolare)
     public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData(float quantum, float maxTime) {
 
         // (Simulazioni[simulazione])[quanto]
 
         // it's ok, maxTime := k é quantum
-        int numberOfSamples = (int) (maxTime / quantum) + 1;
-
-        ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantized =
-                new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
-        for (ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation : simulationResults) {
-            // every sim
-            quantized.add(new ArrayList<Pair<Boolean, ArrayList<Boolean>>>());
-            ArrayList<Float> debug = new ArrayList<Float>();
-            for(float step = 0f; step <= maxTime; step += quantum) {
-                // quanto attuale
-                for (Triplet<Float, Boolean, ArrayList<Boolean>> data : simulation) {
-                    //every sample
-                    if (data.getElement1() > step) {
-                        quantized.get(quantized.size() - 1).add(new Pair(data.getElement2(), data.getElement3()));
-                        debug.add(step);
-                        break;
+        if(quantizedResults == null) {
+            int numberOfSamples = (int) (maxTime / quantum) + 1;
+            quantizedResults = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+            for (ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation : simulationResults) {
+                // every sim
+                quantizedResults.add(new ArrayList<Pair<Boolean, ArrayList<Boolean>>>());
+                for (float step = 0f; step <= maxTime; step += quantum) {
+                    // quanto attuale
+                    for (Triplet<Float, Boolean, ArrayList<Boolean>> data : simulation) {
+                        //every sample
+                        if (data.getElement1() > step) {
+                            quantizedResults.get(quantizedResults.size() - 1).add(new Pair(data.getElement2(), data.getElement3()));
+                            break;
+                        }
                     }
                 }
-            }
-            // correzione necessaria se non esistono più campioni dopo un certo quanto, riempie i quanti rimasti
-            // con l'ultimo istante temporale
-            int l = numberOfSamples - quantized.get(quantized.size() - 1).size();
-            while (l > 0) {
-                quantized.get(quantized.size() - 1).add(new Pair(simulation.get(simulation.size() - 1).getElement2(),
-                        simulation.get(simulation.size() - 1).getElement3()));
-                l--;
+                // correzione necessaria se non esistono più campioni dopo un certo quanto, riempie i quanti rimasti
+                // con l'ultimo istante temporale
+                int l = numberOfSamples - quantizedResults.get(quantizedResults.size() - 1).size();
+                while (l > 0) {
+                    quantizedResults.get(quantizedResults.size() - 1).add(new Pair(simulation.get(simulation.size() - 1).getElement2(),
+                            simulation.get(simulation.size() - 1).getElement3()));
+                    l--;
+                }
             }
         }
-        return quantized;
+        return quantizedResults;
     }
 
     public void clear() {
-        if (!simulationResults.isEmpty())
+        if (!simulationResults.isEmpty()) {
             simulationResults = new ArrayList<ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>>();
+            quantizedResults = null;
+        }
     }
 }
 

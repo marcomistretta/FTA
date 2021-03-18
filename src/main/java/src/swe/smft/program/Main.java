@@ -7,22 +7,28 @@ import src.swe.smft.memory.DataCentre;
 import java.util.ArrayList;
 import java.util.List;
 
+//fixme l'incapsulazione fatta così non mi garba, scegli te se tenerla
+
 public class Main {
 
-    public static void main(String[] args) {
-        // TODO impachettare tutto quanto
+    // TODO: una ottima esecuzione è
+    // premade model
+    // timemax = 20
+    // N = 100'000
+    // qunatum = 0.1
 
-        HarryPlotter hp = HarryPlotter.getInstance();
-        TreeManager tm = new TreeManager();
-        EventFactory modeler = EventFactory.getInstance();
-        DataCentre dc = new DataCentre();
+    static final float maxTime = 20;
+    static final public boolean premadeModel = true;
+    static final int nBasic = 10;
+    static final int N = 100000;
+    static final float quantum = 0.1f;
+    static TreeManager tm = new TreeManager();
+    static DataCentre dc = new DataCentre();
+    static EventFactory modeler = EventFactory.getInstance();
+
+
+    private static Simulator setUp() {
         Simulator sim;
-
-        float maxTime = 20;
-
-        boolean premadeModel = true;
-        int nBasic = 10;
-
         if (premadeModel || nBasic <= 2) {
             float lambdaA = 0.7f;
             float muA = 0.3f;
@@ -61,7 +67,8 @@ public class Main {
             tm.setTopEvent((IntermediateEvent) top);
 
             sim = new Simulator(maxTime, C, tm);
-        } else {
+        }
+        else {
             List<Event> topChildren = new ArrayList<>();
             boolean[] choosenBasic = new boolean[nBasic];
 
@@ -99,24 +106,21 @@ public class Main {
 
             sim = new Simulator(maxTime, topEvent, tm);
         }
+        return sim;
+    }
 
+    public static void main(String[] args) {
 
+        //HarryPlotter hp = HarryPlotter.getInstance();
+        Simulator sim = setUp();
         Analyzer anal = new Analyzer(sim, dc);
-        int N = 100000;
-        float quantum = 0.1f;
 
         boolean defineCI = true;
         // TODO attenzione momentaneamente mutato
         boolean verifyErgodic = false;
 
 
-        // TODO: una ottima esecuzione è
-        // premade model
-        // timemax = 20
-        // N = 100'000
-        // qunatum = 0.1
-
-        // TODO cronometrare l'esecuzione
+        // fixme come sotto
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
@@ -124,12 +128,14 @@ public class Main {
         }
 
 
-        // TODO cronometrare l'esecuzione
+        // fixme non va cronometrata l'esecuzione, non serve a nulla bisogna misurare quanto ci mette ad eseguire i
+        //  primi elementi, e con quelli stimi la durata, simulator l'ho cronometrata, ma ricca ha ragione,
+        //  non ci mette niente
         if (verifyErgodic) {
             float eps = 0.1f;
             anal.verifyErgodic(N, quantum, eps);
         }
 
-        hp.printGraph();
+        HarryPlotter.getInstance().printGraph();
     }
 }

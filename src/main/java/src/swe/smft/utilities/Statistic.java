@@ -10,8 +10,10 @@ public class Statistic {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         double[] list = new double[l];
-        // per ogni istante devo calcolare la varianza campionaria basandomi sul campione delle N simulazioni
+        // per ogni istante devo calcolare la varianza campionaria basandomi sul campione delle N simulazion;
+        double start = System.currentTimeMillis();
         for (int i = 0; i < l; i++) {
+            if(i == 10) System.out.println("sampleVariance, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000) * ((float)l / i) + " secondi");
             double sum = 0;
             for (int j = 0; j < N; j++)
                 // quantizedResults.get(j).get(i).getElement1() ::
@@ -19,6 +21,8 @@ public class Statistic {
                 sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList[i]), 2));
             list[i] = sum / (N - 1);
         }
+        System.out.println("sampleVariance, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000)+" secondi");
+
         return list;
     }
 
@@ -34,8 +38,8 @@ public class Statistic {
             }
             return list;
     }
-
-    public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double alpha) {
+     // fixme ho invertito le chiamate nel main, così sample mean lo calcola una volta sola
+    public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double alpha, double[] sampleMean) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         TDistribution TDist = new TDistribution(N - 1);
@@ -46,20 +50,20 @@ public class Statistic {
         double Tvalue = TDist.inverseCumulativeProbability(1 - (alpha / 2));
         //System.out.println("TSTUDENT: " + value);
 
-        double[] sampleMeanList = sampleMean(quantizedResults);
-        double[] sampleVarianceList = sampleVariance(quantizedResults, sampleMeanList);
+        double[] sampleVarianceList = sampleVariance(quantizedResults, sampleMean);
 
         double radN = Math.sqrt(N);
-
+        float start = System.currentTimeMillis();
         for (int i = 0; i < l; i++) {
+            if(i == 100) System.out.println(((System.currentTimeMillis() - start) / 100) * (float) (l / i));
             double S = Math.sqrt(sampleVarianceList[i]);
             // System.err.println("N: " + N);
             // System.err.println("S: " + S);
             // System.err.println("value: " + value);
             double coeff = (S / radN) * Tvalue;
             // System.err.println(coeff);
-            double up = sampleMeanList[i] + coeff;
-            double low = sampleMeanList[i] - coeff;
+            double up = sampleMean[i] + coeff;
+            double low = sampleMean[i] - coeff;
             if (up > 1)
                 up = 1;
             if (up < 0)
