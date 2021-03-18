@@ -36,14 +36,11 @@ public class Analyzer {
         double[][] CI = Statistic.confidenceInterval(quantizedResults, alpha, sampleMean);
 
         int l = CI[0].length;
-        //fixme te lo eri complicato in modo inutile, ora fa
 
-        // double time = 0;
         double[] times = new double[l];
         for (int i = 0; i < l; i++) {
             times[i] = i * quantum;
-            // times[i] = time;
-            // time = time + quantum;
+
         }
         HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
     }

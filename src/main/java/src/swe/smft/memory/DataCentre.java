@@ -18,7 +18,7 @@ public class DataCentre {
         simulationResults.add(entry);
     }
 
-    //fixme calcolare quantizedData è oneroso: la prima vota che lo calcola lo conserva (cancellare i dati lo forza a ricalcolare)
+    // calcolare quantizedData è oneroso: la prima volta che lo calcola lo conserva (cancellare i dati lo forza a ricalcolare)
     public ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedData(float quantum, float maxTime) {
 
         // (Simulazioni[simulazione])[quanto]

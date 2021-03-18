@@ -31,6 +31,11 @@ public class Simulator {
             treeManager.randomReset();
         else
             treeManager.reset();
+        // TODO check perchè avvolte stampa false
+        for (int i = 0; i < treeManager.getBasicEvents().size(); i++) {
+            if (!treeManager.getBasicEvents().get(i).isWorking())
+                System.err.println(treeManager.getBasicEvents().get(i).isWorking());
+        }
         simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                 (timer.getTime(),
                         topEvent.isWorking(),
@@ -39,8 +44,8 @@ public class Simulator {
         while (timer.getTime() >= 0) {
             treeManager.nextToggle();
             simResult.add(new Triplet(timer.getTime(),
-                            topEvent.isWorking(),
-                            treeManager.getStatus()));
+                    topEvent.isWorking(),
+                    treeManager.getStatus()));
             timer.nextTime(treeManager.getOmega());
         }
         return simResult;
