@@ -10,18 +10,17 @@ public class Statistic {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         double[] list = new double[l];
-        // per ogni istante devo calcolare la varianza campionaria basandomi sul campione delle N simulazion;
         double start = System.currentTimeMillis();
+        // per ogni istante devo calcolare la varianza campionaria basandomi sul campione delle N simulazion;
         for (int i = 0; i < l; i++) {
-            if(i == 10) System.out.println("sampleVariance, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000) * ((float)l / i) + " secondi");
             double sum = 0;
+            Timer.estimatedTime(l, start, i, "Varianza campionaria");
             for (int j = 0; j < N; j++)
                 // quantizedResults.get(j).get(i).getElement1() ::
                 // della j-esima simulazione (su N), il i-esimo istante (su l)
                 sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList[i]), 2));
             list[i] = sum / (N - 1);
         }
-        System.out.println("sampleVariance, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000)+" secondi");
 
         return list;
     }
@@ -32,13 +31,12 @@ public class Statistic {
             double[] list = new double[l];
             double start = System.currentTimeMillis();
             for (int i = 0; i < l; i++) {
-                if(i == 10) System.out.println("sampleMean, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000) * ((float)l / i) + " secondi");
+                Timer.estimatedTime(l, start, i, "Sample Mean");
                 double sum = 0;
-                for (int j = 0; j < N; j++)
+                for(int j = 0; j < N; j++)
                     sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
                 list[i] = sum / N;
             }
-            System.out.println("sampleMean, tempo totale: " + ((System.currentTimeMillis() - start) / 1000)+" secondi");
             return list;
     }
      // fixme ho invertito le chiamate nel main, così sample mean lo calcola una volta sola
@@ -58,7 +56,8 @@ public class Statistic {
         double radN = Math.sqrt(N);
         float start = System.currentTimeMillis();
         for (int i = 0; i < l; i++) {
-            if(i == 100) System.out.println(((System.currentTimeMillis() - start) / 100) * (float) (l / i));
+            //fixme, è talmente veloce che i coefficienti esplodono, io lo leverei da qua
+            //Timer.estimatedTime(l, start, i, "Confidence Interval");
             double S = Math.sqrt(sampleVarianceList[i]);
             // System.err.println("N: " + N);
             // System.err.println("S: " + S);
@@ -88,8 +87,10 @@ public class Statistic {
         int l = quantizedResults.get(0).size();
         int N = quantizedResults.size();
         double[] result = new double[l];
+        double start = System.currentTimeMillis();
         // per ogni istante
         for (int k = 0; k < l; k++) {
+            Timer.estimatedTime(l, start, k, "Calcolo differenze");
             double sumDiff = 0;
             // i-esimo di N valori
             for (int i = 0; i < N - 1; i++) {

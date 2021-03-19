@@ -34,7 +34,6 @@ public class Simulator {
             treeManager.randomReset();
         else
             treeManager.reset();
-        // TODO IMPORTANTE check perchè avvolte stampa false
         for (int i = 0; i < treeManager.getBasicEvents().size(); i++) {
             if (!treeManager.getBasicEvents().get(i).isWorking()) {
                 System.err.println(treeManager.getBasicEvents().get(i).isWorking());
@@ -57,13 +56,6 @@ public class Simulator {
         return simResult;
     }
 
-    public void estimatedTime(int iterations) {
-        double startTime = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) simulation(true);
-        double endTime = System.currentTimeMillis();
-        // divido 1'000'000 perchè divido 1000 per fare la media e nuovamente divido 1000 per passare ai secondi
-        System.out.println("Tempo previsto: " + ((endTime - startTime) / 1000000) * iterations + " secondi");
-    }
 
 }
 
