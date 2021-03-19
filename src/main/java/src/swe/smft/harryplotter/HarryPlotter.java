@@ -66,6 +66,7 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
+    // TODO add zoom Plot
 
     // private static final int width = 1000;
     // private static final int height = 700;
@@ -84,7 +85,7 @@ public class HarryPlotter {
         return mainCharacter;
     }
 
-    public void plotReliability(double[] times, boolean meanPlot, double[][] CI, double[] sampleMean) {
+    public void plotReliability(double[] times, double[][] CI, double[] sampleMean, boolean meanPlot, boolean fault) {
 
         // Customize Chart
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -95,8 +96,16 @@ public class HarryPlotter {
         XYSeries series = chartCI.addSeries("lower bound", times, CI[0]);
         series.setMarker(SeriesMarkers.NONE);
         if (meanPlot) {
-            series = chartCI.addSeries("sample mean", times, sampleMean);
+            series = chartCI.addSeries("sample mean Reliability", times, sampleMean);
             series.setMarker(SeriesMarkers.NONE);
+        }
+        if(fault) {
+            // TODO add CI?
+            double[] faults = new double[sampleMean.length];
+            for (int i = 0; i<sampleMean.length; i++)
+                faults[i] = 1 - sampleMean[i];
+                series = chartCI.addSeries("sample mean Fault", times, faults);
+                series.setMarker(SeriesMarkers.NONE);
         }
         series = chartCI.addSeries("upper bound", times, CI[1]);
         series.setMarker(SeriesMarkers.NONE);
@@ -108,13 +117,28 @@ public class HarryPlotter {
 
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Scatter);
+        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 
         // Series
         XYSeries series = chartErgodic.addSeries("differences", times, differences);
-        //series.setMarker(SeriesMarkers.NONE);
+        series.setMarker(SeriesMarkers.NONE);
         series = chartErgodic.addSeries("epsilon", times, epsF);
-        //series.setMarker(SeriesMarkers.NONE);
+        series.setMarker(SeriesMarkers.NONE);
+
+        new SwingWrapper(chartErgodic).displayChart();
+    }
+
+    public void plotErgodic2(double[] times, double[] sampleMean, double[] sampleVariance) {
+
+        // Customize Chart
+        chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+
+        // Series
+        XYSeries series = chartErgodic.addSeries("sampleMean", times, sampleMean);
+        series.setMarker(SeriesMarkers.NONE);
+        series = chartErgodic.addSeries("sampleVariance", times, sampleVariance);
+        series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartErgodic).displayChart();
     }

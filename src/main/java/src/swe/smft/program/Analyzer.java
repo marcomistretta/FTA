@@ -17,12 +17,12 @@ public class Analyzer {
         this.dc = dc;
     }
 
-    // chiama defineCI senza richiedere il plot di Sample Mean
+    // chiama defineCI senza richiedere il plot di Sample Mean e di fault
     public void defineCI(int N, float alpha, float quantum) {
-        defineCI(N, alpha, quantum, false);
+        defineCI(N, alpha, quantum, false, false);
     }
 
-    public void defineCI(int N, float alpha, float quantum, boolean meanPlot) {
+    public void defineCI(int N, float alpha, float quantum, boolean meanPlot, boolean fault) {
         dc.clear();
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
@@ -41,10 +41,10 @@ public class Analyzer {
         for (int i = 0; i < l; i++) {
             times[i] = i * quantum;
         }
-        HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
+        HarryPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
     }
 
-    public void verifyErgodic(int N, float quantum, float eps) {
+    public void verifyErgodic(int N, float quantum, float eps, boolean ergodic) {
         dc.clear();
 
         double start = System.currentTimeMillis();
@@ -56,15 +56,28 @@ public class Analyzer {
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
 
-        double[] differences = Statistic.allDifference(quantizedResults);
-        double[] times = new double[differences.length];
-        double[] epsF = new double[differences.length];
+        double[] differences;
+        double[] sampleMean;
+        double[] sampleVariance;
+        double[] times;
+        double[] epsF;
 
-        for (int i = 0; i < differences.length; i++) {
-            times[i] = i * quantum;
+        if (ergodic) {
+            differences = Statistic.allDifference(quantizedResults);
+            epsF = new double[differences.length];
+            for (int i = 0; i < differences.length; i++)
+                epsF[i] = eps;
+            times = new double[differences.length];
+            for (int i = 0; i < differences.length; i++)
+                times[i] = i * quantum;
+            HarryPlotter.getInstance().plotErgodic(times, epsF, differences);
+        } else {
+            sampleMean = Statistic.sampleMean(quantizedResults);
+            sampleVariance = Statistic.sampleVariance(quantizedResults, sampleMean);
+            times = new double[sampleVariance.length];
+            for (int i = 0; i < sampleMean.length; i++)
+                times[i] = i * quantum;
+            HarryPlotter.getInstance().plotErgodic2(times, sampleMean, sampleVariance);
         }
-
-        HarryPlotter.getInstance().plotErgodic(times, epsF, differences);
-
     }
 }

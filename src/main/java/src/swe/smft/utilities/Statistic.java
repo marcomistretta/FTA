@@ -101,8 +101,8 @@ public class Statistic {
                 }
             }
             // TODO momentaneamente mutato il binomiale
-            // result[k] = sumDiff / Calculator.binomialCoefficient(N, 2);
-            result[k] = sumDiff / N;
+            result[k] = sumDiff / Calculator.binomialCoefficient(N, 2);
+            // result[k] = sumDiff / N;
         }
         return result;
     }

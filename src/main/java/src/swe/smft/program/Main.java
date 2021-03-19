@@ -19,7 +19,7 @@ public class Main {
 
         float maxTime = 20;
 
-        boolean premadeModel = true;
+        boolean premadeModel = false;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -100,30 +100,39 @@ public class Main {
         }
 
 
-        Analyzer anal = new Analyzer(sim, dc);
-        int N = 1000;
+        Analyzer analyzer = new Analyzer(sim, dc);
+        int N = 150000;
         float quantum = 0.1f;
 
         boolean defineCI = true;
-        boolean verifyErgodic = true;
+        // TODO momentaneamente mutato
+        boolean verifyErgodic = false;
 
 
         // TODO: una ottima esecuzione è
         // premade model
         // timemax = 20
-        // N = 100'000
-        // qunatum = 0.1
+        // N = 150'000
+        // quantum = 0.1
 
         if (defineCI) {
+            if(!premadeModel)
+                N = 50000;
             float alpha = 0.05f;
             boolean meanSimPLot = true;
-            anal.defineCI(N, alpha, quantum, meanSimPLot);
+            boolean faultPLot = true;
+            analyzer.defineCI(N, alpha, quantum, meanSimPLot, faultPLot);
         }
 
-
         if (verifyErgodic) {
-            float eps = 0.1f;
-            anal.verifyErgodic(N, quantum, eps);
+            boolean ergodic = true; // else ergodic2
+            if(ergodic) {
+                // TODO fix
+                N = 10000;
+                quantum = 2;
+            }
+            float eps = 0.2f;
+            analyzer.verifyErgodic(N, quantum, eps, ergodic);
         }
 
         hp.printGraph();
