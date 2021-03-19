@@ -30,12 +30,15 @@ public class Statistic {
             int N = quantizedResults.size();
             int l = quantizedResults.get(0).size();
             double[] list = new double[l];
+            double start = System.currentTimeMillis();
             for (int i = 0; i < l; i++) {
+                if(i == 10) System.out.println("sampleMean, tempo atteso: " + ((System.currentTimeMillis() - start) / 1000) * ((float)l / i) + " secondi");
                 double sum = 0;
                 for (int j = 0; j < N; j++)
                     sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
                 list[i] = sum / N;
             }
+            System.out.println("sampleMean, tempo totale: " + ((System.currentTimeMillis() - start) / 1000)+" secondi");
             return list;
     }
      // fixme ho invertito le chiamate nel main, così sample mean lo calcola una volta sola
