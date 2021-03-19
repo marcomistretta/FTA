@@ -23,6 +23,7 @@ public class Analyzer {
 
     public void defineCI(int N, float alpha, float quantum, boolean meanPlot) {
         dc.clear();
+        // TODO: così spreca tempo, avrebbe più senso che misurasse propriamente le prime N/100 secuzioni
         s.estimatedTime(N);
         for (int i = 0; i < N; i++) {
             dc.appendData(s.simulation(false));
@@ -40,7 +41,6 @@ public class Analyzer {
         double[] times = new double[l];
         for (int i = 0; i < l; i++) {
             times[i] = i * quantum;
-
         }
         HarryPlotter.getInstance().plotReliability(times, meanPlot, CI, sampleMean);
     }

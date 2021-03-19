@@ -14,13 +14,13 @@ public class Main {
     // TODO: una ottima esecuzione è
     // premade model
     // timemax = 20
-    // N = 100'000
+    // N = 150'000
     // qunatum = 0.1
 
     static final float maxTime = 20;
     static final public boolean premadeModel = true;
     static final int nBasic = 10;
-    static final int N = 100000;
+    static final int N = 150000;
     static final float quantum = 0.1f;
     static TreeManager tm = new TreeManager();
     static DataCentre dc = new DataCentre();
@@ -113,7 +113,7 @@ public class Main {
 
         //HarryPlotter hp = HarryPlotter.getInstance();
         Simulator sim = setUp();
-        Analyzer anal = new Analyzer(sim, dc);
+        Analyzer analyzer = new Analyzer(sim, dc);
 
         boolean defineCI = true;
         // TODO attenzione momentaneamente mutato
@@ -124,7 +124,7 @@ public class Main {
         if (defineCI) {
             float alpha = 0.05f;
             boolean meanSimPLot = true;
-            anal.defineCI(N, alpha, quantum, meanSimPLot);
+            analyzer.defineCI(N, alpha, quantum, meanSimPLot);
         }
 
 
@@ -133,7 +133,7 @@ public class Main {
         //  non ci mette niente
         if (verifyErgodic) {
             float eps = 0.1f;
-            anal.verifyErgodic(N, quantum, eps);
+            analyzer.verifyErgodic(N, quantum, eps);
         }
 
         HarryPlotter.getInstance().printGraph();

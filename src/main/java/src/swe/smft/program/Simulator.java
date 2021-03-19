@@ -8,6 +8,8 @@ import src.swe.smft.utilities.Triplet;
 import java.util.ArrayList;
 
 public class Simulator {
+    // TODDO aggiunto solo per il debug
+    static int count = 0;
 
     private final Timer timer;
     private final TreeManager treeManager;
@@ -25,16 +27,20 @@ public class Simulator {
     }
 
     public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(boolean randomReset) {
+        count++;
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
         timer.reset();
         if (randomReset)
             treeManager.randomReset();
         else
             treeManager.reset();
-        // TODO check perchè avvolte stampa false
+        // TODO IMPORTANTE check perchè avvolte stampa false
         for (int i = 0; i < treeManager.getBasicEvents().size(); i++) {
-            if (!treeManager.getBasicEvents().get(i).isWorking())
+            if (!treeManager.getBasicEvents().get(i).isWorking()) {
                 System.err.println(treeManager.getBasicEvents().get(i).isWorking());
+                System.err.println("id: " + i);
+                System.err.println("iterazione: " + count);
+            }
         }
         simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                 (timer.getTime(),
