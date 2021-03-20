@@ -32,9 +32,8 @@ public class Timer {
 
     public static void estimatedTime(int n, double start, int i, String action) {
         double actual = System.currentTimeMillis();
-        if(i == n / 10 || i == 2 * n / 10 || i == 3 * n / 10 ||
-                i == 4 * n / 10 || i == 5 * n / 10 || i == 6 * n / 10 ||
-                i == 7 * n / 10 || i == 8 * n / 10 || i == 9 * n / 10) {
+        // TODO sei un tacchino
+        if(i % (n/10) == 0 && i != 0) {
             double delta = (actual - start) / 1000;
             double estimated = (delta * n) / (i + 1);
             System.out.println(action + ": tempo rimasto ~ " + (estimated - delta));

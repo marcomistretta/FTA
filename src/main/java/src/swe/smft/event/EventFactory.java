@@ -46,6 +46,7 @@ public class EventFactory {
             i = new OrGate(children, opz, ++count);
         // opz == "K" con K numero intero
         else {
+            // fixme
             int k = Integer.parseInt(opz);
             if (k > children.size()) {
                 k = children.size();
@@ -67,6 +68,7 @@ public class EventFactory {
         }
         // opz == K
         else {
+            // fixme
             int k = (int) (Math.random() * children.size() + 1);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }

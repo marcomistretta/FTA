@@ -10,6 +10,7 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        // TODO fare il test che isWorking funzioni
 
         HarryPlotter hp = HarryPlotter.getInstance();
         TreeManager tm = new TreeManager();
@@ -18,7 +19,6 @@ public class Main {
         Simulator sim;
 
         float maxTime = 20;
-
         boolean premadeModel = false;
         int nBasic = 10;
 
@@ -99,17 +99,15 @@ public class Main {
             sim = new Simulator(maxTime, topEvent, tm);
         }
 
-
         Analyzer analyzer = new Analyzer(sim, dc);
+
         int N = 150000;
         float quantum = 0.1f;
 
         boolean defineCI = true;
-        // TODO momentaneamente mutato
-        boolean verifyErgodic = false;
+        boolean verifyErgodic = true;
 
-
-        // TODO: una ottima esecuzione è
+        // un'ottima esecuzione:
         // premade model
         // timemax = 20
         // N = 150'000
@@ -125,9 +123,8 @@ public class Main {
         }
 
         if (verifyErgodic) {
-            boolean ergodic = true; // else ergodic2
+            boolean ergodic = false; // else ergodic2
             if(ergodic) {
-                // TODO fix
                 N = 10000;
                 quantum = 2;
             }

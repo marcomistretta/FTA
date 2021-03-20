@@ -66,8 +66,6 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
-    // TODO add zoom Plot
-
     // private static final int width = 1000;
     // private static final int height = 700;
     private static HarryPlotter mainCharacter = null;
@@ -91,6 +89,8 @@ public class HarryPlotter {
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         chartCI.getStyler().setYAxisMax(1d);
+        // TODO zoom
+        chartCI.getStyler().setZoomEnabled(true);
 
         // Series
         XYSeries series = chartCI.addSeries("lower bound", times, CI[0]);
@@ -100,7 +100,6 @@ public class HarryPlotter {
             series.setMarker(SeriesMarkers.NONE);
         }
         if(fault) {
-            // TODO add CI?
             double[] faults = new double[sampleMean.length];
             for (int i = 0; i<sampleMean.length; i++)
                 faults[i] = 1 - sampleMean[i];
@@ -118,6 +117,8 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        // TODO zoom
+        chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
         XYSeries series = chartErgodic.addSeries("differences", times, differences);
@@ -133,6 +134,8 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        // TODO zoom
+        chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
         XYSeries series = chartErgodic.addSeries("sampleMean", times, sampleMean);

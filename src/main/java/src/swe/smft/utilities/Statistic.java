@@ -39,7 +39,7 @@ public class Statistic {
             }
             return list;
     }
-     // fixme ho invertito le chiamate nel main, così sample mean lo calcola una volta sola
+
     public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double alpha, double[] sampleMean) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
@@ -54,16 +54,9 @@ public class Statistic {
         double[] sampleVarianceList = sampleVariance(quantizedResults, sampleMean);
 
         double radN = Math.sqrt(N);
-        float start = System.currentTimeMillis();
         for (int i = 0; i < l; i++) {
-            //fixme, è talmente veloce che i coefficienti esplodono, io lo leverei da qua
-            //Timer.estimatedTime(l, start, i, "Confidence Interval");
             double S = Math.sqrt(sampleVarianceList[i]);
-            // System.err.println("N: " + N);
-            // System.err.println("S: " + S);
-            // System.err.println("value: " + value);
             double coeff = (S / radN) * Tvalue;
-            // System.err.println(coeff);
             double up = sampleMean[i] + coeff;
             double low = sampleMean[i] - coeff;
             if (up > 1)
@@ -75,9 +68,7 @@ public class Statistic {
             if (low < 0)
                 low = 0;
             ret[0][i] = low;
-            // System.err.println("low: " + low);
             ret[1][i] = up;
-            // System.err.println("up: " + up);
         }
 
         return ret;
@@ -100,7 +91,6 @@ public class Statistic {
                             - (quantizedResults.get(j).get(k).getElement1() ? 1 : 0));
                 }
             }
-            // TODO momentaneamente mutato il binomiale
             result[k] = sumDiff / Calculator.binomialCoefficient(N, 2);
             // result[k] = sumDiff / N;
         }
