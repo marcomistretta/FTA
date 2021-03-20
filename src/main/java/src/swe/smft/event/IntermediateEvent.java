@@ -33,7 +33,7 @@ public abstract class IntermediateEvent implements Event {
     @Override
     // "AND" "OR" "int"
     public void setLabel(int count) {
-        if (!opz.equals("AND") && !opz.equals("OR"))
+        if (!opz.equals("AND") && !opz.equals("OR") && !opz.equals("SEQAND"))
             label = count + ": " + opz + "/" + getChildren().size();
         else
             label = count + ": " + opz;
@@ -106,16 +106,16 @@ class KNGate extends IntermediateEvent {
     }
 }
 
-class SeqAnd extends AndGate {
+class SeqAndGate extends AndGate {
     // generalizza l'and prioritario
 
     // l'and sequenziale propaga il guasto solo se avviene in un certo ordine
-    // si può supporre senza perdere di generalità xhe l'ordine di propagazione sia sempre
+    // si può supporre senza perdere di generalità che l'ordine di propagazione sia sempre
     // l'ordine di inserimento dei figli, dato che esso è sempre influezabile
 
     private ArrayList<Event> faultSequence;
 
-    public SeqAnd(List<Event> children, String opz, int count) {
+    public SeqAndGate(List<Event> children, String opz, int count) {
         super(children, opz, count);
         faultSequence = new ArrayList<>();
     }
@@ -132,11 +132,11 @@ class SeqAnd extends AndGate {
                 faultSequence.add(event);
         }
 
-        if(faultSequence.size() != children.size()) return false;
+        if(faultSequence.size() != children.size()) return true;
         for(int i = 0; i < children.size(); i++)
             if(children.get(i) != faultSequence.get(i))
-                return false;
+                return true;
 
-        return  true;
+        return  false;
     }
 }

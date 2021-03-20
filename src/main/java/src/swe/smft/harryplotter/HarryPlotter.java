@@ -111,23 +111,7 @@ public class HarryPlotter {
         new SwingWrapper(chartCI).displayChart();
     }
 
-    public void plotErgodic(double[] times, double[] epsF, double[] differences) {
-
-        // Customize Chart
-        chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartErgodic.getStyler().setZoomEnabled(true);
-
-        // Series
-        XYSeries series = chartErgodic.addSeries("differences", times, differences);
-        series.setMarker(SeriesMarkers.NONE);
-        series = chartErgodic.addSeries("epsilon", times, epsF);
-        series.setMarker(SeriesMarkers.NONE);
-
-        new SwingWrapper(chartErgodic).displayChart();
-    }
-
-    public void plotErgodic2(double[] times, double[] sampleMean, double[] sampleVariance) {
+    public void plotErgodic(double[] times, double[] sampleMean, double[] sampleVariance) {
 
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -156,10 +140,10 @@ public class HarryPlotter {
         Color color;
         if (i.getLabel().contains("OR"))
             color = YELLOW;
+        else if (i.getLabel().contains("SEQAND"))
+            color = GOLD;
         else if (i.getLabel().contains("AND"))
             color = BLUE;
-        else if (i.getLabel().contains("SEQAND"))
-            color = PURPLE;
         else color = ORANGE;
         for (int j = 0; j < i.getChildren().size(); j++)
             g.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));

@@ -44,7 +44,7 @@ public class Analyzer {
         HarryPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
     }
 
-    public void verifyErgodic(int N, float quantum, double meanPrecision, double varPrecision, int ergodicOpz) {
+    public void verifyErgodic(int N, float quantum, double meanPrecision, double varPrecision) {
         dc.clear();
 
         double start = System.currentTimeMillis();
@@ -62,24 +62,13 @@ public class Analyzer {
         double[] times;
         double[] epsF;
 
-        if (ergodicOpz == 1) {
-            differences = Statistic.allDifference(quantizedResults);
-            epsF = new double[differences.length];
-            for (int i = 0; i < differences.length; i++)
-                epsF[i] = varPrecision;
-            times = new double[differences.length];
-            for (int i = 0; i < differences.length; i++)
-                times[i] = i * quantum;
-            HarryPlotter.getInstance().plotErgodic(times, epsF, differences);
-        } else {//if (ergodicOpz == 2)
-            sampleMean = Statistic.sampleMean(quantizedResults);
-            sampleVariance = Statistic.sampleVariance(quantizedResults, sampleMean);
-            times = new double[sampleVariance.length];
-            for (int i = 0; i < sampleMean.length; i++)
-                times[i] = i * quantum;
-            HarryPlotter.getInstance().plotErgodic2(times, sampleMean, sampleVariance);
-            findConvergency(times, sampleMean, sampleVariance, meanPrecision, varPrecision);
-        }
+        sampleMean = Statistic.sampleMean(quantizedResults);
+        sampleVariance = Statistic.sampleVariance(quantizedResults, sampleMean);
+        times = new double[sampleVariance.length];
+        for (int i = 0; i < sampleMean.length; i++)
+            times[i] = i * quantum;
+        HarryPlotter.getInstance().plotErgodic(times, sampleMean, sampleVariance);
+        findConvergency(times, sampleMean, sampleVariance, meanPrecision, varPrecision);
     }
 
     private int findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {

@@ -42,7 +42,7 @@ public class EventFactory {
         if (opz.equals("AND"))
             i = new AndGate(children, opz, ++count);
         else if (opz.equals("SEQAND"))
-            i = new SeqAnd(children, opz, ++count);
+            i = new SeqAndGate(children, opz, ++count);
         else if (opz.equals("OR"))
             i = new OrGate(children, opz, ++count);
         // opz == "K" con K numero intero
@@ -51,6 +51,10 @@ public class EventFactory {
             int k = Integer.parseInt(opz);
             if (k > children.size()) {
                 k = children.size();
+                opz = String.valueOf(k);
+            }
+            else if(k == 1){
+                k = 2;
                 opz = String.valueOf(k);
             }
             i = new KNGate(children, k, opz, ++count);
@@ -65,7 +69,7 @@ public class EventFactory {
         double selection = Math.random();
         if (selection <= 0.33) {
             if(Math.random() > .9)
-                i = new SeqAnd(children, "SEQAND", ++count);
+                i = new SeqAndGate(children, "SEQAND", ++count);
             else i = new AndGate(children, "AND", ++count);
         } else if (selection <= 0.66) {
             i = new OrGate(children, "OR", ++count);
@@ -73,7 +77,7 @@ public class EventFactory {
         // opz == K
         else {
             // fixme
-            int k = (int) (Math.random() * children.size() + 1);
+            int k = (int) (Math.random() * (children.size()-1) + 2);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
         HarryPlotter.addNodeAndEdges(i);
