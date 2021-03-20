@@ -19,7 +19,7 @@ public class Main {
         Simulator sim;
 
         float maxTime = 20;
-        boolean premadeModel = false;
+        boolean premadeModel = true;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
