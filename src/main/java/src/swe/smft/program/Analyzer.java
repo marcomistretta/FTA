@@ -44,7 +44,7 @@ public class Analyzer {
         HarryPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
     }
 
-    public void verifyErgodic(int N, float quantum, float eps, boolean ergodic) {
+    public void verifyErgodic(int N, float quantum, double meanPrecision, double varPrecision, int ergodicOpz) {
         dc.clear();
 
         double start = System.currentTimeMillis();
@@ -62,22 +62,86 @@ public class Analyzer {
         double[] times;
         double[] epsF;
 
-        if (ergodic) {
+        if (ergodicOpz == 1) {
             differences = Statistic.allDifference(quantizedResults);
             epsF = new double[differences.length];
             for (int i = 0; i < differences.length; i++)
-                epsF[i] = eps;
+                epsF[i] = varPrecision;
             times = new double[differences.length];
             for (int i = 0; i < differences.length; i++)
                 times[i] = i * quantum;
             HarryPlotter.getInstance().plotErgodic(times, epsF, differences);
-        } else {
+        } else {//if (ergodicOpz == 2)
             sampleMean = Statistic.sampleMean(quantizedResults);
             sampleVariance = Statistic.sampleVariance(quantizedResults, sampleMean);
             times = new double[sampleVariance.length];
             for (int i = 0; i < sampleMean.length; i++)
                 times[i] = i * quantum;
             HarryPlotter.getInstance().plotErgodic2(times, sampleMean, sampleVariance);
+            findConvergency(times, sampleMean, sampleVariance, meanPrecision, varPrecision);
         }
+    }
+
+    private int findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {
+        // TODO add parameter variance precision
+        double min = 1.1f;
+        double max = -0.1f;
+        double start = times[times.length - 1];
+        int count = times.length / 10;
+        for (int i = times.length - 1; i >= 0; i--) {
+            // tra gli ultimi valori varianza troppo alta
+            if (sampleVariance[i] > varPrecision && count > 0) {
+                // System.out.println("SV: "+sampleVariance[i]);
+                // System.out.println("Count: "+count);
+                System.err.println("sistema probabilmente non ergodico, varianza campionaria  maggiore di " + varPrecision);
+                return -1; // colpa della varianza
+            }
+            if (sampleMean[i] > max) {
+                // System.out.println("SM: "+sampleMean[i]);
+                // System.out.println("Max: "+max);
+                max = sampleMean[i];
+            }
+            if (sampleMean[i] < min) {
+                // System.out.println("SM: "+sampleMean[i]);
+                // System.out.println("Min: "+min);
+                min = sampleMean[i];
+            }
+            // tra gli ultimi valori media non costante
+            if ((max - min) > meanPrecision && count > 0) {
+                // System.out.println("Diff: "+(max-min));
+                // System.out.println("Eps: "+meanPrecision);
+                // System.out.println("Count: "+count);
+                System.err.println("sistema probabilmente non ergodico, media campionaria non sufficientemente costante");
+                return -2; // colpa del valore medio che non è costante
+            }
+            // è stato ergodico, ma poi varianza troopo alta
+            if (sampleVariance[i] > varPrecision && count <= 0) {
+                // System.out.println("SV: "+sampleVariance[i]);
+                // System.out.println("Count: "+count);
+                System.err.println("Verifica ergodicità arrestata per valore di varianza campionaria maggiore di " + varPrecision);
+                break;
+            }
+            // è stato ergodico ma poi media non costante
+            if ((max - min) > meanPrecision && count <= 0) {
+                // System.out.println("Diff: " + (max - min));
+                // System.out.println("Eps: " + meanPrecision);
+                // System.out.println("Count: " + count);
+                System.err.println("Verifica ergodicità arrestata per valore di media campionaria non sufficientemente costante");
+
+                break;
+            }
+            // continua ad essere ergodico
+            else {
+                // salvo il tempo dal quale sta continuando a valere la convergenza
+                // System.out.println("STO CONTINUANDOOOOOOO");
+                start = times[i];
+                count--;
+                // System.out.println("start: "+start);
+                // System.out.println("count: "+ count);
+            }
+
+        }
+        System.err.println("Sistema probabilmente ergodico a partire dall'istante: " + start);
+        return 0;
     }
 }

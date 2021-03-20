@@ -18,8 +18,8 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        float maxTime = 20;
-        boolean premadeModel = true;
+        float maxTime = 14;
+        boolean premadeModel = false;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -49,13 +49,13 @@ public class Main {
 
             List<Event> childrenC = List.of(A, B);
             List<Event> childrenD = List.of(C, D);
-            String opzC = "AND";
+            String opzC = "OR";
             String opzD = "OR";
             Event E = modeler.createIntermediateEvent(childrenC, opzC);
             Event F = modeler.createIntermediateEvent(childrenD, opzD);
 
             List<Event> childrenTop = List.of(E, F);
-            String opzTop = "AND";
+            String opzTop = "OR";
             Event top = modeler.createIntermediateEvent(childrenTop, opzTop);
             tm.setTopEvent((IntermediateEvent) top);
 
@@ -102,10 +102,15 @@ public class Main {
         Analyzer analyzer = new Analyzer(sim, dc);
 
         int N = 150000;
+        if(!premadeModel && N>100000)
+            N = 100000;
         float quantum = 0.1f;
 
-        boolean defineCI = true;
+        boolean defineCI = false;
         boolean verifyErgodic = true;
+        int ergodicOpz = 2; // else ergodic2
+        double meanPrecision = 0.01f; // == eps di allDifference
+        double varPrecision = 0.2;// 0.25
 
         // un'ottima esecuzione:
         // premade model
@@ -123,13 +128,7 @@ public class Main {
         }
 
         if (verifyErgodic) {
-            boolean ergodic = false; // else ergodic2
-            if(ergodic) {
-                N = 10000;
-                quantum = 2;
-            }
-            float eps = 0.2f;
-            analyzer.verifyErgodic(N, quantum, eps, ergodic);
+            analyzer.verifyErgodic(N, quantum, meanPrecision, varPrecision, ergodicOpz);
         }
 
         hp.printGraph();
