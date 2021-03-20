@@ -19,7 +19,7 @@ public class Main {
         Simulator sim;
 
         float maxTime = 14;
-        boolean premadeModel = false;
+        boolean premadeModel = true;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -55,7 +55,7 @@ public class Main {
             Event F = modeler.createIntermediateEvent(childrenD, opzD);
 
             List<Event> childrenTop = List.of(E, F);
-            String opzTop = "OR";
+            String opzTop = "AND";
             Event top = modeler.createIntermediateEvent(childrenTop, opzTop);
             tm.setTopEvent((IntermediateEvent) top);
 
@@ -72,7 +72,7 @@ public class Main {
 
             for (int j = 0; j < nBasic / 2; j++) {
                 List<Event> children = new ArrayList<>();
-                for (int k = 0; k < (int) (Math.random() * nBasic + 1); k++) {
+                for (int k = 0; k < (int) (Math.random() * (nBasic-1) + 2); k++) {
                     int choose = (int) (Math.random() * nBasic);
                     children.add(tm.getBasicEvents().get(choose));
                     chosenBasic[choose] = true;
@@ -90,7 +90,7 @@ public class Main {
             }
 
             // dato che con topEvent != da K=N/2 la simulazione non risulta interessante
-            //Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
+            // Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
             String topNumberOfChildren = String.valueOf(topChildren.size()/2);
             Event topEvent = modeler.createIntermediateEvent(topChildren, topNumberOfChildren);
 
@@ -101,35 +101,27 @@ public class Main {
 
         Analyzer analyzer = new Analyzer(sim, dc);
 
-        int N = 150000;
-        if(!premadeModel && N>100000)
-            N = 100000;
-        float quantum = 0.1f;
-
-        boolean defineCI = true;
-        boolean verifyErgodic = true;
-        int ergodicOpz = 2; // else ergodic2
-        double meanPrecision = 0.01f; // == eps di allDifference
-        double varPrecision = 0.2;// 0.25
-
         // un'ottima esecuzione:
         // premade model
         // timemax = 20
         // N = 150'000
         // quantum = 0.1
 
-        if (defineCI) {
-            if(!premadeModel)
-                N = 50000;
-            float alpha = 0.05f;
-            boolean meanSimPLot = true;
-            boolean faultPLot = true;
-            analyzer.defineCI(N, alpha, quantum, meanSimPLot, faultPLot);
-        }
+        int N = 100000;
+        float quantum = 0.1f;
+        boolean defineCI = true;
+        boolean verifyErgodic = true;
+        double meanPrecision = 0.01f; // == eps di allDifference
+        double varPrecision = 0.2; // 0.25
+        float alpha = 0.05f;
+        boolean meanSimPLot = true;
+        boolean faultPLot = true;
 
-        if (verifyErgodic) {
-            analyzer.verifyErgodic(N, quantum, meanPrecision, varPrecision, ergodicOpz);
-        }
+        if (defineCI)
+            analyzer.defineCI(N, alpha, quantum, meanSimPLot, faultPLot);
+
+        if (verifyErgodic)
+            analyzer.verifyErgodic(N, quantum, meanPrecision, varPrecision);
 
         hp.printGraph();
     }
