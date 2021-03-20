@@ -115,7 +115,7 @@ public class Main {
         double varPrecision = 0.2; // 0.25
         float alpha = 0.05f;
         boolean meanSimPLot = true;
-        boolean faultPLot = true;
+        boolean faultPLot = false;
 
         if (defineCI)
             analyzer.defineCI(N, alpha, quantum, meanSimPLot, faultPLot);

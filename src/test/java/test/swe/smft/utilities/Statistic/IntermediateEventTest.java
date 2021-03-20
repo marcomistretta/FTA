@@ -20,6 +20,7 @@ public class IntermediateEventTest {
     @BeforeEach
     public void setUp() {
         children = new ArrayList<>();
+        //parametri irrilevanti, le commutazioni le forzo
         children.add(EventFactory.getInstance().createBasicEvent(.1f, .1f, true));
         children.add(EventFactory.getInstance().createBasicEvent(.1f, .1f, true));
         children.add(EventFactory.getInstance().createBasicEvent(.1f, .1f, true));
@@ -61,11 +62,11 @@ public class IntermediateEventTest {
         ((BasicEvent) children.get(2)).setStatus(true);
 
         assertEquals(gate.isWorking(), true);
-        ((BasicEvent) children.get(2)).setStatus(true);
+        ((BasicEvent) children.get(2)).setStatus(false);
         assertEquals(gate.isWorking(), true);
-        ((BasicEvent) children.get(1)).setStatus(true);
+        ((BasicEvent) children.get(1)).setStatus(false);
         assertEquals(gate.isWorking(), true);
-        ((BasicEvent) children.get(0)).setStatus(true);
+        ((BasicEvent) children.get(0)).setStatus(false);
         assertEquals(gate.isWorking(), true);
 
     }
@@ -81,6 +82,8 @@ public class IntermediateEventTest {
         ((BasicEvent) children.get(0)).setStatus(false);
         assertEquals(gate.isWorking(), true);
         ((BasicEvent) children.get(1)).setStatus(false);
+        assertEquals(gate.isWorking(), true);
+        ((BasicEvent) children.get(2)).setStatus(false);
         assertEquals(gate.isWorking(), false);
 
     }
@@ -97,7 +100,7 @@ public class IntermediateEventTest {
             assertEquals(true, gate.isWorking());
         }
         ((BasicEvent) children.get(i)).setStatus(false);
-        assertEquals(true, gate.isWorking());
+        assertEquals(false, gate.isWorking());
 
     }
 

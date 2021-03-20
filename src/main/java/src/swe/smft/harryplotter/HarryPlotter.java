@@ -88,7 +88,7 @@ public class HarryPlotter {
         // Customize Chart
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartCI.getStyler().setYAxisMax(1d);
+        // chartCI.getStyler().setYAxisMax(1d);
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
@@ -117,6 +117,7 @@ public class HarryPlotter {
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         chartErgodic.getStyler().setZoomEnabled(true);
+        chartCI.getStyler().setYAxisMax(1d);
 
         // Series
         XYSeries series = chartErgodic.addSeries("sampleMean", times, sampleMean);
