@@ -62,12 +62,12 @@ public class Main {
             sim = new Simulator(maxTime, C, tm);
         } else {
             List<Event> topChildren = new ArrayList<>();
-            boolean[] choosenBasic = new boolean[nBasic];
+            boolean[] chosenBasic = new boolean[nBasic];
 
             for (int i = 0; i < nBasic; i++) {
                 BasicEvent e = (BasicEvent) modeler.createRandomBasicEvent();
                 tm.addBasicEvent(e);
-                choosenBasic[i] = false;
+                chosenBasic[i] = false;
             }
 
             for (int j = 0; j < nBasic / 2; j++) {
@@ -75,7 +75,7 @@ public class Main {
                 for (int k = 0; k < (int) (Math.random() * nBasic + 1); k++) {
                     int choose = (int) (Math.random() * nBasic);
                     children.add(tm.getBasicEvents().get(choose));
-                    choosenBasic[choose] = true;
+                    chosenBasic[choose] = true;
                 }
                 // j-esimo IntermediateEvent
                 Event i = modeler.createRandomIntermediateEvent(children);
@@ -83,7 +83,7 @@ public class Main {
             }
 
             for (int i = 0; i < nBasic; i++) {
-                if (!choosenBasic[i]) {
+                if (!chosenBasic[i]) {
                     Event e = tm.getBasicEvents().get(i);
                     topChildren.add(e);
                 }
@@ -106,7 +106,7 @@ public class Main {
             N = 100000;
         float quantum = 0.1f;
 
-        boolean defineCI = false;
+        boolean defineCI = true;
         boolean verifyErgodic = true;
         int ergodicOpz = 2; // else ergodic2
         double meanPrecision = 0.01f; // == eps di allDifference

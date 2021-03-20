@@ -89,7 +89,6 @@ public class HarryPlotter {
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         chartCI.getStyler().setYAxisMax(1d);
-        // TODO zoom
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
@@ -117,7 +116,6 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        // TODO zoom
         chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
@@ -134,7 +132,6 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        // TODO zoom
         chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
@@ -161,6 +158,8 @@ public class HarryPlotter {
             color = YELLOW;
         else if (i.getLabel().contains("AND"))
             color = BLUE;
+        else if (i.getLabel().contains("SEQAND"))
+            color = PURPLE;
         else color = ORANGE;
         for (int j = 0; j < i.getChildren().size(); j++)
             g.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));

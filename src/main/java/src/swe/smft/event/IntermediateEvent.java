@@ -1,10 +1,11 @@
 package src.swe.smft.event;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class IntermediateEvent implements Event {
 
-    private List<Event> children;
+    protected List<Event> children;
     String opz;
     String label;
 
@@ -105,4 +106,37 @@ class KNGate extends IntermediateEvent {
     }
 }
 
-// TODO aggiungere porte dinamiche
+class SeqAnd extends AndGate {
+    // generalizza l'and prioritario
+
+    // l'and sequenziale propaga il guasto solo se avviene in un certo ordine
+    // si può supporre senza perdere di generalità xhe l'ordine di propagazione sia sempre
+    // l'ordine di inserimento dei figli, dato che esso è sempre influezabile
+
+    private ArrayList<Event> faultSequence;
+
+    public SeqAnd(List<Event> children, String opz, int count) {
+        super(children, opz, count);
+        faultSequence = new ArrayList<>();
+    }
+
+    @Override
+    public boolean isWorking() {
+        for(Event event: children) {
+            int index = faultSequence.indexOf(event);
+            if(event.isWorking() && index != -1)
+                //funziona, va tolto dalla lista
+                faultSequence.remove(index);
+            else if(!event.isWorking() && index == -1)
+                //è rotto e manc in lista, aggiungere in fondo
+                faultSequence.add(event);
+        }
+
+        if(faultSequence.size() != children.size()) return false;
+        for(int i = 0; i < children.size(); i++)
+            if(children.get(i) != faultSequence.get(i))
+                return false;
+
+        return  true;
+    }
+}

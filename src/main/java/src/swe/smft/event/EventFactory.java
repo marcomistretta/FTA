@@ -11,7 +11,6 @@ public class EventFactory {
     // tiene conto di quanti nodi ci sono nel modello
     private static int count = 0;
 
-
     static private EventFactory eventFactory = null;
 
     private EventFactory(){}
@@ -42,6 +41,8 @@ public class EventFactory {
         IntermediateEvent i;
         if (opz.equals("AND"))
             i = new AndGate(children, opz, ++count);
+        else if (opz.equals("SEQAND"))
+            i = new SeqAnd(children, opz, ++count);
         else if (opz.equals("OR"))
             i = new OrGate(children, opz, ++count);
         // opz == "K" con K numero intero
@@ -61,9 +62,12 @@ public class EventFactory {
 
     public Event createRandomIntermediateEvent(List<Event> children) {
         IntermediateEvent i;
-        if (Math.random() <= 0.33) {
-            i = new AndGate(children, "AND", ++count);
-        } else if (Math.random() <= 0.66) {
+        double selection = Math.random();
+        if (selection <= 0.33) {
+            if(Math.random() > .9)
+                i = new SeqAnd(children, "SEQAND", ++count);
+            else i = new AndGate(children, "AND", ++count);
+        } else if (selection <= 0.66) {
             i = new OrGate(children, "OR", ++count);
         }
         // opz == K
