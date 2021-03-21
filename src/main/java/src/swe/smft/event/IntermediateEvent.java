@@ -5,9 +5,9 @@ import java.util.List;
 
 public abstract class IntermediateEvent implements Event {
 
-    protected List<Event> children;
-    String opz;
-    String label;
+    private List<Event> children;
+    private String opz;
+    private String label;
 
     public IntermediateEvent(List<Event> children, String opz, int count) {
         this.children = children;
@@ -122,7 +122,7 @@ class SeqAndGate extends AndGate {
 
     @Override
     public boolean isWorking() {
-        for(Event event: children) {
+        for(Event event: getChildren()) {
             int index = faultSequence.indexOf(event);
             if(event.isWorking() && index != -1)
                 //funziona, va tolto dalla lista
@@ -132,9 +132,9 @@ class SeqAndGate extends AndGate {
                 faultSequence.add(event);
         }
 
-        if(faultSequence.size() != children.size()) return true;
-        for(int i = 0; i < children.size(); i++)
-            if(children.get(i) != faultSequence.get(i))
+        if(faultSequence.size() != getChildren().size()) return true;
+        for(int i = 0; i < getChildren().size(); i++)
+            if(getChildren().get(i) != faultSequence.get(i))
                 return true;
 
         return  false;

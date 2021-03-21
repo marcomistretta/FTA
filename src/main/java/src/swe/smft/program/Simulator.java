@@ -8,12 +8,10 @@ import src.swe.smft.utilities.Triplet;
 import java.util.ArrayList;
 
 public class Simulator {
-    // TODDO aggiunto solo per il debug
-    static int count = 0;
 
     private final Timer timer;
     private final TreeManager treeManager;
-    private final Event topEvent;
+    private Event topEvent;
 
 
     public float getMaxTime() {
@@ -27,7 +25,6 @@ public class Simulator {
     }
 
     public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(boolean randomReset) {
-        count++;
         ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
         timer.reset();
         if (randomReset)

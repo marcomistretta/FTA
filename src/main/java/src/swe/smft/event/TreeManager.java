@@ -67,6 +67,7 @@ public class TreeManager {
         return status;
     }
 
+    // TODO potemmo fare addBasicEvent(), basicEvents e omega STATIC !!!
     public void addBasicEvent(BasicEvent b) {
         basicEvents.add(b);
         omega += b.getP();

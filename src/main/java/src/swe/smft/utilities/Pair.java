@@ -1,19 +1,20 @@
 package src.swe.smft.utilities;
 
-public class Pair<T, S> {
-    private T element1;
-    private S element2;
+public class Pair<S, T> {
+    private S element1;
+    private T element2;
 
-    public Pair(T t, S s) {
-        element1 = t;
-        element2 = s;
+    public Pair(S s, T t) {
+        element1 = s;
+        element2 = t;
     }
 
-    public T getElement1() {
+    public S getElement1() {
         return element1;
     }
 
-    public S getElement2() {
+    public T getElement2() {
         return element2;
     }
+
 }

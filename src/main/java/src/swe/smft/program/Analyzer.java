@@ -71,7 +71,7 @@ public class Analyzer {
         findConvergency(times, sampleMean, sampleVariance, meanPrecision, varPrecision);
     }
 
-    private int findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {
+    private void findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {
         double min = 1.1f;
         double max = -0.1f;
         double start = times[times.length - 1];
@@ -82,7 +82,7 @@ public class Analyzer {
                 // System.out.println("SV: "+sampleVariance[i]);
                 // System.out.println("Count: "+count);
                 System.err.println("sistema probabilmente non ergodico, varianza campionaria  maggiore di " + varPrecision);
-                return -1; // colpa della varianza
+                return; // colpa della varianza
             }
             if (sampleMean[i] > max) {
                 // System.out.println("SM: "+sampleMean[i]);
@@ -100,7 +100,7 @@ public class Analyzer {
                 // System.out.println("Eps: "+meanPrecision);
                 // System.out.println("Count: "+count);
                 System.err.println("sistema probabilmente non ergodico, media campionaria non sufficientemente costante");
-                return -2; // colpa del valore medio che non è costante
+                return; // colpa del valore medio che non è costante
             }
             // è stato ergodico, ma poi varianza troopo alta
             if (sampleVariance[i] > varPrecision && count <= 0) {
@@ -130,6 +130,6 @@ public class Analyzer {
 
         }
         System.err.println("Sistema probabilmente ergodico a partire dall'istante: " + start);
-        return 0;
+        return;
     }
 }

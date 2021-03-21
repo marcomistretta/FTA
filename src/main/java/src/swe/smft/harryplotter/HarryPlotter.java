@@ -70,6 +70,7 @@ public class HarryPlotter {
     // private static final int height = 700;
     private static HarryPlotter mainCharacter = null;
     private static final MutableGraph g = mutGraph("SMFT").setDirected(true);
+    // TODO i chart dovrebbero essere static
     private final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
 
