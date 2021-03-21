@@ -66,11 +66,8 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
-    // private static final int width = 1000;
-    // private static final int height = 700;
     private static HarryPlotter mainCharacter = null;
-    private static final MutableGraph g = mutGraph("SMFT").setDirected(true);
-    // TODO i chart dovrebbero essere static
+    private final MutableGraph g = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
 
@@ -129,7 +126,7 @@ public class HarryPlotter {
         new SwingWrapper(chartErgodic).displayChart();
     }
 
-    public static void addNode(BasicEvent e) {
+    public void addNode(BasicEvent e) {
         Color color;
         if (e.isWorking())
             color = GREEN;
@@ -138,7 +135,7 @@ public class HarryPlotter {
         g.add(mutNode(e.getLabel()).add(color));
     }
 
-    public static void addNodeAndEdges(IntermediateEvent i) {
+    public void addNodeAndEdges(IntermediateEvent i) {
         Color color;
         if (i.getLabel().contains("OR"))
             color = YELLOW;
@@ -159,7 +156,6 @@ public class HarryPlotter {
         }
     }
 
-    // TODO fammi sapere se ti piacciono, nel caso ti piacciano, io le terrei qui in harry plotter
     public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
         System.out.println();
 
@@ -173,8 +169,6 @@ public class HarryPlotter {
             System.out.println("Richiesta stampa della media campionaria dello stato di mal-funzionamento");
 
         System.out.println();
-
-        return;
     }
 
     public void printErgodicInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, double meanPrecision, double varPrecision) {
