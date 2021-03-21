@@ -66,10 +66,10 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
-    private static HarryPlotter mainCharacter = null;
-    private final MutableGraph g = mutGraph("SMFT").setDirected(true);
-    private final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
-    private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
+    private  static HarryPlotter mainCharacter = null;
+    private  final MutableGraph g = mutGraph("SMFT").setDirected(true);
+    private  final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
+    private  final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
 
 
     private HarryPlotter(){}
@@ -86,7 +86,7 @@ public class HarryPlotter {
         // Customize Chart
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        // chartCI.getStyler().setYAxisMax(1d);
+        chartCI.getStyler().setYAxisMax(1d);
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
@@ -156,6 +156,8 @@ public class HarryPlotter {
         }
     }
 
+    // TODO voglio sapere se vuoi toglierli o lasciarli, e nel caso, se vanno bene qui, i parametri in ingresso, tutto, DIMMI LA TUA
+    // aggiunte al solo scopo di aumentare la leggibilità dell'output
     public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
         System.out.println();
 

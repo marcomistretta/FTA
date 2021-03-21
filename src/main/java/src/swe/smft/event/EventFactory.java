@@ -68,7 +68,7 @@ public class EventFactory {
         IntermediateEvent i;
         double selection = Math.random();
         if (selection <= 0.33) {
-            if(Math.random() > .9)
+            if(Math.random() > .8)
                 i = new SeqAndGate(children, "SEQAND", ++count);
             else i = new AndGate(children, "AND", ++count);
         } else if (selection <= 0.66) {
