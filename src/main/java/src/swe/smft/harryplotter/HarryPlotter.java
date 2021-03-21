@@ -158,4 +158,47 @@ public class HarryPlotter {
         }
     }
 
+    // TODO fammi sapere se ti piacciono, nel caso ti piacciano, io le terrei qui in harry plotter
+    public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
+        System.out.println();
+
+        System.out.println("*** Avvio definizione intervallo di confidenza per il valore atteso dello stato di funzionamento del Top Event del seguente modello di SMFT ***");
+        // entrambe utilizzano questa
+        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
+        System.out.println("Livello di significatività: " + alpha);
+        if (meanPlot)
+            System.out.println("Richiesta stampa della media campionaria dello stato di funzionamento");
+        if (faultPlot)
+            System.out.println("Richiesta stampa della media campionaria dello stato di mal-funzionamento");
+
+        System.out.println();
+
+        return;
+    }
+
+    public void printErgodicInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, double meanPrecision, double varPrecision) {
+        System.out.println();
+
+        System.out.println("*** Avvio verifica ergodicità del seguente modello di SMFT ***");
+        // entrambe utilizzano questa
+        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
+        System.out.println("Margine di errore ammissibile per la valutazione della convergenza della media campionaria: " + meanPrecision);
+        System.out.println("Margine superiore di accettazione per la varianza campionaria: " + varPrecision);
+
+        System.out.println();
+
+        return;
+    }
+
+    // utilizano questa
+    public void printGeneralInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum) {
+        if (premade)
+            System.out.println("Modello pre-costruito");
+        else
+            System.out.println("Modello creato in modo casuale con " + nBasics + " foglie");
+        System.out.println("Max time della simulazione: " + maxTime);
+        System.out.println("Numero di runs: " + runs);
+        System.out.println("Passo di quantizzazione: " + quantum);
+    }
+
 }

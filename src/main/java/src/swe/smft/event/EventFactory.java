@@ -30,7 +30,8 @@ public class EventFactory {
     public Event createRandomBasicEvent() {
         float lambda = round((float) Math.random(), 2);
         float mu = round((float) Math.random(), 2);
-        boolean status = Math.random() >= 0.5;
+        // un basic event viene sempre inizializzato a true
+        boolean status = true;
         BasicEvent e = new BasicEvent(lambda, mu, status, ++count);
         HarryPlotter.addNode(e);
         return e;

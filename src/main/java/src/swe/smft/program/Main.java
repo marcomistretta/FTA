@@ -19,7 +19,7 @@ public class Main {
         Simulator sim;
 
         float maxTime = 15;
-        boolean premadeModel = true;
+        boolean premadeModel = false;
         int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
@@ -91,8 +91,8 @@ public class Main {
 
             // dato che con topEvent != da K=runs/2 la simulazione non risulta interessante
             // Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
-            String topNumberOfChildren = String.valueOf(topChildren.size() / 2);
-            Event topEvent = modeler.createIntermediateEvent(topChildren, topNumberOfChildren);
+            String topOpz = String.valueOf(topChildren.size() / 2);
+            Event topEvent = modeler.createIntermediateEvent(topChildren, topOpz);
 
             tm.setTopEvent((IntermediateEvent) topEvent);
 
@@ -107,11 +107,11 @@ public class Main {
         // runs = 150'000
         // quantum = 0.1
 
-        int runs = 100000;
+        int runs = 150000;
         float quantum = 0.1f;
         boolean doCI = true;
         boolean doErgodic = true;
-        double meanPrecision = 0.05f;
+        double meanPrecision = 0.045f;
         double varPrecision = 0.25;
         float alpha = 0.05f;
         boolean meanPLot = true;
@@ -120,52 +120,11 @@ public class Main {
         hp.printGraph();
 
         if (doCI) {
-            printCIInfo(premadeModel, nBasic, maxTime, runs, quantum, alpha, meanPLot, faultPLot);
+            hp.printCIInfo(premadeModel, nBasic, maxTime, runs, quantum, alpha, meanPLot, faultPLot);
             analyzer.defineCI(runs, alpha, quantum, meanPLot, faultPLot);
         }
         if (doErgodic)
-            printErgodicInfo(premadeModel, nBasic, maxTime, runs, quantum, meanPrecision, varPrecision);
+            hp.printErgodicInfo(premadeModel, nBasic, maxTime, runs, quantum, meanPrecision, varPrecision);
             analyzer.verifyErgodic(runs, quantum, meanPrecision, varPrecision);
-
-    }
-
-    // TODO fammi sapere se ti piacciono, nel caso ti piacciano le vorrei spostare in harry plotter
-    public static void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
-        System.out.println();
-
-        System.out.println("*** Avvio definizione intervallo di confidenza per il valore atteso dello stato di funzionamento del Top Event del seguente modello di SMFT ***");
-        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
-        System.out.println("Livello di significatività: " + alpha);
-        if (meanPlot)
-            System.out.println("Richiesta stampa della media campionaria dello stato di funzionamento");
-        if (faultPlot)
-            System.out.println("Richiesta stampa della media campionaria dello stato di mal-funzionamento");
-
-        System.out.println();
-
-        return;
-    }
-
-    public static void printErgodicInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, double meanPrecision, double varPrecision) {
-        System.out.println();
-
-        System.out.println("*** Avvio verifica ergodicità del seguente modello di SMFT ***");
-        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
-        System.out.println("Margine di errore ammissibile per la valutazione della convergenza della media campionaria: " + meanPrecision);
-        System.out.println("Margine superiore di accettazione per la varianza campionaria: " + varPrecision);
-
-        System.out.println();
-
-        return;
-    }
-
-    public static void printGeneralInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum) {
-        if (premade)
-            System.out.println("Modello pre-costruito");
-        else
-            System.out.println("Modello creato in modo casuale con " + nBasics + " foglie");
-        System.out.println("Max time della simulazione: " + maxTime);
-        System.out.println("Numero di runs: " + runs);
-        System.out.println("Passo di quantizzazione: " + quantum);
     }
 }
