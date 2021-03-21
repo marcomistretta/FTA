@@ -31,7 +31,7 @@ public class Statistic {
         double[] list = new double[l];
         double start = System.currentTimeMillis();
         for (int i = 0; i < l; i++) {
-            Timer.estimatedTime(l, start, i, "Sample Mean");
+            Timer.estimatedTime(l, start, i, "Media campionaria");
             double sum = 0;
             for (int j = 0; j < N; j++)
                 sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
@@ -74,32 +74,4 @@ public class Statistic {
         return ret;
     }
 
-    public static double[] allDifference(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
-        int l = quantizedResults.get(0).size();
-        int N = quantizedResults.size();
-        double[] result = new double[l];
-        double start = System.currentTimeMillis();
-        // per ogni istante
-        // TODO sono un coglione...
-        System.out.println("Calcolo coefficiente binmiale " + N + " su " + 2);
-        // TODO sono un doppio coglione
-        // int binomial = Calculator.binomialCoefficient(N, N-2);
-        int binomial = (N*(N-1))/2;
-        System.out.println("Calcolato");
-        for (int k = 0; k < l; k++) {
-            Timer.estimatedTime(l, start, k, "Calcolo differenze");
-            double sumDiff = 0;
-            // i-esimo di N valori
-            for (int i = 0; i < N - 1; i++) {
-                // j :: i+1-esimo di N valori
-                for (int j = i + 1; j < N; j++) {
-                    sumDiff = sumDiff + Math.abs((quantizedResults.get(i).get(k).getElement1() ? 1 : 0)
-                            - (quantizedResults.get(j).get(k).getElement1() ? 1 : 0));
-                }
-            }
-            result[k] = sumDiff / binomial;
-            // result[k] = sumDiff / N;
-        }
-        return result;
-    }
 }

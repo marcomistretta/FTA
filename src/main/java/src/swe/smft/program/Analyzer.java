@@ -26,7 +26,7 @@ public class Analyzer {
         dc.clear();
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
-            Timer.estimatedTime(N, start, i, "Simulazioni defineCI");
+            Timer.estimatedTime(N, start, i, "Simulazioni per calcolo Intervalli di Confidenza");
             dc.appendData(s.simulation(false));
         }
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
@@ -49,7 +49,7 @@ public class Analyzer {
 
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
-            Timer.estimatedTime(N, start, i, "Simulazioni ergodic");
+            Timer.estimatedTime(N, start, i, "Simulazioni per verifica Ergodicità");
             dc.appendData(s.simulation(false));
         }
 
@@ -72,7 +72,6 @@ public class Analyzer {
     }
 
     private int findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {
-        // TODO add parameter variance precision
         double min = 1.1f;
         double max = -0.1f;
         double start = times[times.length - 1];

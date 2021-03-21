@@ -1,6 +1,7 @@
 package src.swe.smft.program;
 
 import src.swe.smft.event.*;
+import src.swe.smft.event.Event;
 import src.swe.smft.harryplotter.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 
@@ -10,7 +11,6 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        // TODO fare il test che isWorking funzioni
 
         HarryPlotter hp = HarryPlotter.getInstance();
         TreeManager tm = new TreeManager();
@@ -18,7 +18,7 @@ public class Main {
         DataCentre dc = new DataCentre();
         Simulator sim;
 
-        float maxTime = 14;
+        float maxTime = 15;
         boolean premadeModel = true;
         int nBasic = 10;
 
@@ -47,12 +47,12 @@ public class Main {
             Event D = modeler.createBasicEvent(lambdaD, muD, statusD);
             tm.addBasicEvent((BasicEvent) D);
 
-            List<Event> childrenC = List.of(A, B);
-            List<Event> childrenD = List.of(C, D);
-            String opzC = "OR";
-            String opzD = "OR";
-            Event E = modeler.createIntermediateEvent(childrenC, opzC);
-            Event F = modeler.createIntermediateEvent(childrenD, opzD);
+            List<Event> childrenE = List.of(A, B, C);
+            List<Event> childrenF = List.of(B, C, D);
+            String opzE = "AND";
+            String opzF = "AND";
+            Event E = modeler.createIntermediateEvent(childrenE, opzE);
+            Event F = modeler.createIntermediateEvent(childrenF, opzF);
 
             List<Event> childrenTop = List.of(E, F);
             String opzTop = "AND";
@@ -72,7 +72,7 @@ public class Main {
 
             for (int j = 0; j < nBasic / 2; j++) {
                 List<Event> children = new ArrayList<>();
-                for (int k = 0; k < (int) (Math.random() * (nBasic-1) + 2); k++) {
+                for (int k = 0; k < (int) (Math.random() * (nBasic - 1) + 2); k++) {
                     int choose = (int) (Math.random() * nBasic);
                     children.add(tm.getBasicEvents().get(choose));
                     chosenBasic[choose] = true;
@@ -89,9 +89,9 @@ public class Main {
                 }
             }
 
-            // dato che con topEvent != da K=N/2 la simulazione non risulta interessante
+            // dato che con topEvent != da K=runs/2 la simulazione non risulta interessante
             // Event topEvent = modeler.createRandomIntermediateEvent(topChildren);
-            String topNumberOfChildren = String.valueOf(topChildren.size()/2);
+            String topNumberOfChildren = String.valueOf(topChildren.size() / 2);
             Event topEvent = modeler.createIntermediateEvent(topChildren, topNumberOfChildren);
 
             tm.setTopEvent((IntermediateEvent) topEvent);
@@ -104,25 +104,68 @@ public class Main {
         // un'ottima esecuzione:
         // premade model
         // timemax = 20
-        // N = 150'000
+        // runs = 150'000
         // quantum = 0.1
 
-        int N = 100000;
+        int runs = 100000;
         float quantum = 0.1f;
-        boolean defineCI = true;
-        boolean verifyErgodic = true;
-        double meanPrecision = 0.01f; // == eps di allDifference
-        double varPrecision = 0.2; // 0.25
+        boolean doCI = true;
+        boolean doErgodic = true;
+        double meanPrecision = 0.05f;
+        double varPrecision = 0.25;
         float alpha = 0.05f;
-        boolean meanSimPLot = true;
+        boolean meanPLot = true;
         boolean faultPLot = false;
 
-        if (defineCI)
-            analyzer.defineCI(N, alpha, quantum, meanSimPLot, faultPLot);
-
-        if (verifyErgodic)
-            analyzer.verifyErgodic(N, quantum, meanPrecision, varPrecision);
-
         hp.printGraph();
+
+        if (doCI) {
+            printCIInfo(premadeModel, nBasic, maxTime, runs, quantum, alpha, meanPLot, faultPLot);
+            analyzer.defineCI(runs, alpha, quantum, meanPLot, faultPLot);
+        }
+        if (doErgodic)
+            printErgodicInfo(premadeModel, nBasic, maxTime, runs, quantum, meanPrecision, varPrecision);
+            analyzer.verifyErgodic(runs, quantum, meanPrecision, varPrecision);
+
+    }
+
+    // TODO fammi sapere se ti piacciono, nel caso ti piacciano le vorrei spostare in harry plotter
+    public static void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
+        System.out.println();
+
+        System.out.println("*** Avvio definizione intervallo di confidenza per il valore atteso dello stato di funzionamento del Top Event del seguente modello di SMFT ***");
+        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
+        System.out.println("Livello di significatività: " + alpha);
+        if (meanPlot)
+            System.out.println("Richiesta stampa della media campionaria dello stato di funzionamento");
+        if (faultPlot)
+            System.out.println("Richiesta stampa della media campionaria dello stato di mal-funzionamento");
+
+        System.out.println();
+
+        return;
+    }
+
+    public static void printErgodicInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, double meanPrecision, double varPrecision) {
+        System.out.println();
+
+        System.out.println("*** Avvio verifica ergodicità del seguente modello di SMFT ***");
+        printGeneralInfo(premade, nBasics, maxTime, runs, quantum);
+        System.out.println("Margine di errore ammissibile per la valutazione della convergenza della media campionaria: " + meanPrecision);
+        System.out.println("Margine superiore di accettazione per la varianza campionaria: " + varPrecision);
+
+        System.out.println();
+
+        return;
+    }
+
+    public static void printGeneralInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum) {
+        if (premade)
+            System.out.println("Modello pre-costruito");
+        else
+            System.out.println("Modello creato in modo casuale con " + nBasics + " foglie");
+        System.out.println("Max time della simulazione: " + maxTime);
+        System.out.println("Numero di runs: " + runs);
+        System.out.println("Passo di quantizzazione: " + quantum);
     }
 }

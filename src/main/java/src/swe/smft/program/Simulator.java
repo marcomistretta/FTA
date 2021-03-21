@@ -34,15 +34,6 @@ public class Simulator {
             treeManager.randomReset();
         else
             treeManager.reset();
-        /** just for debug
-         *for (int i = 0; i < treeManager.getBasicEvents().size(); i++) {
-         *    if (!treeManager.getBasicEvents().get(i).isWorking()) {
-         *        System.err.println(treeManager.getBasicEvents().get(i).isWorking());
-         *        System.err.println("id: " + i);
-         *        System.err.println("iterazione: " + count);
-         *    }
-         *}
-         */
         simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
                 (timer.getTime(),
                         topEvent.isWorking(),
