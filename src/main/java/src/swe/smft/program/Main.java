@@ -20,7 +20,7 @@ public class Main {
 
         float maxTime = 15;
         boolean premadeModel = false;
-        int nBasic = 10;
+        int nBasic = 6;
 
         if (premadeModel || nBasic <= 2) {
             float lambdaA = 0.7f;
@@ -111,7 +111,7 @@ public class Main {
         float quantum = 0.1f;
         boolean doCI = true;
         boolean doErgodic = true;
-        double meanPrecision = 0.045f;
+        double meanPrecision = 0.03f;
         double varPrecision = 0.25;
         float alpha = 0.05f;
         boolean meanPLot = true;
