@@ -18,6 +18,5 @@ public class TimerTest {
         assertNotEquals(0, timer.getMaxTime());
         timer = new Timer(100000);
         assertEquals(-1, timer.nextTime(0));
-
     }
 }

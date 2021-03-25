@@ -9,7 +9,7 @@ import static org.apache.commons.math3.util.Precision.round;
 public class EventFactory {
 
     // tiene conto di quanti nodi ci sono nel modello
-    private static int count = 0;
+    private int count = 0;
 
     static private EventFactory eventFactory = null;
 

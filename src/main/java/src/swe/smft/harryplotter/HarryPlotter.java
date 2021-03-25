@@ -66,10 +66,10 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
 public class HarryPlotter {
-    private  static HarryPlotter mainCharacter = null;
-    private  final MutableGraph g = mutGraph("SMFT").setDirected(true);
-    private  final XYChart chartCI = new XYChartBuilder().width(1200).height(800).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
-    private  final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
+    private static HarryPlotter mainCharacter = null;
+    private final MutableGraph g = mutGraph("SMFT").setDirected(true);
+    private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
+    private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
 
 
     private HarryPlotter(){}
@@ -183,8 +183,6 @@ public class HarryPlotter {
         System.out.println("Margine superiore di accettazione per la varianza campionaria: " + varPrecision);
 
         System.out.println();
-
-        return;
     }
 
     // utilizano questa

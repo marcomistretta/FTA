@@ -11,16 +11,13 @@ public class Simulator {
 
     private final Timer timer;
     private final TreeManager treeManager;
-    private Event topEvent;
-
 
     public float getMaxTime() {
         return timer.getMaxTime();
     }
 
-    public Simulator(float maxTime, Event topEvent, TreeManager em) {
+    public Simulator(float maxTime, TreeManager em) {
         timer = new Timer(maxTime);
-        this.topEvent = topEvent;
         this.treeManager = em;
     }
 
@@ -31,15 +28,15 @@ public class Simulator {
             treeManager.randomReset();
         else
             treeManager.reset();
-        simResult.add(new Triplet<Float, Boolean, ArrayList<Boolean>>
+        simResult.add(new Triplet<>
                 (timer.getTime(),
-                        topEvent.isWorking(),
+                        treeManager.getTopEvent().isWorking(),
                         treeManager.getStatus()));
         timer.nextTime(treeManager.getOmega());
         while (timer.getTime() >= 0) {
             treeManager.nextToggle();
             simResult.add(new Triplet(timer.getTime(),
-                    topEvent.isWorking(),
+                    treeManager.getTopEvent().isWorking(),
                     treeManager.getStatus()));
             timer.nextTime(treeManager.getOmega());
         }

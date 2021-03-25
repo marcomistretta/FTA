@@ -59,7 +59,7 @@ public class Main {
             Event top = modeler.createIntermediateEvent(childrenTop, opzTop);
             tm.setTopEvent((IntermediateEvent) top);
 
-            sim = new Simulator(maxTime, C, tm);
+            sim = new Simulator(maxTime, tm);
         } else {
             List<Event> topChildren = new ArrayList<>();
             boolean[] chosenBasic = new boolean[nBasic];
@@ -96,7 +96,7 @@ public class Main {
 
             tm.setTopEvent((IntermediateEvent) topEvent);
 
-            sim = new Simulator(maxTime, topEvent, tm);
+            sim = new Simulator(maxTime, tm);
         }
 
         Analyzer analyzer = new Analyzer(sim, dc);
