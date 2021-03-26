@@ -20,5 +20,4 @@ A questo punto è possibile usare la classe HarryPlotter per stampare i risultat
 
 #### Nota bene:
 - Attualmente i nodi intermedi disponibili sono i gate statici AND, OR, KN, ed il gate dinamico SequentialAND
-<hr>
 - Una volta definiti i tutti i nodi bisogna incapsulare l'albero con la classe TreeManager, che deve conoscerne il top e le foglie.
