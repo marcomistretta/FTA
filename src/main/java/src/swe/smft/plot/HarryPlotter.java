@@ -65,8 +65,8 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
-public class MyPlotter {
-    private static MyPlotter mainCharacter = null;
+public class HarryPlotter {
+    private static HarryPlotter mainCharacter = null;
     private final MutableGraph g = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
@@ -74,12 +74,12 @@ public class MyPlotter {
     private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature2").xAxisTitle("times").yAxisTitle("sample means").build();
 
 
-    private MyPlotter(){}
+    private HarryPlotter(){}
 
-    public static MyPlotter getInstance() {
+    public static HarryPlotter getInstance() {
         if (mainCharacter != null)
             return mainCharacter;
-        mainCharacter = new MyPlotter();
+        mainCharacter = new HarryPlotter();
         return mainCharacter;
     }
 
@@ -88,7 +88,7 @@ public class MyPlotter {
         // Customize Chart
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        //chartCI.getStyler().setYAxisMax(1d);
+        chartCI.getStyler().setYAxisMax(1d);
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
@@ -116,7 +116,7 @@ public class MyPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        //chartCI.getStyler().setYAxisMax(1d);
+        chartErgodic.getStyler().setYAxisMax(1d);
         chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
@@ -201,7 +201,7 @@ public class MyPlotter {
         // Customize Chart
         chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        //chartCI.getStyler().setYAxisMax(1d);
+        chartErgodic2.getStyler().setYAxisMax(1d);
         chartErgodic2.getStyler().setZoomEnabled(true);
 
         // Series

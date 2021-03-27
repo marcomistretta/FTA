@@ -1,6 +1,6 @@
 package src.swe.smft.program;
 
-import src.swe.smft.plot.MyPlotter;
+import src.swe.smft.plot.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Statistic;
@@ -41,7 +41,7 @@ public class Analyzer {
         for (int i = 0; i < l; i++) {
             times[i] = i * quantum;
         }
-        MyPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
+        HarryPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
     }
 
     public void verifyErgodic(int N, float quantum, double meanPrecision, double varPrecision) {
@@ -65,7 +65,7 @@ public class Analyzer {
         times = new double[sampleStandardDeviation.length];
         for (int i = 0; i < sampleMean.length; i++)
             times[i] = i * quantum;
-        MyPlotter.getInstance().plotErgodic(times, sampleMean, sampleStandardDeviation);
+        HarryPlotter.getInstance().plotErgodic(times, sampleMean, sampleStandardDeviation);
         findConvergency(times, sampleMean, sampleStandardDeviation, meanPrecision, varPrecision);
 
 
@@ -82,7 +82,7 @@ public class Analyzer {
                 sampleMeans[count] = Statistic.sampleMean(temp);
                 temp.clear();
             }
-            MyPlotter.getInstance().plotErgodic2(times, sampleMeans);
+            HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
         }
     }
 
