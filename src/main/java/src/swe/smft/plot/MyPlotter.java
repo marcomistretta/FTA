@@ -1,4 +1,4 @@
-package src.swe.smft.harryplotter;
+package src.swe.smft.plot;
 
 /*
 // NOTAZIONE PARENTISIZZATA
@@ -65,19 +65,21 @@ import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
 
-public class HarryPlotter {
-    private static HarryPlotter mainCharacter = null;
+public class MyPlotter {
+    private static MyPlotter mainCharacter = null;
     private final MutableGraph g = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
+    // TODO
+    private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature2").xAxisTitle("times").yAxisTitle("sample means").build();
 
 
-    private HarryPlotter(){}
+    private MyPlotter(){}
 
-    public static HarryPlotter getInstance() {
+    public static MyPlotter getInstance() {
         if (mainCharacter != null)
             return mainCharacter;
-        mainCharacter = new HarryPlotter();
+        mainCharacter = new MyPlotter();
         return mainCharacter;
     }
 
@@ -86,7 +88,7 @@ public class HarryPlotter {
         // Customize Chart
         chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartCI.getStyler().setYAxisMax(1d);
+        //chartCI.getStyler().setYAxisMax(1d);
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
@@ -114,13 +116,13 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        //chartCI.getStyler().setYAxisMax(1d);
         chartErgodic.getStyler().setZoomEnabled(true);
-        chartCI.getStyler().setYAxisMax(1d);
 
         // Series
         XYSeries series = chartErgodic.addSeries("sampleMean", times, sampleMean);
         series.setMarker(SeriesMarkers.NONE);
-        series = chartErgodic.addSeries("sampleVariance", times, sampleVariance);
+        series = chartErgodic.addSeries("sampleStandardDeviation", times, sampleVariance);
         series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartErgodic).displayChart();
@@ -156,8 +158,6 @@ public class HarryPlotter {
         }
     }
 
-    // TODO voglio sapere se vuoi toglierli o lasciarli, e nel caso, se vanno bene qui, i parametri in ingresso, tutto, DIMMI LA TUA
-    // aggiunte al solo scopo di aumentare la leggibilità dell'output
     public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {
         System.out.println();
 
@@ -196,4 +196,22 @@ public class HarryPlotter {
         System.out.println("Passo di quantizzazione: " + quantum);
     }
 
+    // TODO add?
+    public void plotErgodic2(double[] times, double[][] sampleMeans) {
+        // Customize Chart
+        chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+        chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        //chartCI.getStyler().setYAxisMax(1d);
+        chartErgodic2.getStyler().setZoomEnabled(true);
+
+        // Series
+        if(sampleMeans.length != 10)
+            System.err.println("ERRRRRRRRRRROREEEEEEEEEEEEEEEEEEE");
+        for(int i = 0; i<sampleMeans.length; i++) {
+            XYSeries series = chartErgodic2.addSeries("M+"+(i+1) ,times, sampleMeans[i]);
+            series.setMarker(SeriesMarkers.NONE);
+        }
+
+        new SwingWrapper(chartErgodic2).displayChart();
+    }
 }

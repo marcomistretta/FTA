@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Statistic {
 
-    public static double[] sampleVariance(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double[] sampleMeanList) {
+    public static double[] sampleStandardDeviation(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double[] sampleMeanList) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         double[] list = new double[l];
@@ -14,12 +14,12 @@ public class Statistic {
         // per ogni istante devo calcolare la varianza campionaria basandomi sul campione delle N simulazion;
         for (int i = 0; i < l; i++) {
             double sum = 0;
-            Timer.estimatedTime(l, start, i, "Varianza campionaria");
+            Timer.estimatedTime(l, start, i, "Deviazione standard campionaria");
             for (int j = 0; j < N; j++)
                 // quantizedResults.get(j).get(i).getElement1() ::
                 // della j-esima simulazione (su N), il i-esimo istante (su l)
                 sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList[i]), 2));
-            list[i] = sum / (N - 1);
+            list[i] = Math.sqrt(sum / (N - 1));
         }
 
         return list;
@@ -51,11 +51,11 @@ public class Statistic {
         double Tvalue = TDist.inverseCumulativeProbability(1 - (alpha / 2));
         //System.out.println("TSTUDENT: " + value);
 
-        double[] sampleVarianceList = sampleVariance(quantizedResults, sampleMean);
+        double[] sampleStandardDeviationList = sampleStandardDeviation(quantizedResults, sampleMean);
 
         double radN = Math.sqrt(N);
         for (int i = 0; i < l; i++) {
-            double S = Math.sqrt(sampleVarianceList[i]);
+            double S = sampleStandardDeviationList[i];
             double coeff = (S / radN) * Tvalue;
             double up = sampleMean[i] + coeff;
             double low = sampleMean[i] - coeff;

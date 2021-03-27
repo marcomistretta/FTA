@@ -1,6 +1,6 @@
 package src.swe.smft.event;
 
-import src.swe.smft.harryplotter.HarryPlotter;
+import src.swe.smft.plot.MyPlotter;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class EventFactory {
 
     public Event createBasicEvent(float lambda, float mu, boolean status) {
         BasicEvent e = new BasicEvent(lambda, mu, status, ++count);
-        HarryPlotter.getInstance().addNode(e);
+        MyPlotter.getInstance().addNode(e);
         return e;
     }
 
@@ -33,7 +33,7 @@ public class EventFactory {
         // un basic event viene sempre inizializzato a true
         boolean status = true;
         BasicEvent e = new BasicEvent(lambda, mu, status, ++count);
-        HarryPlotter.getInstance().addNode(e);
+        MyPlotter.getInstance().addNode(e);
         return e;
     }
 
@@ -59,7 +59,7 @@ public class EventFactory {
             }
             i = new KNGate(children, k, opz, ++count);
         }
-        HarryPlotter.getInstance().addNodeAndEdges(i);
+        MyPlotter.getInstance().addNodeAndEdges(i);
         return i;
     }
 
@@ -79,7 +79,7 @@ public class EventFactory {
             int k = (int) (Math.random() * (children.size()-1) + 2);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
-        HarryPlotter.getInstance().addNodeAndEdges(i);
+        MyPlotter.getInstance().addNodeAndEdges(i);
         return i;
 
     }

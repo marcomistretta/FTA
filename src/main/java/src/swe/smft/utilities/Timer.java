@@ -32,7 +32,7 @@ public class Timer {
 
     public static void estimatedTime(int n, double start, int i, String action) {
         double actual = System.currentTimeMillis();
-        if(i % (n/10) == 0 && i != 0) {
+        if(i % (n/5) == 0 && i != 0) {
             double delta = (actual - start) / 1000;
             double estimated = (delta * n) / (i + 1);
             System.out.println(action + ": tempo rimasto ~ " + (estimated - delta));

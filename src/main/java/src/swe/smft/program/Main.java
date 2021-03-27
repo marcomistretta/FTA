@@ -2,7 +2,7 @@ package src.swe.smft.program;
 
 import src.swe.smft.event.*;
 import src.swe.smft.event.Event;
-import src.swe.smft.harryplotter.HarryPlotter;
+import src.swe.smft.plot.MyPlotter;
 import src.swe.smft.memory.DataCentre;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        HarryPlotter hp = HarryPlotter.getInstance();
+        MyPlotter hp = MyPlotter.getInstance();
         TreeManager tm = new TreeManager();
         EventFactory modeler = EventFactory.getInstance();
         DataCentre dc = new DataCentre();
@@ -20,7 +20,7 @@ public class Main {
 
         float maxTime = 15;
         boolean premadeModel = false;
-        int nBasic = 6;
+        int nBasic = 10;
 
         if (premadeModel || nBasic <= 2) {
             float lambdaA = 0.7f;
@@ -49,7 +49,7 @@ public class Main {
 
             List<Event> childrenE = List.of(A, B, C);
             List<Event> childrenF = List.of(B, C, D);
-            String opzE = "AND";
+            String opzE = "OR";
             String opzF = "AND";
             Event E = modeler.createIntermediateEvent(childrenE, opzE);
             Event F = modeler.createIntermediateEvent(childrenF, opzF);
@@ -103,16 +103,16 @@ public class Main {
 
         // un'ottima esecuzione:
         // premade model
-        // timemax = 20
+        // timemax = 15
         // runs = 150'000
         // quantum = 0.1
 
-        int runs = 150000;
+        int runs = 100000;
         float quantum = 0.1f;
         boolean doCI = true;
         boolean doErgodic = true;
         double meanPrecision = 0.03f;
-        double varPrecision = 0.25;
+        double stDeviationPrecision = 0.35;
         float alpha = 0.05f;
         boolean meanPLot = true;
         boolean faultPLot = false;
@@ -124,7 +124,7 @@ public class Main {
             analyzer.defineCI(runs, alpha, quantum, meanPLot, faultPLot);
         }
         if (doErgodic)
-            hp.printErgodicInfo(premadeModel, nBasic, maxTime, runs, quantum, meanPrecision, varPrecision);
-            analyzer.verifyErgodic(runs, quantum, meanPrecision, varPrecision);
+            hp.printErgodicInfo(premadeModel, nBasic, maxTime, runs, quantum, meanPrecision, stDeviationPrecision);
+            analyzer.verifyErgodic(runs, quantum, meanPrecision, stDeviationPrecision);
     }
 }

@@ -44,7 +44,7 @@ public class StatisticTest {
     @DisplayName("Check Sample Variance Calc")
     public void testSampleVariance() {
         for (int j = 0; j < times; j++) {
-            assertEquals(0, Statistic.sampleVariance(quantizedResults, Statistic.sampleMean(quantizedResults))[j], "Sample variance of a dataset of true should be zero");
+            assertEquals(0, Statistic.sampleStandardDeviation(quantizedResults, Statistic.sampleMean(quantizedResults))[j], "Sample variance of a dataset of true should be zero");
         }
     }
 }

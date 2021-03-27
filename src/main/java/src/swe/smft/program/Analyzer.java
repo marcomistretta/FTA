@@ -1,6 +1,6 @@
 package src.swe.smft.program;
 
-import src.swe.smft.harryplotter.HarryPlotter;
+import src.swe.smft.plot.MyPlotter;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.Pair;
 import src.swe.smft.utilities.Statistic;
@@ -41,7 +41,7 @@ public class Analyzer {
         for (int i = 0; i < l; i++) {
             times[i] = i * quantum;
         }
-        HarryPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
+        MyPlotter.getInstance().plotReliability(times, CI, sampleMean, meanPlot, fault);
     }
 
     public void verifyErgodic(int N, float quantum, double meanPrecision, double varPrecision) {
@@ -50,38 +50,53 @@ public class Analyzer {
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
             Timer.estimatedTime(N, start, i, "Simulazioni per verifica Ergodicità");
-            dc.appendData(s.simulation(false));
+            dc.appendData(s.simulation(true));
         }
 
         ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
 
-        double[] differences;
         double[] sampleMean;
-        double[] sampleVariance;
+        double[] sampleStandardDeviation;
         double[] times;
-        double[] epsF;
 
         sampleMean = Statistic.sampleMean(quantizedResults);
-        sampleVariance = Statistic.sampleVariance(quantizedResults, sampleMean);
-        times = new double[sampleVariance.length];
+        sampleStandardDeviation = Statistic.sampleStandardDeviation(quantizedResults, sampleMean);
+        times = new double[sampleStandardDeviation.length];
         for (int i = 0; i < sampleMean.length; i++)
             times[i] = i * quantum;
-        HarryPlotter.getInstance().plotErgodic(times, sampleMean, sampleVariance);
-        findConvergency(times, sampleMean, sampleVariance, meanPrecision, varPrecision);
+        MyPlotter.getInstance().plotErgodic(times, sampleMean, sampleStandardDeviation);
+        findConvergency(times, sampleMean, sampleStandardDeviation, meanPrecision, varPrecision);
+
+
+        // TODO dimmi che ne pensi
+        if(true) {
+            ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> temp = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+            // assumo N multiplo di 10 (oltre che multiplo del quanto)
+            double[][] sampleMeans = new double[10][];
+
+            for (int count = 0; count < 10; count++) {
+                for (int i = quantizedResults.size() / 10 * count; i < quantizedResults.size() / 10 * (count + 1); i++) {
+                    temp.add(quantizedResults.get(i));
+                }
+                sampleMeans[count] = Statistic.sampleMean(temp);
+                temp.clear();
+            }
+            MyPlotter.getInstance().plotErgodic2(times, sampleMeans);
+        }
     }
 
-    private void findConvergency(double[] times, double[] sampleMean, double[] sampleVariance, double meanPrecision, double varPrecision) {
+    private void findConvergency(double[] times, double[] sampleMean, double[] sampleStandardDeviation, double meanPrecision, double varPrecision) {
         double min = 1.1f;
         double max = -0.1f;
         double start = times[times.length - 1];
         int count = times.length / 10;
         for (int i = times.length - 1; i >= 0; i--) {
             // tra gli ultimi valori varianza troppo alta
-            if (sampleVariance[i] > varPrecision && count > 0) {
-                // System.out.println("SV: "+sampleVariance[i]);
+            if (sampleStandardDeviation[i] > varPrecision && count > 0) {
+                // System.out.println("SV: "+sampleStandardDeviation[i]);
                 // System.out.println("Count: "+count);
-                System.err.println("sistema probabilmente non ergodico, varianza campionaria  maggiore di " + varPrecision);
+                System.err.println("sistema probabilmente non ergodico, deviazione standar campionaria  maggiore di " + varPrecision);
                 return; // colpa della varianza
             }
             if (sampleMean[i] > max) {
@@ -103,10 +118,10 @@ public class Analyzer {
                 return; // colpa del valore medio che non è costante
             }
             // è stato ergodico, ma poi varianza troopo alta
-            if (sampleVariance[i] > varPrecision && count <= 0) {
-                // System.out.println("SV: "+sampleVariance[i]);
+            if (sampleStandardDeviation[i] > varPrecision && count <= 0) {
+                // System.out.println("SV: "+sampleStandardDeviation[i]);
                 // System.out.println("Count: "+count);
-                System.err.println("Verifica ergodicità arrestata per valore di varianza campionaria maggiore di " + varPrecision);
+                System.err.println("Verifica ergodicità arrestata per valore di deviazione standar campionaria maggiore di " + varPrecision);
                 break;
             }
             // è stato ergodico ma poi media non costante
