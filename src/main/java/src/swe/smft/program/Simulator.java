@@ -1,9 +1,8 @@
 package src.swe.smft.program;
 
-import src.swe.smft.event.Event;
 import src.swe.smft.event.TreeManager;
 import src.swe.smft.utilities.Timer;
-import src.swe.smft.utilities.Triplet;
+import src.swe.smft.utilities.RawSample;
 
 import java.util.ArrayList;
 
@@ -21,21 +20,21 @@ public class Simulator {
         this.treeManager = em;
     }
 
-    public ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simulation(boolean randomReset) {
-        ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>> simResult = new ArrayList<Triplet<Float, Boolean, ArrayList<Boolean>>>();
+    public ArrayList<RawSample> simulation(boolean randomReset) {
+        ArrayList<RawSample> simResult = new ArrayList<RawSample>();
         timer.reset();
         if (randomReset)
             treeManager.randomReset();
         else
             treeManager.reset();
-        simResult.add(new Triplet<>
+        simResult.add(new RawSample
                 (timer.getTime(),
                         treeManager.getTopEvent().isWorking(),
                         treeManager.getStatus()));
         timer.nextTime(treeManager.getOmega());
         while (timer.getTime() >= 0) {
             treeManager.nextToggle();
-            simResult.add(new Triplet(timer.getTime(),
+            simResult.add(new RawSample(timer.getTime(),
                     treeManager.getTopEvent().isWorking(),
                     treeManager.getStatus()));
             timer.nextTime(treeManager.getOmega());

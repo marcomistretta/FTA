@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Statistic {
 
-    public static double[] sampleStandardDeviation(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double[] sampleMeanList) {
+    public static double[] sampleStandardDeviation(ArrayList<ArrayList<QuantizedSample>> quantizedResults, double[] sampleMeanList) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         double[] list = new double[l];
@@ -18,14 +18,14 @@ public class Statistic {
             for (int j = 0; j < N; j++)
                 // quantizedResults.get(j).get(i).getElement1() ::
                 // della j-esima simulazione (su N), il i-esimo istante (su l)
-                sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getElement1() ? 1f : 0f) - sampleMeanList[i]), 2));
+                sum = sum + (Math.pow(((quantizedResults.get(j).get(i).getTopStatus() ? 1f : 0f) - sampleMeanList[i]), 2));
             list[i] = Math.sqrt(sum / (N - 1));
         }
 
         return list;
     }
 
-    public static double[] sampleMean(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults) {
+    public static double[] sampleMean(ArrayList<ArrayList<QuantizedSample>> quantizedResults) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         double[] list = new double[l];
@@ -34,13 +34,13 @@ public class Statistic {
             Timer.estimatedTime(l, start, i, "Media campionaria");
             double sum = 0;
             for (int j = 0; j < N; j++)
-                sum += (quantizedResults.get(j).get(i).getElement1() ? 1 : 0);
+                sum += (quantizedResults.get(j).get(i).getTopStatus() ? 1 : 0);
             list[i] = sum / N;
         }
         return list;
     }
 
-    public static double[][] confidenceInterval(ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults, double alpha, double[] sampleMean) {
+    public static double[][] confidenceInterval(ArrayList<ArrayList<QuantizedSample>> quantizedResults, double alpha, double[] sampleMean) {
         int N = quantizedResults.size();
         int l = quantizedResults.get(0).size();
         TDistribution TDist = new TDistribution(N - 1);

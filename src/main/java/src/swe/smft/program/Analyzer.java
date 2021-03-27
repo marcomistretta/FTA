@@ -2,7 +2,7 @@ package src.swe.smft.program;
 
 import src.swe.smft.plot.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
-import src.swe.smft.utilities.Pair;
+import src.swe.smft.utilities.QuantizedSample;
 import src.swe.smft.utilities.Statistic;
 import src.swe.smft.utilities.Timer;
 
@@ -29,7 +29,7 @@ public class Analyzer {
             Timer.estimatedTime(N, start, i, "Simulazioni per calcolo Intervalli di Confidenza");
             dc.appendData(s.simulation(false));
         }
-        ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
+        ArrayList<ArrayList<QuantizedSample>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
 
         double[] sampleMean = Statistic.sampleMean(quantizedResults);
@@ -53,7 +53,7 @@ public class Analyzer {
             dc.appendData(s.simulation(true));
         }
 
-        ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults =
+        ArrayList<ArrayList<QuantizedSample>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
 
         double[] sampleMean;
@@ -71,7 +71,7 @@ public class Analyzer {
 
         // TODO dimmi che ne pensi
         if(true) {
-            ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> temp = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+            ArrayList<ArrayList<QuantizedSample>> temp = new ArrayList<>();
             // assumo N multiplo di 10 (oltre che multiplo del quanto)
             double[][] sampleMeans = new double[10][];
 

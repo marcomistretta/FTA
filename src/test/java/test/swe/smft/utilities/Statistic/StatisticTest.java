@@ -3,7 +3,7 @@ package test.swe.smft.utilities.Statistic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import src.swe.smft.utilities.Pair;
+import src.swe.smft.utilities.QuantizedSample;
 import src.swe.smft.utilities.Statistic;
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StatisticTest {
 
-    private final ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>> quantizedResults = new ArrayList<ArrayList<Pair<Boolean, ArrayList<Boolean>>>>();
+    private final ArrayList<ArrayList<QuantizedSample>> quantizedResults = new ArrayList<>();
     private final int N = 10; // numero di simulazioni
     private final int times = 100; // numero di istanti
 
@@ -20,12 +20,12 @@ public class StatisticTest {
     public void setUp() throws Exception {
         ArrayList<Boolean> basicEvents = new ArrayList<>();
         basicEvents.add(true); // non ci servono le foglie
-        Pair<Boolean, ArrayList<Boolean>> pair = new Pair<>(true, basicEvents); // la prima posizione è quella di nostro interess
-        ArrayList<Pair<Boolean, ArrayList<Boolean>>> internArray = new ArrayList<>();
+        QuantizedSample quantizedSample = new QuantizedSample(true, basicEvents); // la prima posizione è quella di nostro interess
+        ArrayList<QuantizedSample> internArray = new ArrayList<>();
         for (int i = 0; i < N; i++) {
             internArray.clear();
             for (int j = 0; j < times; j++) {
-                internArray.add(pair); // ogni arrayList interno sarà costituito da "times" pair
+                internArray.add(quantizedSample); // ogni arrayList interno sarà costituito da "times" pair
             }
             quantizedResults.add(internArray);
         }
