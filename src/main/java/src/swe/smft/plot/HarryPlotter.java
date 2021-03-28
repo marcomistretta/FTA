@@ -70,7 +70,6 @@ public class HarryPlotter {
     private final MutableGraph g = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
-    // TODO
     private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature2").xAxisTitle("times").yAxisTitle("sample means").build();
 
 
@@ -196,7 +195,6 @@ public class HarryPlotter {
         System.out.println("Passo di quantizzazione: " + quantum);
     }
 
-    // TODO add?
     public void plotErgodic2(double[] times, double[][] sampleMeans) {
         // Customize Chart
         chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);

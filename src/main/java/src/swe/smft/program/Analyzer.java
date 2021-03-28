@@ -69,21 +69,19 @@ public class Analyzer {
         findConvergency(times, sampleMean, sampleStandardDeviation, meanPrecision, varPrecision);
 
 
-        // TODO dimmi che ne pensi
-        if(true) {
-            ArrayList<ArrayList<QuantizedSample>> temp = new ArrayList<>();
-            // assumo N multiplo di 10 (oltre che multiplo del quanto)
-            double[][] sampleMeans = new double[10][];
+        ArrayList<ArrayList<QuantizedSample>> temp = new ArrayList<>();
+        // assumo N multiplo di 10 (oltre che multiplo del quanto)
+        double[][] sampleMeans = new double[10][];
 
-            for (int count = 0; count < 10; count++) {
-                for (int i = quantizedResults.size() / 10 * count; i < quantizedResults.size() / 10 * (count + 1); i++) {
-                    temp.add(quantizedResults.get(i));
-                }
-                sampleMeans[count] = Statistic.sampleMean(temp);
-                temp.clear();
+        for (int count = 0; count < 10; count++) {
+            for (int i = quantizedResults.size() / 10 * count; i < quantizedResults.size() / 10 * (count + 1); i++) {
+                temp.add(quantizedResults.get(i));
             }
-            HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
+            sampleMeans[count] = Statistic.sampleMean(temp);
+            temp.clear();
         }
+        HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
+
     }
 
     private void findConvergency(double[] times, double[] sampleMean, double[] sampleStandardDeviation, double meanPrecision, double varPrecision) {
