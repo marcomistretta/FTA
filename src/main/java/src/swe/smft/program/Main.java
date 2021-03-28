@@ -142,12 +142,12 @@ public class Main {
         // quantum = 0.1
 
 
-        System.out.println("Digitare il numero di simulazioni per test desiderato [100'000]: ");
+        System.out.println("Digitare il numero di simulazioni per test desiderato (deve essere multiplo di 10) [100'000]: ");
         int runs;
         try {
             runs = Integer.parseInt(scanner.next());
-            if(runs < 1) {
-                System.err.println("Numero insufficiente, verrà utilizzato il valore di default");
+            if(runs < 1 || runs % 10 != 0) {
+                System.err.println("Numero non adeguato, verrà utilizzato il valore di default");
                 runs = 100000;
             }
         } catch(NumberFormatException e) {
@@ -155,13 +155,12 @@ public class Main {
             runs = 100000;
         }
 
-        // TODO fix quantum NON deve essere multiplo di 10, runs deve essere multiplo di 10
-        System.out.println("Digitare il valore del passo di campionamento desiderato [0.1]. Nota, deve dividere " + maxTime + " e 10");
+        System.out.println("Digitare il valore del passo di campionamento desiderato [0.1]. Nota, deve dividere " + maxTime);
         float quantum;
         try {
             quantum = Float.parseFloat(scanner.next());
-            if(quantum < 0) {
-                System.err.println("Passo digitato negativo, verrà utilizzato il valore di default");
+            if(quantum < 0 || maxTime / quantum != (int) maxTime / quantum) {
+                System.err.println("Passo digitato non adeguato, verrà utilizzato il valore di default");
                 quantum = .1f;
             }
         } catch(NumberFormatException e) {
@@ -169,7 +168,6 @@ public class Main {
             quantum = .1f;
         }
 
-        // TODO fix non sovrascrivere in caso di valore di default
         boolean doCI = true;
         boolean doErgodic = true;
 
@@ -184,7 +182,6 @@ public class Main {
             selection = 3;
         }
 
-        // TODO fix non sovrascrivere in caso di valore di default
         // questi devono essere i valori di default
         float alpha = 0.05f;
         boolean meanPLot = true;
@@ -194,17 +191,14 @@ public class Main {
         double meanPrecision = 0.3;
 
         if(selection == 1 || selection == 3) {
-            doCI = true;
             System.out.println("Digitare il valore di significatività desiderato");
             try {
-                alpha = Float.parseFloat(scanner.next());
-                if(alpha <= 0 || alpha >= 1) {
+                float temp = Float.parseFloat(scanner.next());
+                if(temp <= 0 || temp >= 1) {
                     System.err.println("Valore di significatività non accettabile, verrà utilizzato il valore di default");
-                    alpha = 0.05f;
-                }
+                } else alpha = temp;
             } catch(NumberFormatException e) {
                 System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-                alpha = 0.05f;
             }
 
             System.out.println("Si desidera visualizzare la media campionaria dello stato di funzionamento del top event? Y/n ");
@@ -215,29 +209,24 @@ public class Main {
         }
 
         if(selection == 2 || selection == 3) {
-            doErgodic = true;
             System.out.println("Digitare la precisione della deviazione standard desiderata (>0) [0.45]: ");
             try {
-                stDeviationPrecision = Float.parseFloat(scanner.next());
-                if(stDeviationPrecision <= 0) {
+                double tmp = Float.parseFloat(scanner.next());
+                if(tmp <= 0)
                     System.err.println("Deve essere positiva, verrà utilizzato il valore di default");
-                    stDeviationPrecision = 0.45;
-                }
+                else stDeviationPrecision = tmp;
             } catch(NumberFormatException e) {
                 System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-                stDeviationPrecision = 0.45;
             }
 
             System.out.println("Digitare la precisione della media campionaria desiderata (>0) [0.3]: ");
             try {
-                meanPrecision = Float.parseFloat(scanner.next());
-                if(stDeviationPrecision <= 0) {
+                double tmp = Float.parseFloat(scanner.next());
+                if(tmp <= 0)
                     System.err.println("Deve essere positiva, verrà utilizzato il valore di default");
-                    meanPrecision = 0.03;
-                }
+                else meanPrecision = tmp;
             } catch(NumberFormatException e) {
                 System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-                meanPrecision = 0.03;
             }
         }
 
