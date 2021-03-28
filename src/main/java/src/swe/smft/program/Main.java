@@ -216,19 +216,19 @@ public class Main {
 
         if(selection == 2 || selection == 3) {
             doErgodic = true;
-            System.out.println("Digitare la precisione della deviazione standard desiderata (>0) [0.35]: ");
+            System.out.println("Digitare la precisione della deviazione standard desiderata (>0) [0.45]: ");
             try {
                 stDeviationPrecision = Float.parseFloat(scanner.next());
                 if(stDeviationPrecision <= 0) {
                     System.err.println("Deve essere positiva, verrà utilizzato il valore di default");
-                    stDeviationPrecision = 0.35;
+                    stDeviationPrecision = 0.45;
                 }
             } catch(NumberFormatException e) {
                 System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-                stDeviationPrecision = 0.35;
+                stDeviationPrecision = 0.45;
             }
 
-            System.out.println("Digitare la precisione della media campionaria desiderata (>0) [0.35]: ");
+            System.out.println("Digitare la precisione della media campionaria desiderata (>0) [0.3]: ");
             try {
                 meanPrecision = Float.parseFloat(scanner.next());
                 if(stDeviationPrecision <= 0) {
