@@ -26,17 +26,15 @@ public class Main {
         if (scanner.next().equals("r")){
             premadeModel = false;
             // random flow (default)
-            int nBasic;
-            System.out.println("Digitare numero di foglie desiderato (>= 2)[10]: ");
+            int nBasic = 10;
+            System.out.println("Digitare numero di foglie desiderato (>= 2)["+nBasic+"]: ");
             try {
                 nBasic = Integer.parseInt(scanner.next());
                 if(nBasic < 2) {
                     System.err.println("Numero insufficiente, verrà utilizzato il valore di default");
-                    nBasic = 10;
                 }
             } catch(NumberFormatException e) {
                 System.err.println("Non è stato digitato un numero intero, verrà utilizzato il valore di default");
-                nBasic = 10;
             }
 
 
@@ -113,46 +111,33 @@ public class Main {
             tm.setTopEvent((IntermediateEvent) top);
         }
 
-
-        System.out.println("Digitare la durata delle simulazioni desiderata (>=0)[15s]: ");
-        float maxTime;
+        float maxTime = 15;
+        System.out.println("Digitare la durata delle simulazioni desiderata (>=0)["+maxTime+"]: ");
         try {
             maxTime = Float.parseFloat(scanner.next());
-
             if(maxTime < 0) {
                 System.err.println("La durata delle simulazioni non può essere negativa, verrà utilizzato il valore di default");
-                maxTime = 15;
             }
         } catch(NumberFormatException e) {
             System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-            maxTime = 15;
         }
         //elimino le cifre decimali in eccesso
         int aux = (int)(maxTime * 10);
         maxTime = aux/10f;
 
-
         sim = new Simulator(maxTime, tm);
         Analyzer analyzer = new Analyzer(sim, dc);
 
-        // un'ottima esecuzione:
-        // premade model
-        // timemax = 15
-        // runs = 150'000
-        // quantum = 0.1
+        int runs = 100000;
+        System.out.println("Digitare il numero di simulazioni per test desiderato (deve essere multiplo di 10) ["+runs+"]: ");
 
-
-        System.out.println("Digitare il numero di simulazioni per test desiderato (deve essere multiplo di 10) [100'000]: ");
-        int runs;
         try {
             runs = Integer.parseInt(scanner.next());
             if(runs < 1 || runs % 10 != 0) {
                 System.err.println("Numero non adeguato, verrà utilizzato il valore di default");
-                runs = 100000;
             }
         } catch(NumberFormatException e) {
             System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
-            runs = 100000;
         }
 
         System.out.println("Digitare il valore del passo di campionamento desiderato [0.1]. Nota, deve dividere " + maxTime);
@@ -209,7 +194,7 @@ public class Main {
         }
 
         if(selection == 2 || selection == 3) {
-            System.out.println("Digitare la precisione della deviazione standard desiderata (>0) [0.45]: ");
+            System.out.println("Digitare la precisione della deviazione standard desiderata (>0) ["+stDeviationPrecision+"]: ");
             try {
                 double tmp = Float.parseFloat(scanner.next());
                 if(tmp <= 0)
@@ -219,7 +204,7 @@ public class Main {
                 System.err.println("Non è stato digitato un numero, verrà utilizzato il valore di default");
             }
 
-            System.out.println("Digitare la precisione della media campionaria desiderata (>0) [0.3]: ");
+            System.out.println("Digitare la precisione della media campionaria desiderata (>0) ["+meanPrecision+"]: ");
             try {
                 double tmp = Float.parseFloat(scanner.next());
                 if(tmp <= 0)

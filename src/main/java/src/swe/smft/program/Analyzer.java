@@ -68,7 +68,7 @@ public class Analyzer {
         HarryPlotter.getInstance().plotErgodic(times, sampleMean, sampleStandardDeviation);
         findConvergency(times, sampleMean, sampleStandardDeviation, meanPrecision, varPrecision);
 
-
+        /* ERGODIC 2
         ArrayList<ArrayList<QuantizedSample>> temp = new ArrayList<>();
         // assumo N multiplo di 10 (oltre che multiplo del quanto)
         double[][] sampleMeans = new double[10][];
@@ -81,6 +81,10 @@ public class Analyzer {
             temp.clear();
         }
         HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
+        */
+
+        // TODO ergodic 3
+
 
     }
 

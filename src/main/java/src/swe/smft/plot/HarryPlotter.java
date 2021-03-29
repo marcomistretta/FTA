@@ -115,7 +115,7 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartErgodic.getStyler().setYAxisMax(1d);
+        // chartErgodic.getStyler().setYAxisMax(1d);
         chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
@@ -125,6 +125,24 @@ public class HarryPlotter {
         series.setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartErgodic).displayChart();
+    }
+
+    public void plotErgodic2(double[] times, double[][] sampleMeans) {
+        // Customize Chart
+        chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+        chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
+        // chartErgodic2.getStyler().setYAxisMax(1d);
+        chartErgodic2.getStyler().setZoomEnabled(true);
+
+        // Series
+        if(sampleMeans.length != 10)
+            System.err.println("error");
+        for(int i = 0; i<sampleMeans.length; i++) {
+            XYSeries series = chartErgodic2.addSeries("M"+(i+1) ,times, sampleMeans[i]);
+            series.setMarker(SeriesMarkers.NONE);
+        }
+
+        new SwingWrapper(chartErgodic2).displayChart();
     }
 
     public void addNode(BasicEvent e) {
@@ -195,21 +213,5 @@ public class HarryPlotter {
         System.out.println("Passo di quantizzazione: " + quantum);
     }
 
-    public void plotErgodic2(double[] times, double[][] sampleMeans) {
-        // Customize Chart
-        chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartErgodic2.getStyler().setYAxisMax(1d);
-        chartErgodic2.getStyler().setZoomEnabled(true);
 
-        // Series
-        if(sampleMeans.length != 10)
-            System.err.println("ERRRRRRRRRRROREEEEEEEEEEEEEEEEEEE");
-        for(int i = 0; i<sampleMeans.length; i++) {
-            XYSeries series = chartErgodic2.addSeries("M+"+(i+1) ,times, sampleMeans[i]);
-            series.setMarker(SeriesMarkers.NONE);
-        }
-
-        new SwingWrapper(chartErgodic2).displayChart();
-    }
 }
