@@ -35,7 +35,7 @@ public class Timer {
         if(i % (n/5) == 0 && i != 0) {
             double delta = (actual - start) / 1000;
             double estimated = (delta * n) / (i + 1);
-            if((estimated-delta)>= 1e-3)
+            if((estimated-delta)>= 1e-1)
                 System.out.println(action + ": tempo rimasto ~ " + (estimated - delta));
         }
     }

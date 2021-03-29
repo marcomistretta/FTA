@@ -1,5 +1,6 @@
 package src.swe.smft.program;
 
+import src.swe.smft.event.TreeManager;
 import src.swe.smft.plot.HarryPlotter;
 import src.swe.smft.memory.DataCentre;
 import src.swe.smft.utilities.QuantizedSample;
@@ -11,10 +12,13 @@ import java.util.ArrayList;
 public class Analyzer {
     private final Simulator s;
     private final DataCentre dc;
+    // TODO ho aggiunto il riferimento a tree manager
+    private final TreeManager treeManager;
 
-    public Analyzer(Simulator s, DataCentre dc) {
+    public Analyzer(Simulator s, DataCentre dc, TreeManager tm) {
         this.s = s;
         this.dc = dc;
+        this.treeManager = tm;
     }
 
     // chiama defineCI senza richiedere il plot di Sample Mean e di fault
@@ -27,7 +31,8 @@ public class Analyzer {
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
             Timer.estimatedTime(N, start, i, "Simulazioni per calcolo Intervalli di Confidenza");
-            dc.appendData(s.simulation(false));
+            treeManager.reset();
+            dc.appendData(s.simulation());
         }
         ArrayList<ArrayList<QuantizedSample>> quantizedResults =
                 dc.quantizedData(quantum, s.getMaxTime());
@@ -50,7 +55,8 @@ public class Analyzer {
         double start = System.currentTimeMillis();
         for (int i = 0; i < N; i++) {
             Timer.estimatedTime(N, start, i, "Simulazioni per verifica Ergodicità");
-            dc.appendData(s.simulation(true));
+            treeManager.randomReset();
+            dc.appendData(s.simulation());
         }
 
         ArrayList<ArrayList<QuantizedSample>> quantizedResults =
@@ -68,7 +74,8 @@ public class Analyzer {
         HarryPlotter.getInstance().plotErgodic(times, sampleMean, sampleStandardDeviation);
         findConvergency(times, sampleMean, sampleStandardDeviation, meanPrecision, varPrecision);
 
-        /* ERGODIC 2
+        /*
+        // questo è il coso vecchio
         ArrayList<ArrayList<QuantizedSample>> temp = new ArrayList<>();
         // assumo N multiplo di 10 (oltre che multiplo del quanto)
         double[][] sampleMeans = new double[10][];
@@ -82,10 +89,38 @@ public class Analyzer {
         }
         HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
         */
+        // TODO move?
+        verifyErgodic2(N, quantum);
 
-        // TODO ergodic 3
+    }
 
+    // TODO added
+    public void verifyErgodic2(int N, float quantum) {
+        dc.clear();
 
+        ArrayList<ArrayList<QuantizedSample>>[] quantizedResults = new ArrayList[10];
+
+        double start = System.currentTimeMillis();
+        for (int i = 0; i < 10; i++) {
+            Timer.estimatedTime(N, start, i, "Simulazioni per verifica Ergodicità 2!");
+            treeManager.randomReset();
+            for (int count = 0; count < N / 10; count++) {
+                treeManager.randomReset();
+                dc.appendData(s.simulation());
+            }
+            quantizedResults[i] = dc.quantizedData(quantum, s.getMaxTime());
+            dc.clear();
+        }
+
+        double[][] sampleMeans = new double[10][];
+        for (int i = 0; i < 10; i++)
+            sampleMeans[i] = Statistic.sampleMean(quantizedResults[i]);
+
+        double[] times = new double[sampleMeans[0].length];
+        for (int i = 0; i < sampleMeans.length; i++)
+            times[i] = i * quantum;
+
+        HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
     }
 
     private void findConvergency(double[] times, double[] sampleMean, double[] sampleStandardDeviation, double meanPrecision, double varPrecision) {

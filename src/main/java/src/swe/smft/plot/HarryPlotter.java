@@ -131,7 +131,7 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        // chartErgodic2.getStyler().setYAxisMax(1d);
+        chartErgodic2.getStyler().setYAxisMax(1d);
         chartErgodic2.getStyler().setZoomEnabled(true);
 
         // Series

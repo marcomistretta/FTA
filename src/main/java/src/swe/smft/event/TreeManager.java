@@ -96,6 +96,22 @@ public class TreeManager {
         return basicEvents;
     }
 
+    // TODO last added
+    public ArrayList<Boolean> getBasicEventsStatus() {
+        ArrayList<Boolean> basicEventsStatus = new ArrayList<>();
+        for (BasicEvent b : basicEvents) {
+            basicEventsStatus.add(b.isWorking());
+        }
+        return basicEventsStatus;
+    }
+
+    // TODO last added
+    public void setBasicEventsStatus(ArrayList<Boolean> basicEventsStatus) {
+        for (int i = 0; i < basicEvents.size(); i++) {
+            basicEvents.get(i).setStatus(basicEventsStatus.get(i));
+        }
+    }
+
     public float getOmega() {
         return omega;
     }

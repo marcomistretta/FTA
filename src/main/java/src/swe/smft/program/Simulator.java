@@ -20,13 +20,9 @@ public class Simulator {
         this.treeManager = em;
     }
 
-    public ArrayList<RawSample> simulation(boolean randomReset) {
+    public ArrayList<RawSample> simulation() {
         ArrayList<RawSample> simResult = new ArrayList<RawSample>();
         timer.reset();
-        if (randomReset)
-            treeManager.randomReset();
-        else
-            treeManager.reset();
         simResult.add(new RawSample
                 (timer.getTime(),
                         treeManager.getTopEvent().isWorking(),

@@ -126,7 +126,7 @@ public class Main {
         maxTime = aux/10f;
 
         sim = new Simulator(maxTime, tm);
-        Analyzer analyzer = new Analyzer(sim, dc);
+        Analyzer analyzer = new Analyzer(sim, dc, tm);
 
         int runs = 100000;
         System.out.println("Digitare il numero di simulazioni per test desiderato (deve essere multiplo di 10) ["+runs+"]: ");
@@ -188,9 +188,13 @@ public class Main {
 
             System.out.println("Si desidera visualizzare la media campionaria dello stato di funzionamento del top event? Y/n ");
             if(scanner.next().equals("n")) meanPLot = false;
+            else
+                System.err.println("Digitazione errata, verrà utilizzato il valore di default");
 
             System.out.println("Si desidera visualizzare la media campionaria dello stato di mal-funzionamento del top event? y/N ");
             if(scanner.next().equals("y")) faultPLot = true;
+            else
+                System.err.println("Digitazione errata, verrà utilizzato il valore di default");
         }
 
         if(selection == 2 || selection == 3) {
