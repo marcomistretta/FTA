@@ -100,13 +100,13 @@ public class Main {
 
             List<Event> childrenE = List.of(A, B, C);
             List<Event> childrenF = List.of(B, C, D);
-            String opzE = "OR";
-            String opzF = "AND";
+            String opzE = "2";
+            String opzF = "SEQAND";
             Event E = modeler.createIntermediateEvent(childrenE, opzE);
             Event F = modeler.createIntermediateEvent(childrenF, opzF);
 
             List<Event> childrenTop = List.of(E, F);
-            String opzTop = "AND";
+            String opzTop = "OR";
             Event top = modeler.createIntermediateEvent(childrenTop, opzTop);
             tm.setTopEvent((IntermediateEvent) top);
         }
@@ -126,7 +126,7 @@ public class Main {
         maxTime = aux/10f;
 
         sim = new Simulator(maxTime, tm);
-        Analyzer analyzer = new Analyzer(sim, dc, tm);
+        Analyzer analyzer = new Analyzer(sim, dc);
 
         int runs = 100000;
         System.out.println("Digitare il numero di simulazioni per test desiderato (deve essere multiplo di 10) ["+runs+"]: ");

@@ -2,12 +2,12 @@ package src.swe.smft.utilities;
 
 import java.util.ArrayList;
 
-public class RawSample {
+public class UnquantizedSample {
     private Float time;
     private Boolean topStatus;
     private ArrayList<Boolean> leavesStatus;
 
-    public RawSample(Float t, Boolean top, ArrayList<Boolean> l) {
+    public UnquantizedSample(Float t, Boolean top, ArrayList<Boolean> l) {
         time = t;
         topStatus = top;
         leavesStatus = l;

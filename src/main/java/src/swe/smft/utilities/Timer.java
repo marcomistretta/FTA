@@ -30,12 +30,12 @@ public class Timer {
         return current_time;
     }
 
-    public static void estimatedTime(int n, double start, int i, String action) {
+    public static void estimatedTime(int N, double start, int i, String action) {
         double actual = System.currentTimeMillis();
-        if(i % (n/5) == 0 && i != 0) {
+        if(i % (N/10) == 0 && i != 0) {
             double delta = (actual - start) / 1000;
-            double estimated = (delta * n) / (i + 1);
-            if((estimated-delta)>= 1e-1)
+            double estimated = (delta * N) / (i + 1);
+            if((estimated-delta)>= 7e-1)
                 System.out.println(action + ": tempo rimasto ~ " + (estimated - delta));
         }
     }

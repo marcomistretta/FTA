@@ -48,6 +48,7 @@ import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
 import guru.nidi.graphviz.model.MutableGraph;
+import org.knowm.xchart.XYSeries;
 import src.swe.smft.event.BasicEvent;
 import src.swe.smft.event.IntermediateEvent;
 
@@ -60,7 +61,6 @@ import static guru.nidi.graphviz.model.Factory.mutNode;
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
-import org.knowm.xchart.XYSeries;
 import org.knowm.xchart.style.Styler;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
@@ -91,21 +91,17 @@ public class HarryPlotter {
         chartCI.getStyler().setZoomEnabled(true);
 
         // Series
-        XYSeries series = chartCI.addSeries("lower bound", times, CI[0]);
-        series.setMarker(SeriesMarkers.NONE);
+        chartCI.addSeries("lower bound", times, CI[0]).setMarker(SeriesMarkers.NONE);
         if (meanPlot) {
-            series = chartCI.addSeries("sample mean Reliability", times, sampleMean);
-            series.setMarker(SeriesMarkers.NONE);
+            chartCI.addSeries("sample mean Reliability", times, sampleMean).setMarker(SeriesMarkers.NONE);
         }
         if(fault) {
             double[] faults = new double[sampleMean.length];
             for (int i = 0; i<sampleMean.length; i++)
                 faults[i] = 1 - sampleMean[i];
-                series = chartCI.addSeries("sample mean Fault", times, faults);
-                series.setMarker(SeriesMarkers.NONE);
+                chartCI.addSeries("sample mean Fault", times, faults).setMarker(SeriesMarkers.NONE);
         }
-        series = chartCI.addSeries("upper bound", times, CI[1]);
-        series.setMarker(SeriesMarkers.NONE);
+        chartCI.addSeries("upper bound", times, CI[1]).setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartCI).displayChart();
     }
@@ -119,10 +115,8 @@ public class HarryPlotter {
         chartErgodic.getStyler().setZoomEnabled(true);
 
         // Series
-        XYSeries series = chartErgodic.addSeries("sampleMean", times, sampleMean);
-        series.setMarker(SeriesMarkers.NONE);
-        series = chartErgodic.addSeries("sampleStandardDeviation", times, sampleVariance);
-        series.setMarker(SeriesMarkers.NONE);
+        chartErgodic.addSeries("sampleMean", times, sampleMean).setMarker(SeriesMarkers.NONE);
+        chartErgodic.addSeries("sampleStandardDeviation", times, sampleVariance).setMarker(SeriesMarkers.NONE);
 
         new SwingWrapper(chartErgodic).displayChart();
     }
@@ -131,15 +125,11 @@ public class HarryPlotter {
         // Customize Chart
         chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
-        chartErgodic2.getStyler().setYAxisMax(1d);
+        //chartErgodic2.getStyler().setYAxisMax(1d);
         chartErgodic2.getStyler().setZoomEnabled(true);
 
-        // Series
-        if(sampleMeans.length != 10)
-            System.err.println("error");
         for(int i = 0; i<sampleMeans.length; i++) {
-            XYSeries series = chartErgodic2.addSeries("M"+(i+1) ,times, sampleMeans[i]);
-            series.setMarker(SeriesMarkers.NONE);
+            chartErgodic2.addSeries("M"+(i+1) ,times, sampleMeans[i]).setMarker(SeriesMarkers.NONE);
         }
 
         new SwingWrapper(chartErgodic2).displayChart();

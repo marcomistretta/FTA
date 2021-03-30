@@ -2,19 +2,19 @@ package src.swe.smft.memory;
 
 import src.swe.smft.utilities.QuantizedSample;
 import src.swe.smft.utilities.Timer;
-import src.swe.smft.utilities.RawSample;
+import src.swe.smft.utilities.UnquantizedSample;
 
 import java.util.ArrayList;
 
 public class DataCentre {
     // simulazioni >> campionamenti(tempo, topEvent, basicEvents)
-    private ArrayList<ArrayList<RawSample>> simulationResults;
+    private ArrayList<ArrayList<UnquantizedSample>> simulationResults;
 
     public DataCentre() {
-        simulationResults = new ArrayList<ArrayList<RawSample>>();
+        simulationResults = new ArrayList<ArrayList<UnquantizedSample>>();
     }
 
-    public void appendData(ArrayList<RawSample> entry) {
+    public void appendData(ArrayList<UnquantizedSample> entry) {
         simulationResults.add(entry);
     }
 
@@ -36,7 +36,7 @@ public class DataCentre {
             quantizedResults.add(new ArrayList<>());
             for (float step = 0f; step <= maxTime; step += quantum) {
                 // quanto attuale
-                for (RawSample data : simulationResults.get(i)) {
+                for (UnquantizedSample data : simulationResults.get(i)) {
                     //every sample
                     //if step > time ==> nextTime
                     if (data.getTime() >= step) {
