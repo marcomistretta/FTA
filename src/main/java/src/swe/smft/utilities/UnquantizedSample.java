@@ -3,25 +3,26 @@ package src.swe.smft.utilities;
 import java.util.ArrayList;
 
 public class UnquantizedSample {
-    private Float time;
-    private Boolean topStatus;
+    private boolean topStatus;
     private ArrayList<Boolean> leavesStatus;
+    private float time;
 
-    public UnquantizedSample(Float t, Boolean top, ArrayList<Boolean> l) {
+    public UnquantizedSample(float t, boolean top, ArrayList<Boolean> l) {
         time = t;
         topStatus = top;
         leavesStatus = l;
     }
 
-    public Float getTime() {
-        return time;
-    }
-
-    public Boolean getTopStatus() {
+    public boolean getTopStatus() {
         return topStatus;
     }
 
     public ArrayList<Boolean> getLeavesStatus() {
         return leavesStatus;
     }
+
+    public float getTime() {
+        return time;
+    }
+
 }

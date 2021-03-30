@@ -1,49 +1,5 @@
 package src.swe.smft.plot;
 
-/*
-// NOTAZIONE PARENTISIZZATA
-import guru.nidi.graphviz.attribute.Color;
-import guru.nidi.graphviz.attribute.Font;
-import guru.nidi.graphviz.attribute.Rank;
-import guru.nidi.graphviz.attribute.Style;
-import org.jgrapht.Graph;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.Pseudograph;
-import src.swe.smft.event.BasicEvent;
-import src.swe.smft.event.Event;
-import src.swe.smft.event.IntermediateEvent;
-
-import static guru.nidi.graphviz.attribute.Attributes.attr;
-import static guru.nidi.graphviz.attribute.Rank.RankDir.BOTTOM_TO_TOP;
-import static guru.nidi.graphviz.model.Factory.graph;
-import static guru.nidi.graphviz.model.Factory.node;
-import static guru.nidi.graphviz.model.Link.to;
-
-public class GraphBuilder {
-    private static final Graph<String, DefaultEdge> g = new Pseudograph<>(DefaultEdge.class);
-
-
-    public static void addNode(BasicEvent e) {
-        g.addVertex(e.getLabel());
-        System.out.println(g.toString());
-        System.out.println();
-    }
-
-    public static void addNodeAndEdges(IntermediateEvent i) {
-        g.addVertex(i.getLabel());
-        for (Event e : i.getChildren()) {
-            g.addEdge(i.getLabel(), e.getLabel());
-            System.out.println(g.toString());
-            System.out.println();
-
-        }
-    }
-
-    public void printGraph() {
-    }
-}
-*/
-
 import guru.nidi.graphviz.attribute.Color;
 import guru.nidi.graphviz.engine.Format;
 import guru.nidi.graphviz.engine.Graphviz;
@@ -58,6 +14,7 @@ import java.io.IOException;
 import static guru.nidi.graphviz.attribute.Color.*;
 import static guru.nidi.graphviz.model.Factory.mutGraph;
 import static guru.nidi.graphviz.model.Factory.mutNode;
+
 import org.knowm.xchart.SwingWrapper;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -67,13 +24,14 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 public class HarryPlotter {
     private static HarryPlotter mainCharacter = null;
-    private final MutableGraph g = mutGraph("SMFT").setDirected(true);
+    private final MutableGraph graph = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
     private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature2").xAxisTitle("times").yAxisTitle("sample means").build();
+    private final String path = "example/modelloSMFT.png";
 
-
-    private HarryPlotter(){}
+    private HarryPlotter() {
+    }
 
     public static HarryPlotter getInstance() {
         if (mainCharacter != null)
@@ -95,11 +53,11 @@ public class HarryPlotter {
         if (meanPlot) {
             chartCI.addSeries("sample mean Reliability", times, sampleMean).setMarker(SeriesMarkers.NONE);
         }
-        if(fault) {
+        if (fault) {
             double[] faults = new double[sampleMean.length];
-            for (int i = 0; i<sampleMean.length; i++)
+            for (int i = 0; i < sampleMean.length; i++)
                 faults[i] = 1 - sampleMean[i];
-                chartCI.addSeries("sample mean Fault", times, faults).setMarker(SeriesMarkers.NONE);
+            chartCI.addSeries("sample mean Fault", times, faults).setMarker(SeriesMarkers.NONE);
         }
         chartCI.addSeries("upper bound", times, CI[1]).setMarker(SeriesMarkers.NONE);
 
@@ -128,8 +86,8 @@ public class HarryPlotter {
         //chartErgodic2.getStyler().setYAxisMax(1d);
         chartErgodic2.getStyler().setZoomEnabled(true);
 
-        for(int i = 0; i<sampleMeans.length; i++) {
-            chartErgodic2.addSeries("M"+(i+1) ,times, sampleMeans[i]).setMarker(SeriesMarkers.NONE);
+        for (int i = 0; i < sampleMeans.length; i++) {
+            chartErgodic2.addSeries("M" + (i + 1), times, sampleMeans[i]).setMarker(SeriesMarkers.NONE);
         }
 
         new SwingWrapper(chartErgodic2).displayChart();
@@ -141,7 +99,7 @@ public class HarryPlotter {
             color = GREEN;
         else
             color = RED;
-        g.add(mutNode(e.getLabel()).add(color));
+        graph.add(mutNode(e.getLabel()).add(color));
     }
 
     public void addNodeAndEdges(IntermediateEvent i) {
@@ -154,15 +112,18 @@ public class HarryPlotter {
             color = BLUE;
         else color = ORANGE;
         for (int j = 0; j < i.getChildren().size(); j++)
-            g.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));
+            graph.add(mutNode(i.getLabel()).add(color).addLink(mutNode(i.getChildren().get(j).getLabel())));
     }
 
     public void printGraph() {
+        System.out.println("*** Avvio salvataggio in formato png del modello impostato ***");
         try {
-            Graphviz.fromGraph(g).height(1000).width(4000).render(Format.PNG).toFile(new File("example/modelloSMFT.png"));
+            Graphviz.fromGraph(graph).height(1000).width(4000).render(Format.PNG).toFile(new File(path));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("*** Modello esportato nell directory " + path + " ***");
+
     }
 
     public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {

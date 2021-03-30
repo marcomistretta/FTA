@@ -3,15 +3,15 @@ package src.swe.smft.utilities;
 import java.util.ArrayList;
 
 public class QuantizedSample {
-    private Boolean topStatus;
+    private boolean topStatus;
     private ArrayList<Boolean> leavesStatus;
 
-    public QuantizedSample(Boolean t, ArrayList<Boolean> l) {
+    public QuantizedSample(boolean t, ArrayList<Boolean> l) {
         topStatus = t;
         leavesStatus = l;
     }
 
-    public Boolean getTopStatus() {
+    public boolean getTopStatus() {
         return topStatus;
     }
 
