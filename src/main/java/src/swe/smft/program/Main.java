@@ -100,7 +100,7 @@ public class Main {
 
             List<Event> childrenE = List.of(A, B, C);
             List<Event> childrenF = List.of(B, C, D);
-            String opzE = "2";
+            String opzE = "AND";
             String opzF = "SEQAND";
             Event E = modeler.createIntermediateEvent(childrenE, opzE);
             Event F = modeler.createIntermediateEvent(childrenF, opzF);
