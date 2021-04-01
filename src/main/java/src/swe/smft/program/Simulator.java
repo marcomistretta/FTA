@@ -25,7 +25,7 @@ public class Simulator {
     }
 
     public ArrayList<UnquantizedSample> simulation() {
-        ArrayList<UnquantizedSample> simResult = new ArrayList<UnquantizedSample>();
+        ArrayList<UnquantizedSample> simResult = new ArrayList<>();
         timer.reset();
         simResult.add(new UnquantizedSample
                 (timer.getTime(),

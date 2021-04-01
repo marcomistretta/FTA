@@ -17,11 +17,6 @@ public class Analyzer {
         this.dc = dc;
     }
 
-    // chiama defineCI senza richiedere il plot di Sample Mean e di fault
-    public void defineCI(int N, float alpha, float quantum) {
-        defineCI(N, alpha, quantum, false, false);
-    }
-
     public void defineCI(int N, float alpha, float quantum, boolean meanPlot, boolean fault) {
         dc.clear();
         double start = System.currentTimeMillis();
@@ -97,7 +92,7 @@ public class Analyzer {
         for (int i = 0; i < sampleMeans[0].length; i++)
             times[i] = i * quantum;
 
-        HarryPlotter.getInstance().plotErgodic2(times, sampleMeans);
+        HarryPlotter.getInstance().plotErgodicAlternative(times, sampleMeans);
     }
 
     private void findConvergency(double[] times, double[] sampleMean, double[] sampleStandardDeviation,

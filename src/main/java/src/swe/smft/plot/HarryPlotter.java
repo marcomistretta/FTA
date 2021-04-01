@@ -27,7 +27,7 @@ public class HarryPlotter {
     private final MutableGraph graph = mutGraph("SMFT").setDirected(true);
     private final XYChart chartCI = new XYChartBuilder().width(600).height(400).title("Confidence Intervals").xAxisTitle("times").yAxisTitle("CI").build();
     private final XYChart chartErgodic = new XYChartBuilder().width(600).height(400).title("Ergodic Nature").xAxisTitle("times").yAxisTitle("value").build();
-    private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature2").xAxisTitle("times").yAxisTitle("sample means").build();
+    private final XYChart chartErgodic2 = new XYChartBuilder().width(600).height(400).title("Ergodic Nature Alternative").xAxisTitle("times").yAxisTitle("sample means").build();
     private final String path = "example/modelloSMFT.png";
 
     private HarryPlotter() {
@@ -79,7 +79,7 @@ public class HarryPlotter {
         new SwingWrapper(chartErgodic).displayChart();
     }
 
-    public void plotErgodic2(double[] times, double[][] sampleMeans) {
+    public void plotErgodicAlternative(double[] times, double[][] sampleMeans) {
         // Customize Chart
         chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         //chartErgodic2.getStyler().setYAxisMax(1d);
