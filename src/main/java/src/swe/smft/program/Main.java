@@ -3,7 +3,7 @@ package src.swe.smft.program;
 import src.swe.smft.event.*;
 import src.swe.smft.event.Event;
 import src.swe.smft.plot.HarryPlotter;
-import src.swe.smft.memory.DataCentre;
+import src.swe.smft.memory.DataCenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ public class Main {
         HarryPlotter hp = HarryPlotter.getInstance();
         TreeManager tm = new TreeManager();
         EventFactory modeler = EventFactory.getInstance();
-        DataCentre dc = new DataCentre();
+        DataCenter dc = new DataCenter();
         Simulator sim;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Utility di creazione ed analisi di modelli SMFT:\nSi desidera usare un modello preimpostato [P]" +

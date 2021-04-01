@@ -43,10 +43,10 @@ public class HarryPlotter {
     public void plotReliability(double[] times, double[][] CI, double[] sampleMean, boolean meanPlot, boolean fault) {
 
         // Customize Chart
-        chartCI.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartCI.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         //chartCI.getStyler().setYAxisMax(1d);
         chartCI.getStyler().setZoomEnabled(true);
+        chartCI.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
 
         // Series
         chartCI.addSeries("lower bound", times, CI[0]).setMarker(SeriesMarkers.NONE);
@@ -67,10 +67,10 @@ public class HarryPlotter {
     public void plotErgodic(double[] times, double[] sampleMean, double[] sampleVariance) {
 
         // Customize Chart
-        chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         // chartErgodic.getStyler().setYAxisMax(1d);
         chartErgodic.getStyler().setZoomEnabled(true);
+        chartErgodic.getStyler().setLegendPosition(Styler.LegendPosition.OutsideS);
 
         // Series
         chartErgodic.addSeries("sampleMean", times, sampleMean).setMarker(SeriesMarkers.NONE);
@@ -81,10 +81,10 @@ public class HarryPlotter {
 
     public void plotErgodic2(double[] times, double[][] sampleMeans) {
         // Customize Chart
-        chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chartErgodic2.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
         //chartErgodic2.getStyler().setYAxisMax(1d);
         chartErgodic2.getStyler().setZoomEnabled(true);
+        chartErgodic2.getStyler().setLegendPosition(Styler.LegendPosition.OutsideE);
 
         for (int i = 0; i < sampleMeans.length; i++) {
             chartErgodic2.addSeries("M" + (i + 1), times, sampleMeans[i]).setMarker(SeriesMarkers.NONE);
@@ -102,7 +102,7 @@ public class HarryPlotter {
         graph.add(mutNode(e.getLabel()).add(color));
     }
 
-    public void addNodeAndEdges(IntermediateEvent i) {
+    public void addNode(IntermediateEvent i) {
         Color color;
         if (i.getLabel().contains("OR"))
             color = YELLOW;
@@ -123,7 +123,6 @@ public class HarryPlotter {
             e.printStackTrace();
         }
         System.out.println("*** Modello esportato nell directory " + path + " ***");
-
     }
 
     public void printCIInfo(boolean premade, int nBasics, float maxTime, int runs, float quantum, float alpha, boolean meanPlot, boolean faultPlot) {

@@ -6,12 +6,12 @@ import src.swe.smft.utilities.UnquantizedSample;
 
 import java.util.ArrayList;
 
-public class DataCentre {
+public class DataCenter {
     // simulazioni >> campionamenti(tempo, topEvent, basicEvents)
     private ArrayList<ArrayList<UnquantizedSample>> simulationResults;
 
-    public DataCentre() {
-        simulationResults = new ArrayList<ArrayList<UnquantizedSample>>();
+    public DataCenter() {
+        simulationResults = new ArrayList<>();
     }
 
     public void appendData(ArrayList<UnquantizedSample> entry) {
@@ -60,7 +60,7 @@ public class DataCentre {
 
     public void clear() {
         if (!simulationResults.isEmpty())
-            simulationResults = new ArrayList<>();
+            simulationResults.clear();
     }
 }
 

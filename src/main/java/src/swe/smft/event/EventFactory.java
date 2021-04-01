@@ -59,7 +59,7 @@ public class EventFactory {
             }
             i = new KNGate(children, k, opz, ++count);
         }
-        HarryPlotter.getInstance().addNodeAndEdges(i);
+        HarryPlotter.getInstance().addNode(i);
         return i;
     }
 
@@ -79,7 +79,7 @@ public class EventFactory {
             int k = (int) (Math.random() * (children.size()-1) + 2);
             i = new KNGate(children, k, String.valueOf(k), ++count);
         }
-        HarryPlotter.getInstance().addNodeAndEdges(i);
+        HarryPlotter.getInstance().addNode(i);
         return i;
 
     }

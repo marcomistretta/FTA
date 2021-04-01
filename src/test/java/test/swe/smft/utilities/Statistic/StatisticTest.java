@@ -41,10 +41,10 @@ public class StatisticTest {
 
     // @RepeatedTest(5)
     @Test
-    @DisplayName("Check Sample Variance Calc")
-    public void testSampleVariance() {
+    @DisplayName("Check Standard Deviation Calc")
+    public void testStandardDeviation() {
         for (int j = 0; j < times; j++) {
-            assertEquals(0, Statistic.sampleStandardDeviation(quantizedResults, Statistic.sampleMean(quantizedResults))[j], "Sample variance of a dataset of true should be zero");
+            assertEquals(0, Statistic.sampleStandardDeviation(quantizedResults, Statistic.sampleMean(quantizedResults))[j], "Standard deviation of a dataset of true should be zero");
         }
     }
 }

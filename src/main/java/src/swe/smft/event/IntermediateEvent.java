@@ -48,6 +48,7 @@ class AndGate extends IntermediateEvent {
         super(children, opz, count);
     }
 
+    //AND Gate
     @Override
     public boolean isWorking() {
         boolean result = true;
@@ -68,6 +69,7 @@ class OrGate extends IntermediateEvent {
         super(children, opz, count);
     }
 
+    //OR Gate
     @Override
     public boolean isWorking() {
         boolean result = false;
@@ -90,6 +92,7 @@ class KNGate extends IntermediateEvent {
         this.K = k;
     }
 
+    //K/N Gate
     @Override
     public boolean isWorking() {
         boolean result = false;
@@ -120,6 +123,7 @@ class SeqAndGate extends AndGate {
         faultSequence = new ArrayList<>();
     }
 
+    //SEquantialANDGate
     @Override
     public boolean isWorking() {
         for(Event event: getChildren()) {
