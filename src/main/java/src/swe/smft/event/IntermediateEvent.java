@@ -109,7 +109,7 @@ class KNGate extends IntermediateEvent {
     }
 }
 
-class SeqAndGate extends AndGate {
+class SeqAndGate extends IntermediateEvent {
     // generalizza l'and prioritario
 
     // l'and sequenziale propaga il guasto solo se avviene in un certo ordine

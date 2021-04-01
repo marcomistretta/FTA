@@ -97,8 +97,8 @@ public class Analyzer {
 
     private void findConvergency(double[] times, double[] sampleMean, double[] sampleStandardDeviation,
                                  double meanPrecision, double varPrecision) {
-        double min = 1.1f;
-        double max = -0.1f;
+        double min = 1.1;
+        double max = -0.1;
         double start = times[times.length - 1];
         int count = times.length / 10;
         for (int i = times.length - 1; i >= 0; i--) {
