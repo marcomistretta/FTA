@@ -1,35 +1,39 @@
 # Stochastic Markovian Fault Trees Analyzer
-Un package che permette modellare degli SMFT, manualmente oppure in modo randomico, e di valutarne le principali caratteristiche,  definire intervalli di confidenza per il valore atteso dello stato di funzionamento e valutarne la natura ergodica.
 
+A package that allows for modeling SMFTs either manually or randomly, evaluating their main characteristics, defining confidence intervals for the expected value of the operational state, and assessing their ergodic nature.
 
+## Usage
 
-## Uso
-### Modellazione dello SMFT 
-#### Modalità Manuale
-La costruzione dell'albero avviene in modo bottom-up: si parte dalle foglie, e con esse si definiscono gli altri nodi, fino ad arrivare al top event.
+### Modeling the SMFT 
+
+#### Manual Mode
+The tree construction follows a bottom-up approach: start from the leaves, then define the other nodes using them, until reaching the top event.
 
 ![Default SMFT](diagrams/premade.png)
-#### Modalità Randomica
-Definito un numero desiderato di foglie, il modello verrà generato in modo casuale su 3 livelli di profondità. 
+
+#### Random Mode
+After specifying the desired number of leaves, the model will be generated randomly with 3 levels of depth.
 
 ![Random SMFT](diagrams/random.png)
+
 <hr>
 
-### Calcolo dati
-Il calcolo dei dati è gestito dalle classi Analyzer e Simulator: una volta impostato il Simulator possiamo, tramite Analyzer, impostare il numero di simulazioni (runs) da eseguire e definire gli intervalli di confidenza e valutare la natura ergodica del sistema.<br>
-A questo punto è possibile usare la classe HarryPlotter per stampare i risultati desiderati.
+### Data Calculation
+Data calculation is managed by the `Analyzer` and `Simulator` classes: once the `Simulator` is set up, you can use the `Analyzer` to specify the number of simulation runs, define confidence intervals, and evaluate the ergodic nature of the system. You can then use the `HarryPlotter` class to visualize the desired results.
 
-#### Intervallo di confidenza
-![Intervallo di Confidenza](diagrams/ci.png)
-![Intervallo di Confidenza ingrandito](diagrams/ci_magnified.png)
-#### Ergodicità
-Vengono proposti due grafici:
-- Andamento della media e della varianza campionaria. Se entrambi sono stabili si ha ergodicità
-- Trend delle medie. Se le medie tendono ad un medesimo volarore allora si ha l'ergodicità
-![Ergodicità](diagrams/ergodic.png)
-![Ergodicità, metodo alternativo](diagrams/ergodic_alt.png)
+#### Confidence Interval
+![Confidence Interval](diagrams/ci.png)
+![Confidence Interval Magnified](diagrams/ci_magnified.png)
 
-#### Nota bene:
-- Attualmente i nodi intermedi disponibili sono i gate statici AND, OR, KN, ed il gate dinamico SequentialAND
-- Una volta definiti i tutti i nodi bisogna incapsulare l'albero con la classe TreeManager, che deve conoscerne il top e le foglie.
-- Sui grafici è possibile effettuare lo zoom
+#### Ergodicity
+Two graphs are proposed:
+- The behavior of the sample mean and variance. If both are stable, the system is ergodic.
+- The trend of the means. If the means tend to a common value, the system is ergodic.
+
+![Ergodicity](diagrams/ergodic.png)
+![Ergodicity, alternative method](diagrams/ergodic_alt.png)
+
+#### Notes:
+- Currently, the available intermediate nodes are the static gates AND, OR, KN, and the dynamic gate SequentialAND.
+- Once all nodes are defined, the tree must be encapsulated with the `TreeManager` class, which must know the top event and the leaves.
+- The graphs allow for zooming in for detailed analysis.
